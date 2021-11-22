@@ -39,7 +39,10 @@ typedef struct s_vars
 
 typedef struct s_cub3D
 {
-	char	**map;
+	char				**map;
+	int					map_height;
+	int					map_width;
+	struct line_segment	*walls;
 }	t_cub3D;
 
 #endif /* STRUCT_H */

@@ -33,6 +33,7 @@ int	main(int argc, char **argv)
 		ft_putendl_fd("Usage: ./cub3D <map_name.cub>", STDERR_FILENO);
 		exit(EXIT_FAILURE);
 	}
+	init_struct(&mystruct);
 	mystruct.map = malloc(10 * sizeof(char *));
 	for (int i = 0; i < 10; ++i)
 		mystruct.map[i] = malloc(10);
