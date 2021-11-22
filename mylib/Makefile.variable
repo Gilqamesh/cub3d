@@ -1,0 +1,8 @@
+MYLIBNAME = libmylib.a
+LIBFTNAME = libft.a
+LIBPRINTFNAME = libftprintf.a
+LIBGNLNAME = libgnl.a
+LIBFTDIR = libft
+PRINTFDIR = printf
+GNLDIR = gnl
+MYLIBHEADER = mylib.h
