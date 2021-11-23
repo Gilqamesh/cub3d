@@ -1,6 +1,7 @@
 NAME = cub3D
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
+PATH_MLX = mlx
 LIBS = -Lminilibx -lmlx -lm -lz -framework OpenGL -framework AppKit
 SRC = main.c initialize.c utils.c hook.c
 HDIR = headers

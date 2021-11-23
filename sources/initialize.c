@@ -20,8 +20,4 @@ void	init_struct(t_cub3D *mystruct)
 	mystruct->dirY = 0;
 	mystruct->planeX = 0;
 	mystruct->planeY = 0.66;
-	mystruct->time = 0;
-	mystruct->oldTime = get_current_timestamp();
-	// mystruct->moveSpeed = 100;
-	// mystruct->rotSpeed = 0.3;
 }

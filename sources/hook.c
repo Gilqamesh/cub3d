@@ -102,36 +102,34 @@ int	render_frame(void *param)
 		enum color	color;
 		switch (mystruct->map[mapY][mapX])
 		{
-			case 1:  color = RED;  break;	// red
-			case 2:  color = GREEN;  break;	// green
-			case 3:  color = BLUE;   break;	// blue
-			case 4:  color = WHITE;  break;	// white
+			case '1':  color = RED;  break;	// red
+			case '2':  color = GREEN;  break;	// green
+			case '3':  color = BLUE;   break;	// blue
+			case '4':  color = WHITE;  break;	// white
 			default: color = YELLOW; break;	// yellow
 		}
 
-		//give x and y sides different brightness
-		if (side == 1) {color = color / 2;}
+		// give x and y sides different brightness
+		if (side == 1)
+			color = color / 2;
 
-		//draw the pixels of the stripe as a vertical line
+		// draw the pixels of the stripe as a vertical line
 		verLine(mystruct, x, 0, SCREEN_H - 1, BLACK);
 		verLine(mystruct, x, drawStart, drawEnd, color);
-		//timing for input and FPS counter
-		mystruct->oldTime = mystruct->time;
-		mystruct->time = get_current_timestamp();
-		double	frameTime = (mystruct->time - mystruct->oldTime) / 100.0; // frameTime is the time this frame has taken, in seconds
-		printf("%f, %f\n", frameTime, 1.0 / frameTime);
-
-		//speed modifiers
-		mystruct->moveSpeed = frameTime * 5.0; //the constant value is in squares/second
-		mystruct->rotSpeed = frameTime * 3.0; //the constant value is in radians/second
 	}
+	// timing for input and FPS counter
+	double	frameTime = 1 / FPS;
+	// printf("%f, %f\n", frameTime, 1.0 / frameTime);
+
+	// speed modifiers
+	mystruct->moveSpeed = frameTime * 5.0;	// the constant value is in squares/second
+	mystruct->rotSpeed = frameTime * 3.0;	// the constant value is in radians/second
+	// Idk, maybe we need this
+	// mlx_do_sync(mystruct->vars.mlx);
 	mlx_put_image_to_window(mystruct->vars.mlx, mystruct->vars.win, mystruct->img.img, 0, 0);
-	// mlx_sync();
 	return (0);
 }
 
-// W A S D
-// 
 int	key_hook(int key, void *param)
 {
 	t_cub3D	*mystruct = (t_cub3D *)param;
@@ -152,23 +150,23 @@ int	key_hook(int key, void *param)
 		if (mystruct->map [(int)(mystruct->posY - mystruct->dirY * mystruct->moveSpeed)][(int)(mystruct->posX)] == '0')
 			mystruct->posY -= mystruct->dirY * mystruct->moveSpeed;
 	}
-	// IDK how to implement this for now
 	// move left if no wall to the left
-	// if (key == KEY_A)
-	// {
-	// 	if (mystruct->map [(int)(mystruct->posY)][(int)(mystruct->posX - mystruct->dirX * mystruct->moveSpeed)] == '0')
-	// 		mystruct->posX += mystruct->dirX * mystruct->moveSpeed;
-	// 	if (mystruct->map [(int)(mystruct->posY - mystruct->dirY * mystruct->moveSpeed)][(int)(mystruct->posX)] == '0')
-	// 		mystruct->posY -= mystruct->dirY * mystruct->moveSpeed;
-	// }
+	if (key == KEY_A)
+	{
+		
+		if (mystruct->map [(int)(mystruct->posY)][(int)(mystruct->posX - mystruct->dirY * mystruct->moveSpeed)] == '0')
+			mystruct->posX -= mystruct->dirY * mystruct->moveSpeed;
+		if (mystruct->map [(int)(mystruct->posY + mystruct->dirX * mystruct->moveSpeed)][(int)(mystruct->posX)] == '0')
+			mystruct->posY += mystruct->dirX * mystruct->moveSpeed;
+	}
 	// // move right if no wall to the right
-	// if (key == KEY_D)
-	// {
-	// 	if (mystruct->map [(int)(mystruct->posY)][(int)(mystruct->posX - mystruct->dirX * mystruct->moveSpeed)] == '0')
-	// 		mystruct->posX -= mystruct->dirX * mystruct->moveSpeed;
-	// 	if (mystruct->map [(int)(mystruct->posY - mystruct->dirY * mystruct->moveSpeed)][(int)(mystruct->posX)] == '0')
-	// 		mystruct->posY += mystruct->dirY * mystruct->moveSpeed;
-	// }
+	if (key == KEY_D)
+	{
+		if (mystruct->map [(int)(mystruct->posY)][(int)(mystruct->posX + mystruct->dirY * mystruct->moveSpeed)] == '0')
+			mystruct->posX += mystruct->dirY * mystruct->moveSpeed;
+		if (mystruct->map [(int)(mystruct->posY - mystruct->dirX * mystruct->moveSpeed)][(int)(mystruct->posX)] == '0')
+			mystruct->posY -= mystruct->dirX * mystruct->moveSpeed;
+	}
 	// rotate to the right
 	if (key == KEY_LEFT)
 	{

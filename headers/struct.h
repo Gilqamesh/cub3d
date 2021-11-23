@@ -53,8 +53,6 @@ typedef struct s_cub3D
 	double				dirY;
 	double				planeX; // the 2d raycaster version of camera plane
 	double				planeY;
-	long int			time; // time of current frame
-	long int			oldTime; // time of previous frame
 	double				moveSpeed;
 	double				rotSpeed;
 }	t_cub3D;

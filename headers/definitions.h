@@ -15,9 +15,12 @@
 # define KEY_A		0
 # define KEY_D		2
 # define KEY_S		1
+# define PI			3.1415
+# define FPS		60.0
+# define BASS_SAMPLE_LOOP	4
 
-# include <stdio.h>
 // debugging
+# include <stdio.h>
 # define PRINT_HERE() (printf("file: %s, line: %d\n", __FILE__, __LINE__))
 
 #endif /* DEFINITIONS_H */
