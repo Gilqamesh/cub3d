@@ -6,5 +6,6 @@
 # define TITLE		"cub3D"
 # define mapWidth	24
 # define mapHeight	24
+# define INFINITY	1e30
 
 #endif /* DEFINITIONS_H */
