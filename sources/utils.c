@@ -33,7 +33,26 @@ void	my_mlx_pixel_put(t_data *data, double x, double y, int color)
 void	verLine(t_cub3D *mystruct, int x, int y_start, int y_end, int color)
 {
 	for (int i = y_start; i <= y_end; ++i)
-	{
 		my_mlx_pixel_put(&mystruct->img, x, i, color);
-	}
+}
+
+/*
+** Returns the current timestamp in microseconds compared to start.
+*/
+long int	get_current_timestamp(void)
+{
+	struct timeval	cur;
+
+	gettimeofday(&cur, NULL);
+	return (timval_to_microseconds(&cur));
+}
+
+/*
+** Returns in microseconds the sum value in 't'.
+*/
+long int	timval_to_microseconds(struct timeval *t)
+{
+	if (t == NULL)
+		return (-1);
+	return (t->tv_sec * 1000000 + t->tv_usec);
 }

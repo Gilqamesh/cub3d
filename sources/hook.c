@@ -20,11 +20,9 @@ int	render_frame(void *param)
 		double	rayDirY = mystruct->dirY + mystruct->planeY * cameraX;
 
 		// which box of the map we're in
-		PRINT_HERE();
 		int mapX = (int)mystruct->posX;
 		int mapY = (int)mystruct->posY;
 
-		PRINT_HERE();
 		// length of ray from current position to next x or y-side
 		double	sideDistX;
 		double	sideDistY;
@@ -80,13 +78,8 @@ int	render_frame(void *param)
 				side = 1;
 			}
 			// Check if ray has hit a wall
-			PRINT_HERE();
-			ft_printf("%d %d\n", mapY, mapX);
-			if (mapY < 0 || mapX < 0 || mapY >= mapHeight || mapX >= mapWidth)
-				break ;
 			if (mystruct->map[mapY][mapX] > '0')
 				hit = 1;
-			PRINT_HERE();
 		}
 		// Calculate distance projected on camera direction (Euclidean distance would give fisheye effect!)
 		if (side == 0)
@@ -107,7 +100,6 @@ int	render_frame(void *param)
 
 		// choose wall color
 		enum color	color;
-		PRINT_HERE();
 		switch (mystruct->map[mapY][mapX])
 		{
 			case 1:  color = RED;  break;	// red
@@ -116,26 +108,66 @@ int	render_frame(void *param)
 			case 4:  color = WHITE;  break;	// white
 			default: color = YELLOW; break;	// yellow
 		}
-		PRINT_HERE();
 
 		//give x and y sides different brightness
 		if (side == 1) {color = color / 2;}
 
 		//draw the pixels of the stripe as a vertical line
+		verLine(mystruct, x, 0, SCREEN_H - 1, BLACK);
 		verLine(mystruct, x, drawStart, drawEnd, color);
 		//timing for input and FPS counter
-		// mystruct->oldTime = mystruct->time;
-		// mystruct->time = getTicks();
-		// double frameTime = (time - oldTime) / 1000.0; //frameTime is the time this frame has taken, in seconds
-		// print(1.0 / frameTime); //FPS counter
-		// redraw();
-		// cls();
+		mystruct->oldTime = mystruct->time;
+		mystruct->time = get_current_timestamp();
+		double	frameTime = (mystruct->time - mystruct->oldTime) / 100.0; // frameTime is the time this frame has taken, in seconds
+		printf("%f, %f\n", frameTime, 1.0 / frameTime);
 
 		//speed modifiers
-		// double moveSpeed = frameTime * 5.0; //the constant value is in squares/second
-		// double rotSpeed = frameTime * 3.0; //the constant value is in radians/second
+		mystruct->moveSpeed = frameTime * 5.0; //the constant value is in squares/second
+		mystruct->rotSpeed = frameTime * 3.0; //the constant value is in radians/second
 	}
 	mlx_put_image_to_window(mystruct->vars.mlx, mystruct->vars.win, mystruct->img.img, 0, 0);
 	// mlx_sync();
+	return (0);
+}
+
+// W A S D
+// 
+int	key_hook(int key, void *param)
+{
+	t_cub3D	*mystruct = (t_cub3D *)param;
+	//move forward if no wall in front of you
+	if (key == KEY_W)
+	{
+		if(mystruct->map [(int)(mystruct->posY)][(int)(mystruct->posX + mystruct->dirX * mystruct->moveSpeed)] == '0') mystruct->posX += mystruct->dirX * mystruct->moveSpeed;
+		if(mystruct->map [(int)(mystruct->posY + mystruct->dirY * mystruct->moveSpeed)][(int)(mystruct->posX)] == '0') mystruct->posY += mystruct->dirY * mystruct->moveSpeed;
+	}
+	//move backwards if no wall behind you
+	if (key == KEY_S)
+	{
+		if(mystruct->map [(int)(mystruct->posY)][(int)(mystruct->posX - mystruct->dirX * mystruct->moveSpeed)] == '0') mystruct->posX -= mystruct->dirX * mystruct->moveSpeed;
+		if(mystruct->map [(int)(mystruct->posY - mystruct->dirY * mystruct->moveSpeed)][(int)(mystruct->posX)] == '0') mystruct->posY -= mystruct->dirY * mystruct->moveSpeed;
+	}
+	//rotate to the right
+	if (key == KEY_D)
+	{
+		//both camera direction and camera plane must be rotated
+		double oldDirX = mystruct->dirX;
+		mystruct->dirX = mystruct->dirX * cos(-mystruct->rotSpeed) - mystruct->dirY * sin(-mystruct->rotSpeed);
+		mystruct->dirY = oldDirX * sin(-mystruct->rotSpeed) + mystruct->dirY * cos(-mystruct->rotSpeed);
+		double oldPlaneX = mystruct->planeX;
+		mystruct->planeX = mystruct->planeX * cos(-mystruct->rotSpeed) - mystruct->planeY * sin(-mystruct->rotSpeed);
+		mystruct->planeY = oldPlaneX * sin(-mystruct->rotSpeed) + mystruct->planeY * cos(-mystruct->rotSpeed);
+	}
+	//rotate to the left
+	if (key == KEY_A)
+	{
+		//both camera direction and camera plane must be rotated
+		double oldDirX = mystruct->dirX;
+		mystruct->dirX = mystruct->dirX * cos(mystruct->rotSpeed) - mystruct->dirY * sin(mystruct->rotSpeed);
+		mystruct->dirY = oldDirX * sin(mystruct->rotSpeed) + mystruct->dirY * cos(mystruct->rotSpeed);
+		double oldPlaneX = mystruct->planeX;
+		mystruct->planeX = mystruct->planeX * cos(mystruct->rotSpeed) - mystruct->planeY * sin(mystruct->rotSpeed);
+		mystruct->planeY = oldPlaneX * sin(mystruct->rotSpeed) + mystruct->planeY * cos(mystruct->rotSpeed);
+	}
 	return (0);
 }

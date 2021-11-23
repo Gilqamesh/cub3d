@@ -13,7 +13,8 @@ enum color
 	GREEN = 0x0000ff00,
 	BLUE = 0x000000ff,
 	YELLOW = 0x00ffff00,
-	WHITE = 0x00ffffff
+	WHITE = 0x00ffffff,
+	BLACK = 0x00000000
 };
 
 struct line_segment
@@ -52,8 +53,10 @@ typedef struct s_cub3D
 	double				dirY;
 	double				planeX; // the 2d raycaster version of camera plane
 	double				planeY;
-	double				time; // time of current frame
-	double				oldTime; // time of previous frame
+	long int			time; // time of current frame
+	long int			oldTime; // time of previous frame
+	double				moveSpeed;
+	double				rotSpeed;
 }	t_cub3D;
 
 #endif /* STRUCT_H */

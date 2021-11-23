@@ -2,6 +2,7 @@
 #include "definitions.h"
 #include "mlx.h"
 #include <stdlib.h>
+#include "utils.h"
 
 void	init_struct(t_cub3D *mystruct)
 {
@@ -20,5 +21,7 @@ void	init_struct(t_cub3D *mystruct)
 	mystruct->planeX = 0;
 	mystruct->planeY = 0.66;
 	mystruct->time = 0;
-	mystruct->oldTime = 0;
+	mystruct->oldTime = get_current_timestamp();
+	// mystruct->moveSpeed = 100;
+	// mystruct->rotSpeed = 0.3;
 }

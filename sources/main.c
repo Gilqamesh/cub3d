@@ -45,8 +45,9 @@ int	main(int argc, char **argv)
 	};
 	for (int i = 0; i < mapHeight; ++i)
 		for (int j = 0; j < mapWidth; ++j)
-			mystruct.map[i][j] = worldMap[i][j] - '0';
+			mystruct.map[i][j] = worldMap[i][j] + '0';
 	mlx_loop_hook(mystruct.vars.mlx, render_frame, &mystruct);
+	mlx_key_hook(mystruct.vars.win, key_hook, &mystruct);
 	mlx_loop(mystruct.vars.mlx);
 	// parsing();
 	// build_tree();
