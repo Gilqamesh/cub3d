@@ -43,6 +43,16 @@ typedef struct s_cub3D
 	int					map_height;
 	int					map_width;
 	struct line_segment	*walls;
+	t_data				img;
+	t_vars				vars;
+	double				posX; // x and y start position
+	double				posY;
+	double				dirX; // initial direction vector
+	double				dirY;
+	double				planeX; // the 2d raycaster version of camera plane
+	double				planeY;
+	double				time; // time of current frame
+	double				oldTime; // time of previous frame
 }	t_cub3D;
 
 #endif /* STRUCT_H */
