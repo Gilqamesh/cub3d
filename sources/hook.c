@@ -135,22 +135,44 @@ int	render_frame(void *param)
 int	key_hook(int key, void *param)
 {
 	t_cub3D	*mystruct = (t_cub3D *)param;
-	//move forward if no wall in front of you
+
+	// move forward if no wall in front of you
 	if (key == KEY_W)
 	{
-		if(mystruct->map [(int)(mystruct->posY)][(int)(mystruct->posX + mystruct->dirX * mystruct->moveSpeed)] == '0') mystruct->posX += mystruct->dirX * mystruct->moveSpeed;
-		if(mystruct->map [(int)(mystruct->posY + mystruct->dirY * mystruct->moveSpeed)][(int)(mystruct->posX)] == '0') mystruct->posY += mystruct->dirY * mystruct->moveSpeed;
+		if (mystruct->map [(int)(mystruct->posY)][(int)(mystruct->posX + mystruct->dirX * mystruct->moveSpeed)] == '0')
+			mystruct->posX += mystruct->dirX * mystruct->moveSpeed;
+		if (mystruct->map [(int)(mystruct->posY + mystruct->dirY * mystruct->moveSpeed)][(int)(mystruct->posX)] == '0')
+			mystruct->posY += mystruct->dirY * mystruct->moveSpeed;
 	}
-	//move backwards if no wall behind you
+	// move backwards if no wall behind you
 	if (key == KEY_S)
 	{
-		if(mystruct->map [(int)(mystruct->posY)][(int)(mystruct->posX - mystruct->dirX * mystruct->moveSpeed)] == '0') mystruct->posX -= mystruct->dirX * mystruct->moveSpeed;
-		if(mystruct->map [(int)(mystruct->posY - mystruct->dirY * mystruct->moveSpeed)][(int)(mystruct->posX)] == '0') mystruct->posY -= mystruct->dirY * mystruct->moveSpeed;
+		if (mystruct->map [(int)(mystruct->posY)][(int)(mystruct->posX - mystruct->dirX * mystruct->moveSpeed)] == '0')
+			mystruct->posX -= mystruct->dirX * mystruct->moveSpeed;
+		if (mystruct->map [(int)(mystruct->posY - mystruct->dirY * mystruct->moveSpeed)][(int)(mystruct->posX)] == '0')
+			mystruct->posY -= mystruct->dirY * mystruct->moveSpeed;
 	}
-	//rotate to the right
-	if (key == KEY_D)
+	// IDK how to implement this for now
+	// move left if no wall to the left
+	// if (key == KEY_A)
+	// {
+	// 	if (mystruct->map [(int)(mystruct->posY)][(int)(mystruct->posX - mystruct->dirX * mystruct->moveSpeed)] == '0')
+	// 		mystruct->posX += mystruct->dirX * mystruct->moveSpeed;
+	// 	if (mystruct->map [(int)(mystruct->posY - mystruct->dirY * mystruct->moveSpeed)][(int)(mystruct->posX)] == '0')
+	// 		mystruct->posY -= mystruct->dirY * mystruct->moveSpeed;
+	// }
+	// // move right if no wall to the right
+	// if (key == KEY_D)
+	// {
+	// 	if (mystruct->map [(int)(mystruct->posY)][(int)(mystruct->posX - mystruct->dirX * mystruct->moveSpeed)] == '0')
+	// 		mystruct->posX -= mystruct->dirX * mystruct->moveSpeed;
+	// 	if (mystruct->map [(int)(mystruct->posY - mystruct->dirY * mystruct->moveSpeed)][(int)(mystruct->posX)] == '0')
+	// 		mystruct->posY += mystruct->dirY * mystruct->moveSpeed;
+	// }
+	// rotate to the right
+	if (key == KEY_LEFT)
 	{
-		//both camera direction and camera plane must be rotated
+		// both camera direction and camera plane must be rotated
 		double oldDirX = mystruct->dirX;
 		mystruct->dirX = mystruct->dirX * cos(-mystruct->rotSpeed) - mystruct->dirY * sin(-mystruct->rotSpeed);
 		mystruct->dirY = oldDirX * sin(-mystruct->rotSpeed) + mystruct->dirY * cos(-mystruct->rotSpeed);
@@ -158,10 +180,10 @@ int	key_hook(int key, void *param)
 		mystruct->planeX = mystruct->planeX * cos(-mystruct->rotSpeed) - mystruct->planeY * sin(-mystruct->rotSpeed);
 		mystruct->planeY = oldPlaneX * sin(-mystruct->rotSpeed) + mystruct->planeY * cos(-mystruct->rotSpeed);
 	}
-	//rotate to the left
-	if (key == KEY_A)
+	// rotate to the left
+	if (key == KEY_RIGHT)
 	{
-		//both camera direction and camera plane must be rotated
+		// both camera direction and camera plane must be rotated
 		double oldDirX = mystruct->dirX;
 		mystruct->dirX = mystruct->dirX * cos(mystruct->rotSpeed) - mystruct->dirY * sin(mystruct->rotSpeed);
 		mystruct->dirY = oldDirX * sin(mystruct->rotSpeed) + mystruct->dirY * cos(mystruct->rotSpeed);
