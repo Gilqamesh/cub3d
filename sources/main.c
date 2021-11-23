@@ -2,18 +2,21 @@
 #include "mlx.h"
 #include "struct.h"
 #include "definitions.h"
+#include "initialize.h"
+#include "hook.h"
 #include <stdio.h>
 
 int	main(int argc, char **argv)
 {
+	(void)argv;
 	t_cub3D	mystruct;
 	if (argc != 2)
 	{
 		ft_putendl_fd("Usage: ./cub3D <map_name.cub>", STDERR_FILENO);
 		exit(EXIT_FAILURE);
 	}
-	init_struct(&mystruct, argc, argv);
-	char	worldMap[mapWidth][mapHeight] =
+	init_struct(&mystruct);
+	int	worldMap[mapWidth][mapHeight] =
 	{
 		{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
 		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
@@ -42,7 +45,7 @@ int	main(int argc, char **argv)
 	};
 	for (int i = 0; i < mapHeight; ++i)
 		for (int j = 0; j < mapWidth; ++j)
-			mystruct.map[i][j] = worldMap[i][j];
+			mystruct.map[i][j] = worldMap[i][j] - '0';
 	mlx_loop_hook(mystruct.vars.mlx, render_frame, &mystruct);
 	mlx_loop(mystruct.vars.mlx);
 	// parsing();

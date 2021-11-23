@@ -1,7 +1,9 @@
 #include "initialize.h"
 #include "definitions.h"
+#include "mlx.h"
+#include <stdlib.h>
 
-void	init_struct(t_cub3D *mystruct, int argc, char **argv)
+void	init_struct(t_cub3D *mystruct)
 {
 	mystruct->map = malloc(mapHeight * sizeof(*mystruct->map));
 	for (int i = 0; i < mapHeight; ++i)

@@ -9,10 +9,11 @@ struct Point
 
 enum color
 {
-	RED,
-	GREEN,
-	BLUE,
-	YELLOW
+	RED = 0x00ff0000,
+	GREEN = 0x0000ff00,
+	BLUE = 0x000000ff,
+	YELLOW = 0x00ffff00,
+	WHITE = 0x00ffffff
 };
 
 struct line_segment

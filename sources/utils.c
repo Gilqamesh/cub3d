@@ -28,3 +28,12 @@ void	my_mlx_pixel_put(t_data *data, double x, double y, int color)
 	dst = data->addr + (b * data->line_length + a * (data->bits_per_pixel / 8));
 	*(unsigned int *)dst = color;
 }
+
+// Draws a line
+void	verLine(t_cub3D *mystruct, int x, int y_start, int y_end, int color)
+{
+	for (int i = y_start; i <= y_end; ++i)
+	{
+		my_mlx_pixel_put(&mystruct->img, x, i, color);
+	}
+}
