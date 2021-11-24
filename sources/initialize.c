@@ -23,6 +23,6 @@ void	init_struct(t_cub3D *mystruct)
 	mystruct->textures = malloc(8 * sizeof(*mystruct->textures));
 	for (int i = 0; i < 8; ++i)
 		extract_image(&mystruct->textures[i], (t_args1){
-			(t_point){i * TEXTURE_W, TEXTURE_H - 1}, (t_point){(i + 1) * TEXTURE_W - 1, 0}, "./assets/wolftextures.xpm",
+			(t_point){i * TEXTURE_W, TEXTURE_H - 1}, (t_point){(i + 1) * TEXTURE_W - 1, 0}, "assets/wolftextures.xpm",
 			&mystruct->vars, (t_point){TEXTURE_W, TEXTURE_H}});
 }

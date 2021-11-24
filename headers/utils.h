@@ -14,5 +14,7 @@ void	get_part_of_img(t_vars vars, t_data *img,
             t_point bot_left, t_point top_right);
 int 	abs_int(int a);
 void	extract_image(t_data *images, t_args1 args1);
+void	resize_img(t_vars vars, t_data *img, t_point old_params,
+t_point new_params);
 
 #endif /* UTILS_H */

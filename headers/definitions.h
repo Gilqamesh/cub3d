@@ -17,8 +17,8 @@
 # define KEY_S		115
 # define PI			3.1415
 # define FPS		30.0
-# define TEXTURE_W  70
-# define TEXTURE_H  70
+# define TEXTURE_W  64
+# define TEXTURE_H  64
 
 // debugging
 # include <stdio.h>
