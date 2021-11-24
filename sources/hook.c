@@ -168,7 +168,7 @@ int	key_hook(int key, void *param)
 			mystruct->posY -= mystruct->dirX * mystruct->moveSpeed;
 	}
 	// rotate to the right
-	if (key == KEY_LEFT)
+	if (key == KEY_RIGHT)
 	{
 		// both camera direction and camera plane must be rotated
 		double oldDirX = mystruct->dirX;
@@ -179,7 +179,7 @@ int	key_hook(int key, void *param)
 		mystruct->planeY = oldPlaneX * sin(-mystruct->rotSpeed) + mystruct->planeY * cos(-mystruct->rotSpeed);
 	}
 	// rotate to the left
-	if (key == KEY_RIGHT)
+	if (key == KEY_LEFT)
 	{
 		// both camera direction and camera plane must be rotated
 		double oldDirX = mystruct->dirX;
