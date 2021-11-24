@@ -1,14 +1,14 @@
 NAME = cub3D
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -O3
 PATH_MLX = mlx
-LIBS = -Lminilibx -lmlx -lm -lz -framework OpenGL -framework AppKit
+LIBS = -L/usr/lib -lXext -lX11 -Lmlx_linux -lmlx -lm -lz
 SRC = main.c initialize.c utils.c hook.c
 HDIR = headers
 ODIR = objects
 SDIR = sources
 MYLIB = mylib/libmylib.a
-INCLUDES = -I../$(HDIR) -I../minilibx -I../mylib
+INCLUDES = -I../$(HDIR) -I../mlx_linux -I../mylib -I/usr/include
 
 $(NAME): $(MYLIB) $(foreach file,$(SRC:.c=.o),$(ODIR)/$(file))
 	$(CC) -o $@ $(LIBS) $^
