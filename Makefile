@@ -2,7 +2,8 @@ NAME = cub3D
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror -O3
 PATH_MLX = mlx
-LIBS = -L/usr/lib -lXext -lX11 -Lmlx_linux -lmlx -lm -lz
+LIBS = -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz -Lmlx_linux -lmlx_Linux \
+-Lmylib -lmylib
 SRC = main.c initialize.c utils.c hook.c
 HDIR = headers
 ODIR = objects
@@ -10,8 +11,10 @@ SDIR = sources
 MYLIB = mylib/libmylib.a
 INCLUDES = -I../$(HDIR) -I../mlx_linux -I../mylib -I/usr/include
 
-$(NAME): $(MYLIB) $(foreach file,$(SRC:.c=.o),$(ODIR)/$(file))
-	$(CC) -o $@ $(LIBS) $^
+DEPENDS: $(MYLIB)
+	make $(NAME)
+$(NAME): $(foreach file,$(SRC:.c=.o),$(ODIR)/$(file))
+	$(CC) -o $@ $^ $(LIBS)
 $(ODIR)/main.o: $(SDIR)/main.c
 	cd $(ODIR) && $(CC) $(INCLUDES) $(CFLAGS) -c ../$<
 $(ODIR)/%.o: $(SDIR)/%.c $(HDIR)/%.h

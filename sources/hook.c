@@ -6,6 +6,7 @@
 #include "utils.h"
 #include "mlx.h"
 #include "mylib.h"
+#include <stdio.h>
 
 int	render_frame(void *param)
 {
@@ -83,12 +84,22 @@ int	render_frame(void *param)
 		}
 		// Calculate distance projected on camera direction (Euclidean distance would give fisheye effect!)
 		if (side == 0)
+		{
+			// Fisheye
+			// perpWallDist = sideDistX;
+			// Without
 			perpWallDist = (sideDistX - deltaDistX);
+		}
 		else
+		{
+			// Fisheye
+			// perpWallDist = sideDistY;
+			// Without
 			perpWallDist = (sideDistY - deltaDistY);
+		}
 
 		// Calculate height of line to draw on screen
-		int lineHeight = (int)(SCREEN_H / perpWallDist);
+		int lineHeight = (int)(2 * SCREEN_H / perpWallDist);
 
 		// calculate lowest and highest pixel to fill in current stripe
 		int drawStart = -lineHeight / 2 + SCREEN_H / 2;
@@ -98,24 +109,65 @@ int	render_frame(void *param)
 		if (drawEnd >= SCREEN_H)
 			drawEnd = SCREEN_H - 1;
 
-		// choose wall color
-		enum color	color;
-		switch (mystruct->map[mapY][mapX])
-		{
-			case '1':  color = RED;  break;	// red
-			case '2':  color = GREEN;  break;	// green
-			case '3':  color = BLUE;   break;	// blue
-			case '4':  color = WHITE;  break;	// white
-			default: color = YELLOW; break;	// yellow
-		}
+		// UNTEXTURED
+		// // choose wall color
+		// enum color	color;
+		// switch (mystruct->map[mapY][mapX])
+		// {
+		// 	case '1':  color = RED;  break;	// red
+		// 	case '2':  color = GREEN;  break;	// green
+		// 	case '3':  color = BLUE;   break;	// blue
+		// 	case '4':  color = WHITE;  break;	// white
+		// 	default: color = YELLOW; break;	// yellow
+		// }
 
-		// give x and y sides different brightness
-		if (side == 1)
-			color = color / 2;
+		// // give x and y sides different brightness
+		// if (side == 1)
+		// 	color = color / 2;
+		// END UNTEXTURED
+
+		// TEXTURED
+		// texturing calculations
+		int	textNum = mystruct->map[mapY][mapX] - '0' - 1; // 1 subtracted from it so that texture 0 can be used!
+
+		// calculate value of wallX
+		double	wallX; // where exactly the wall was hit
+		if (side == 0)
+			wallX = mystruct->posY + perpWallDist * rayDirX;
+		else
+			wallX = mystruct->posX + perpWallDist * rayDirX;
+		wallX -= floor(wallX);
+
+		// x coordinate on the texture
+		int	texX = (int)(wallX * (double)TEXTURE_W);
+		if (side == 0 && rayDirX > 0)
+			texX = TEXTURE_W - texX - 1;
+		if (side == 1 && rayDirY < 0)
+			texX = TEXTURE_W - texX - 1;
+
+		// How much to increase the texture coordinate per screen pixel
+		double	step = 1.0 * TEXTURE_H / lineHeight;
+		// Starting texture coordinate
+		double	texPos = (drawStart - SCREEN_H / 2 + lineHeight / 2) * step;
+		verLine(mystruct, x, 0, SCREEN_H - 1, BLACK);
+		for (int y = drawStart; y < drawEnd; ++y)
+		{
+			// Cast the texture coordinate to integer, and mask with (texHeight - 1) in case of overflow
+			int	texY = (int)texPos & (TEXTURE_H - 1);
+			texPos += step;
+			// printf("%d %d\n", texX, texY);
+			unsigned int	color = get_color(&mystruct->textures[textNum], texX, texY);
+			// make color darker for y-sides: R, G and B byte each divided through two with a "shift" and an "and"
+			// if (side == 1)
+			// 	color = (color >> 1) & 8355711;
+			my_mlx_pixel_put(&mystruct->img, x, y, color);
+		}
+		// END TEXTURED
 
 		// draw the pixels of the stripe as a vertical line
-		verLine(mystruct, x, 0, SCREEN_H - 1, BLACK);
-		verLine(mystruct, x, drawStart, drawEnd, color);
+		// UNTEXTURED
+		// verLine(mystruct, x, 0, SCREEN_H - 1, BLACK);
+		// verLine(mystruct, x, drawStart, drawEnd, color);
 	}
 	// timing for input and FPS counter
 	double	frameTime = 1 / FPS;
@@ -168,7 +220,7 @@ int	key_hook(int key, void *param)
 			mystruct->posY -= mystruct->dirX * mystruct->moveSpeed;
 	}
 	// rotate to the right
-	if (key == KEY_LEFT)
+	if (key == KEY_RIGHT)
 	{
 		// both camera direction and camera plane must be rotated
 		double oldDirX = mystruct->dirX;
@@ -179,7 +231,7 @@ int	key_hook(int key, void *param)
 		mystruct->planeY = oldPlaneX * sin(-mystruct->rotSpeed) + mystruct->planeY * cos(-mystruct->rotSpeed);
 	}
 	// rotate to the left
-	if (key == KEY_RIGHT)
+	if (key == KEY_LEFT)
 	{
 		// both camera direction and camera plane must be rotated
 		double oldDirX = mystruct->dirX;
@@ -189,5 +241,6 @@ int	key_hook(int key, void *param)
 		mystruct->planeX = mystruct->planeX * cos(mystruct->rotSpeed) - mystruct->planeY * sin(mystruct->rotSpeed);
 		mystruct->planeY = oldPlaneX * sin(mystruct->rotSpeed) + mystruct->planeY * cos(mystruct->rotSpeed);
 	}
+	// render_frame(mystruct);
 	return (0);
 }

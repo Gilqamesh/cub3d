@@ -7,16 +7,18 @@
 # define mapWidth	24
 # define mapHeight	24
 # define INFINITY	1e30
-# define KEY_LEFT	124
-# define KEY_UP		126
-# define KEY_DOWN	125
-# define KEY_RIGHT	123
-# define KEY_W		13
-# define KEY_A		0
-# define KEY_D		2
-# define KEY_S		1
+# define KEY_LEFT	65361
+# define KEY_UP	    65362
+# define KEY_DOWN   65364
+# define KEY_RIGHT	65363
+# define KEY_W		119
+# define KEY_A		97
+# define KEY_D		100
+# define KEY_S		115
 # define PI			3.1415
-# define FPS		60.0
+# define FPS		30.0
+# define TEXTURE_W  70
+# define TEXTURE_H  70
 
 // debugging
 # include <stdio.h>
