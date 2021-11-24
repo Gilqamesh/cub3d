@@ -1,5 +1,4 @@
 #include "utils.h"
-#include "bass.h"
 #include "definitions.h"
 
 double	ft_fabs(double x)

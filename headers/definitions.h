@@ -17,7 +17,6 @@
 # define KEY_S		1
 # define PI			3.1415
 # define FPS		60.0
-# define BASS_SAMPLE_LOOP	4
 
 // debugging
 # include <stdio.h>
