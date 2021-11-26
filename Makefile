@@ -1,17 +1,19 @@
 NAME = cub3D
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -O3
 PATH_MLX = mlx
-LIBS = -Lminilibx -lmlx -lm -lz -framework OpenGL -framework AppKit
+LIBS = -Lminilibx -lmlx -lm -lz -framework OpenGL -framework AppKit -Lmylib -lmylib
 SRC = main.c initialize.c utils.c hook.c destroy.c
 HDIR = headers
 ODIR = objects
 SDIR = sources
 MYLIB = mylib/libmylib.a
-INCLUDES = -I../$(HDIR) -I../minilibx -I../mylib
+INCLUDES = -I../$(HDIR) -I../minilibx -I../mylib -I/usr/include
 
-$(NAME): $(MYLIB) $(foreach file,$(SRC:.c=.o),$(ODIR)/$(file))
-	$(CC) -o $@ $(LIBS) $^
+DEPENDS: $(MYLIB)
+	make $(NAME)
+$(NAME): $(foreach file,$(SRC:.c=.o),$(ODIR)/$(file))
+	$(CC) -o $@ $^ $(LIBS)
 $(ODIR)/main.o: $(SDIR)/main.c
 	cd $(ODIR) && $(CC) $(INCLUDES) $(CFLAGS) -c ../$<
 $(ODIR)/%.o: $(SDIR)/%.c $(HDIR)/%.h

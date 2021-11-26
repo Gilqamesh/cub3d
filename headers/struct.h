@@ -1,11 +1,11 @@
 #ifndef STRUCT_H
 # define STRUCT_H
 
-struct Point
+typedef struct s_point
 {
 	int	x;
 	int	y;
-};
+}	t_point;
 
 enum color
 {
@@ -17,12 +17,12 @@ enum color
 	BLACK = 0x00000000
 };
 
-struct line_segment
+typedef struct s_line_segment
 {
-	struct Point	A;
-	struct Point	B;
+	t_point			A;
+	t_point			B;
 	enum color		color;
-};
+}	t_line_segment;
 
 typedef struct s_data
 {
@@ -38,6 +38,18 @@ typedef struct s_vars
 	void	*mlx;
 	void	*win;
 }	t_vars;
+
+enum texture_name
+{
+	FLAG,
+	RED_BRICK,
+	PURPLE_BRICK,
+	WHITE_BRICK,
+	BLUE_BRICK,
+	MOSS_BRICK,
+	WOOD,
+	COBBLE_STONE
+};
 
 typedef struct s_cub3D
 {
@@ -55,6 +67,16 @@ typedef struct s_cub3D
 	double				planeY;
 	double				moveSpeed;
 	double				rotSpeed;
+	t_data				*textures;
 }	t_cub3D;
+
+typedef struct s_args1
+{
+	t_point	A;
+	t_point	B;
+	char	*filePath;
+	t_vars	*vars;
+	t_point	cell_size;
+}	t_args1;
 
 #endif /* STRUCT_H */

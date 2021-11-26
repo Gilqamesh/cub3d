@@ -6,6 +6,65 @@ int	render_frame(void *param)
 	t_cub3D	*mystruct;
 
 	mystruct = (t_cub3D *)param;
+	// FLOOR CASTING
+	// for (int y = 0; y < SCREEN_H; ++y)
+	// {
+	// 	// rayDir for leftmost ray (x = 0) and rightmost ray (x = w)
+	// 	float	rayDirX0 = mystruct->dirX - mystruct->planeX;
+	// 	float	rayDirY0 = mystruct->dirY - mystruct->planeY;
+	// 	float	rayDirX1 = mystruct->dirX + mystruct->planeX;
+	// 	float	rayDirY1 = mystruct->dirY + mystruct->planeY;
+
+	// 	// Current y position compared to the center of the screen (the horizon)
+	// 	int p = y - SCREEN_H / 2;
+
+	// 	// Vertical position of the camera
+	// 	float	posZ = 0.5 * SCREEN_H;
+
+	// 	// Horizontal distance from the camera to the floor for the current row.
+	// 	// 0.5 is the z position exactly in the middle between floor and ceiling.
+	// 	float	rowDistance = posZ / p;
+
+	// 	// Calculate the real world step vector we have to add for each x (parallel to camera plane)
+	// 	// adding step by step avoids multiplications with a weight in the innter loop
+	// 	float	floorStepX = rowDistance * (rayDirX1 - rayDirX0) / SCREEN_W;
+	// 	float	floorStepY = rowDistance * (rayDirY1 - rayDirY0) / SCREEN_W;
+
+	// 	// Real world coordinates of the leftmost column. This will be updated as we step to the right.
+	// 	float	floorX = mystruct->posX + rowDistance * rayDirX0;
+	// 	float	floorY = mystruct->posY + rowDistance * rayDirY0;
+
+	// 	for (int x = 0; x < SCREEN_W; ++x)
+	// 	{
+	// 		// The cell coord is simply got from the integer parts of floorX and floorY
+	// 		int	cellX = (int)floorX;
+	// 		int	cellY = (int)floorY;
+
+	// 		// Get the texture coordinate from the fractional part
+	// 		int	tx = (int)(TEXTURE_W * (floorX - cellX)) & (TEXTURE_W - 1);
+	// 		int	ty = (int)(TEXTURE_H * (floorY - cellY)) & (TEXTURE_H - 1);
+
+	// 		floorX += floorStepX;
+	// 		floorY += floorStepY;
+
+	// 		// Choose texture and draw the pixel
+	// 		int	floorTexture = WHITE_BRICK;
+	// 		int	ceilingTexture = WOOD;
+
+	// 		unsigned int	color;
+	// 		// floor
+	// 		color = get_color(&mystruct->textures[floorTexture], tx, ty);
+	// 		color = (color >> 1) & 8355711;
+	// 		my_mlx_pixel_put(&mystruct->img, x, y, color);
+
+	// 		// Ceiling (symmetrical, at screenHeight - y - 1 instead of y)
+	// 		color = get_color(&mystruct->textures[ceilingTexture], tx, ty);
+	// 		color = (color >> 1) & 8355711;
+	// 		my_mlx_pixel_put(&mystruct->img, x, SCREEN_H - y - 1, color);
+	// 	}
+	// }
+
+	// WALL CASTING
 	for (int x = 0; x < SCREEN_W; ++x)
     {
 		// calculate ray position and direction
@@ -100,24 +159,64 @@ int	render_frame(void *param)
 		if (drawEnd >= SCREEN_H)
 			drawEnd = SCREEN_H - 1;
 
-		// choose wall color
-		enum color	color;
-		switch (mystruct->map[mapY][mapX])
-		{
-			case '1':  color = RED;  break;	// red
-			case '2':  color = GREEN;  break;	// green
-			case '3':  color = BLUE;   break;	// blue
-			case '4':  color = WHITE;  break;	// white
-			default: color = YELLOW; break;	// yellow
-		}
+		// UNTEXTURED
+		// // choose wall color
+		// enum color	color;
+		// switch (mystruct->map[mapY][mapX])
+		// {
+		// 	case '1':  color = RED;  break;	// red
+		// 	case '2':  color = GREEN;  break;	// green
+		// 	case '3':  color = BLUE;   break;	// blue
+		// 	case '4':  color = WHITE;  break;	// white
+		// 	default: color = YELLOW; break;	// yellow
+		// }
 
-		// give x and y sides different brightness
-		if (side == 1)
-			color = color / 2;
+		// // give x and y sides different brightness
+		// if (side == 1)
+		// 	color = color / 2;
+		// END UNTEXTURED
 
-		// draw the pixels of the stripe as a vertical line
+		// TEXTURED
+		// texturing calculations
+		int	textNum = mystruct->map[mapY][mapX] - '0' - 1; // 1 subtracted from it so that texture 0 can be used!
+
+		// calculate value of wallX
+		double	wallX; // where exactly the wall was hit
+		if (side == 0)
+			wallX = mystruct->posY + perpWallDist * rayDirY;
+		else
+			wallX = mystruct->posX + perpWallDist * rayDirX;
+		wallX -= floor(wallX);
+
+		// x coordinate on the texture
+		int	texX = (int)(wallX * (double)TEXTURE_W);
+		if (side == 0 && rayDirX > 0)
+			texX = TEXTURE_W - texX - 1;
+		if (side == 1 && rayDirY < 0)
+			texX = TEXTURE_W - texX - 1;
+
+		// How much to increase the texture coordinate per screen pixel
+		double	step = 1.0 * TEXTURE_H / lineHeight;
+		// Starting texture coordinate
+		double	texPos = (drawStart - SCREEN_H / 2 + lineHeight / 2) * step;
 		verLine(mystruct, x, 0, SCREEN_H - 1, BLACK);
-		verLine(mystruct, x, drawStart, drawEnd, color);
+		for (int y = drawStart; y < drawEnd; ++y)
+		{
+			// Cast the texture coordinate to integer, and mask with (texHeight - 1) in case of overflow
+			int	texY = (int)texPos & (TEXTURE_H - 1);
+			texPos += step;
+			unsigned int	color = get_color(&mystruct->textures[textNum], texX, texY);
+			// make color darker for y-sides: R, G and B byte each divided through two with a "shift" and an "and"
+			if (side == 1)
+				color = (color >> 1) & 8355711;
+			my_mlx_pixel_put(&mystruct->img, x, y, color);
+		}
+		// END TEXTURED
+
+		// UNTEXTURED
+		// draw the pixels of the stripe as a vertical line
+		// verLine(mystruct, x, 0, SCREEN_H - 1, BLACK);
+		// verLine(mystruct, x, drawStart, drawEnd, color);
 	}
 	// timing for input and FPS counter
 	double	frameTime = 1 / FPS;
@@ -191,5 +290,6 @@ int	key_hook(int key, void *param)
 		mystruct->planeX = mystruct->planeX * cos(mystruct->rotSpeed) - mystruct->planeY * sin(mystruct->rotSpeed);
 		mystruct->planeY = oldPlaneX * sin(mystruct->rotSpeed) + mystruct->planeY * cos(mystruct->rotSpeed);
 	}
+	// render_frame(mystruct);
 	return (0);
 }
