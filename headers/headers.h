@@ -9,6 +9,7 @@
 # include "mlx.h"
 # include "mylib.h"
 # include "destroy.h"
+# include "parsing.h"
 
 // Debug / not sure if can be used
 # include <stdio.h>

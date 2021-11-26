@@ -4,13 +4,16 @@ int	main(int argc, char **argv)
 {
 	(void)argv;
 	t_cub3D	mystruct;
+	t_input_parse 	*parse;
 
 	if (argc != 2)
 	{
 		ft_putendl_fd("Usage: ./cub3D <map_name.cub>", STDERR_FILENO);
 		exit(EXIT_FAILURE);
 	}
-	// parsing();
+	parse = malloc(sizeof(parse));
+	//ft_extension_checker(argc, argv);
+	//ft_input_parse(argv, parse);
 	init_struct(&mystruct);
 	int	worldMap[mapWidth][mapHeight] =
 	{
