@@ -1,11 +1,5 @@
-#include "hook.h"
-#include "struct.h"
-#include "definitions.h"
+#include "headers.h"
 #include <math.h>
-#include <unistd.h>
-#include "utils.h"
-#include "mlx.h"
-#include "mylib.h"
 
 int	render_frame(void *param)
 {

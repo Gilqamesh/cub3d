@@ -1,5 +1,4 @@
-#include "utils.h"
-#include "definitions.h"
+#include "headers.h"
 
 double	ft_fabs(double x)
 {

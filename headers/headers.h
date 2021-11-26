@@ -8,5 +8,9 @@
 # include "struct.h"
 # include "mlx.h"
 # include "mylib.h"
+# include "destroy.h"
+
+// Debug / not sure if can be used
+# include <stdio.h>
 
 #endif /* HEADERS_H */

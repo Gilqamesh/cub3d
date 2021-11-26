@@ -1,8 +1,4 @@
-#include "initialize.h"
-#include "definitions.h"
-#include "mlx.h"
-#include <stdlib.h>
-#include "utils.h"
+#include "headers.h"
 
 void	init_struct(t_cub3D *mystruct)
 {
@@ -20,4 +16,10 @@ void	init_struct(t_cub3D *mystruct)
 	mystruct->dirY = 0;
 	mystruct->planeX = 0;
 	mystruct->planeY = 0.66;
+}
+
+void	install_hooks(t_cub3D *mystruct)
+{
+	mlx_loop_hook(mystruct->vars.mlx, render_frame, mystruct);
+	mlx_key_hook(mystruct->vars.win, key_hook, mystruct);
 }
