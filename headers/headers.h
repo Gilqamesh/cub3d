@@ -10,6 +10,7 @@
 # include "destroy.h"
 # include "ft_mylib.h"
 # include <unistd.h>
+# include "parsing.h"
 
 // Debug / not sure if can be used
 # include <stdio.h>

@@ -79,4 +79,23 @@ typedef struct s_args1
 	t_point	cell_size;
 }	t_args1;
 
+typedef struct s_input_parse
+{
+	char	*NO;
+	char	*SO;
+	char	*WE;
+	char	*EA;
+
+	int		F;
+	int		C;
+
+	char	*one_dim_map;
+	char	*two_dim_map;
+
+	int		fd;
+	int		full;
+	char	*temp;
+	char	*one_dim;
+}	t_input_parse;
+
 #endif /* STRUCT_H */
