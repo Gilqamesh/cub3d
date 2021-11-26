@@ -77,9 +77,17 @@ int	render_frame(void *param)
 		}
 		// Calculate distance projected on camera direction (Euclidean distance would give fisheye effect!)
 		if (side == 0)
+		{
 			perpWallDist = (sideDistX - deltaDistX);
+			// // Fisheye
+			// perpWallDist = sideDistX;
+		}
 		else
+		{
 			perpWallDist = (sideDistY - deltaDistY);
+			// // Fisheye
+			// perpWallDist = sideDistY;
+		}
 
 		// Calculate height of line to draw on screen
 		int lineHeight = (int)(SCREEN_H / perpWallDist);
