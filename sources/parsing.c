@@ -123,14 +123,14 @@ void	ft_input_parse(char **argv, t_input_parse *parse)
 	ft_single_free(&parse->temp);
 	ft_single_free(&line);
 	close (parse->fd);
-	//printf("NO: %s\n", parse->NO);
-	//printf("SO: %s\n", parse->SO);
-	//printf("WE: %s\n", parse->WE);
-	//printf("EA: %s\n\n", parse->EA);
-	//printf("F: %d\n", parse->F);
-	//printf("C: %d\n\n", parse->C);
-	//printf("Full: %d\n", parse->full);
-	//printf("one_dim: %s\n", parse->one_dim);
+	printf("NO: %s\n", parse->NO);
+	printf("SO: %s\n", parse->SO);
+	printf("WE: %s\n", parse->WE);
+	printf("EA: %s\n\n", parse->EA);
+	printf("F: %d\n", parse->F);
+	printf("C: %d\n\n", parse->C);
+	printf("Full: %d\n", parse->full);
+	printf("one_dim: %s\n", parse->one_dim);
 }
 
 int	ft_extension_checker(int argc, char **argv)
