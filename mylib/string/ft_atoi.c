@@ -1,0 +1,52 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/06/18 19:30:27 by edavid            #+#    #+#             */
+/*   Updated: 2021/06/18 19:30:27 by edavid           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "ft_libftstring.h"
+#include <limits.h>
+#include "ft_libftctype.h"
+
+static int	ft_isspace(const char c)
+{
+	if (c == '\f' || c == '\n' || c == '\r' || c == '\t'
+		|| c == '\v' || c == ' ')
+		return (1);
+	return (0);
+}
+
+int	ft_atoi(const char *nptr)
+{
+	int			is_negative;
+	int			result;
+
+	if (ft_isspace(*nptr))
+		return (ft_atoi(nptr + 1));
+	is_negative = 0;
+	if (*nptr == '+' || *nptr == '-')
+		if (*nptr++ == '-')
+			is_negative = 1;
+	result = 0;
+	while (*nptr && ft_isdigit(*nptr))
+	{
+		if (result >= INT_MAX / 10 || (result == INT_MAX / 10 && *nptr > '7'))
+		{
+			if (is_negative)
+				result = INT_MIN;
+			else
+				result = INT_MAX;
+			return (result);
+		}
+		result = result * 10 + (*nptr++ - '0');
+	}
+	if (is_negative)
+		return (-result);
+	return (result);
+}

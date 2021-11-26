@@ -6,17 +6,21 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/19 15:10:42 by edavid            #+#    #+#             */
-/*   Updated: 2021/08/10 16:15:22 by edavid           ###   ########.fr       */
+/*   Updated: 2021/11/26 20:21:14 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "ft_libftgnl.h"
 #include <unistd.h>
 #include <limits.h>
+#include "ft_libftstring.h"
+#include "ft_libftmemory.h"
 #ifndef OPEN_MAX
 # define OPEN_MAX 3000
 #endif
-#define BUFFER_SIZE 42
+#ifndef BUFFER_SIZE
+# define BUFFER_SIZE 100
+#endif
 
 static int	reset_ret(char **line, int ret, char **buf_p)
 {
@@ -63,7 +67,7 @@ int	get_next_line(int fd, char **line)
 	int				buf_len;
 	static char		*buffers[OPEN_MAX] = {0};
 
-	if (fd < 0 || BUFFER_SIZE <= 0 || !line)
+	if (fd < 0 || BUFFER_SIZE <= 0 || line == NULL || fd >= OPEN_MAX)
 		return (-1);
 	if (!buffers[fd])
 	{
