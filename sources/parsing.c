@@ -140,13 +140,17 @@ int	ft_extension_checker(int argc, char **argv)
 		ft_error_message("Wrong input\n");
 		return (1);
 	}
-	else if (argv[1][ft_strlen(argv[1]) - 4] != '.'
-		&& argv[1][ft_strlen(argv[1]) - 3] != 'c'
-		&& argv[1][ft_strlen(argv[1]) - 2] != 'u'
-		&& argv[1][ft_strlen(argv[1]) - 1] != 'b')
+	else if (!(argv[1][ft_strlen(argv[1]) - 4] == '.'
+		&& argv[1][ft_strlen(argv[1]) - 3] == 'c'
+		&& argv[1][ft_strlen(argv[1]) - 2] == 'u'
+		&& argv[1][ft_strlen(argv[1]) - 1] == 'b')) //why not segfault with 1.cu
 	{
 		ft_error_message("Wrong input\n");
 		return (1);
 	}
+	printf("char: %c\n", argv[1][ft_strlen(argv[1]) - 4]);
+	printf("char: %c\n", argv[1][ft_strlen(argv[1]) - 3]);
+	printf("char: %c\n", argv[1][ft_strlen(argv[1]) - 2]);
+	printf("char: %c\n", argv[1][ft_strlen(argv[1]) - 1]);
 	return (0);
 }
