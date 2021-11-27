@@ -92,6 +92,9 @@ typedef struct s_input_parse
 	char	*one_dim_map;
 	char	*two_dim_map;
 
+	int		map_width;
+	int		map_height;
+
 	int		fd;
 	int		full;
 	char	*line;
