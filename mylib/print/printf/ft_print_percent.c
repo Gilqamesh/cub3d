@@ -6,7 +6,7 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/02 15:24:53 by edavid            #+#    #+#             */
-/*   Updated: 2021/11/26 19:47:18 by edavid           ###   ########.fr       */
+/*   Updated: 2021/11/27 19:28:13 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,13 @@ static void	set_vars(t_printf *mystruct, t_pad_vars *vars)
 	if (mystruct->flags.zero_padding)
 	{
 		vars->zero_padding = ft_maxofint(mystruct->flags.min_field_width
-			- vars->n_len, 0);
+				- vars->n_len, 0);
 		vars->space_padding = 0;
 	}
 	else
 	{
 		vars->space_padding = ft_maxofint(mystruct->flags.min_field_width
-			- vars->n_len, 0);
+				- vars->n_len, 0);
 		vars->zero_padding = 0;
 	}
 }

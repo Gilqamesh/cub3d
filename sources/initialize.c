@@ -29,5 +29,6 @@ void	install_hooks(t_cub3D *mystruct)
 	mlx_do_key_autorepeatoff(mystruct->vars.mlx);
 	mlx_hook(mystruct->vars.win, 2, 1, key_press, mystruct);
 	mlx_hook(mystruct->vars.win, 3, 1 << 1, key_release, mystruct);
+	mlx_hook(mystruct->vars.win, 17, 1 << 17, exit_program, mystruct);
 	mlx_loop_hook(mystruct->vars.mlx, render_frame, mystruct);
 }

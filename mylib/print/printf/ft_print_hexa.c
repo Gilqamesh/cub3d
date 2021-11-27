@@ -6,7 +6,7 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/02 14:03:01 by edavid            #+#    #+#             */
-/*   Updated: 2021/11/26 19:50:18 by edavid           ###   ########.fr       */
+/*   Updated: 2021/11/27 19:28:06 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,9 @@ t_printf_vars x)
 		vars->n_len = 0;
 	}
 	vars->zero_padding = ft_maxofint(mystruct->flags.precision
-		- vars->n_len, 0);
+			- vars->n_len, 0);
 	vars->space_padding = ft_maxofint(mystruct->flags.min_field_width
-		- ft_strlen(*alt_form) - vars->zero_padding - vars->n_len, 0);
+			- ft_strlen(*alt_form) - vars->zero_padding - vars->n_len, 0);
 	if (mystruct->flags.zero_padding)
 	{
 		vars->zero_padding = ft_maxofint(vars->zero_padding,

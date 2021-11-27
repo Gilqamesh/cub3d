@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_nodbinstrjoin_from_back.c                       :+:      :+:    :+:   */
+/*   ft_dliststrjoin_from_back.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -30,7 +30,7 @@ static void	concatenateResult(char *result, t_dlist *cur)
 
 // Allocates and returns a string that is the concatenation of going through
 // the list's str contents
-char	*ft_nodbinstrjoin_from_back(t_dlist *list)
+char	*ft_dliststrjoin_from_back(t_dlist *list)
 {
 	int				len;
 	t_dlist			*cur;

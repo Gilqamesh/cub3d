@@ -1,14 +1,14 @@
 #ifndef FT_LIBFTOBJLIST_H
 # define FT_LIBFTOBJLIST_H
 
+# include <stdlib.h>
+
 typedef struct s_obj_lst
 {
-	char	*key;
-	char	*value;
+	char				*key;
+	char				*value;
 	struct s_obj_lst	*next;
 }	t_obj_lst;
-
-# include <stdlib.h>
 
 // Frees the list using the function 'del' and free.
 // Finally, the pointer to the list is set to NULL.

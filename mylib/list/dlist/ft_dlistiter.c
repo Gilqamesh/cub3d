@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_nodbiniter.c                                    :+:      :+:    :+:   */
+/*   ft_dlistiter.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,7 +12,7 @@
 
 #include "ft_libftdlist.h"
 
-void	ft_nodbiniter(t_dlist *lst, void (*f)(void *))
+void	ft_dlistiter(t_dlist *lst, void (*f)(void *))
 {
 	while (lst)
 	{

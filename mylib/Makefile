@@ -6,7 +6,7 @@
 #    By: edavid <edavid@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/15 10:05:25 by edavid            #+#    #+#              #
-#    Updated: 2021/11/27 11:09:41 by edavid           ###   ########.fr        #
+#    Updated: 2021/11/26 20:20:40 by edavid           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,7 +45,7 @@ SLIST_SRC = ft_lstadd_back.c ft_lstadd_front.c ft_lstclear.c ft_lstdel.c ft_lstd
 SLIST_H = $(HDIR)/ft_libftslist.h
 MATH_DIR = math
 MATH_SRC = 	ft_abs_int.c ft_baselen.c ft_intlen.c ft_maxofint.c ft_minofint.c ft_fabs.c \
-			ft_round_to_nearest_int.c
+		ft_round_to_nearest_int.c
 MATH_H = $(HDIR)/ft_libftmath.h
 MEMORY_DIR = memory
 MEMORY_SRC = 	ft_bzero.c ft_calloc.c ft_intdup.c ft_memccpy.c ft_memchr.c ft_memcmp.c \
@@ -97,7 +97,7 @@ SRC =	$(CTYPE_PATH) $(EXTRA_PATH) $(GNL_PATH) $(DLIST_PATH) $(FILELIST_PATH) $(O
 		$(SLIST_PATH) $(MATH_PATH) $(MEMORY_PATH) $(PRINT_PATH) $(PRINTF_PATH) $(PUT_PATH) \
 		$(SORT_PATH) $(STRING_PATH) $(VALIDIFIERS_PATH)
 INCLUDES = ../../$(HDIR)
-NAME = libmylib.a
+NAME = libft.a
 
 $(NAME): $(foreach file,$(SRC:.c=.o),$(ODIR)/$(file))
 	ar -rs $(NAME) $?

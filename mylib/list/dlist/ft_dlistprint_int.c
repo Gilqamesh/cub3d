@@ -6,14 +6,14 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/26 11:32:11 by edavid            #+#    #+#             */
-/*   Updated: 2021/11/26 20:10:51 by edavid           ###   ########.fr       */
+/*   Updated: 2021/11/27 19:23:54 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_libftdlist.h"
 #include "ft_libftprint.h"
 
-void	ft_nodbinprint_int(t_dlist *lst, int n)
+void	ft_dlistprint_int(t_dlist *lst, int n)
 {
 	if (!lst)
 	{

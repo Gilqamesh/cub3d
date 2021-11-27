@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_nodbinnew.c                                     :+:      :+:    :+:   */
+/*   ft_dlistnew.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,7 +12,7 @@
 
 #include "ft_libftdlist.h"
 
-t_dlist	*ft_nodbinnew(void *content)
+t_dlist	*ft_dlistnew(void *content)
 {
 	t_dlist	*new_el;
 

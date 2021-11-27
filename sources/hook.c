@@ -2,10 +2,15 @@
 
 int	render_frame(void *param)
 {
-	t_cub3D	*mystruct;
-	static int	counter = 0;
+	static t_cub3D	*mystruct = NULL;
+	static bool		first_time = true;
+	static int		counter = 0;
 
-	mystruct = (t_cub3D *)param;
+	if (first_time == true)
+	{
+		first_time = false;
+		mystruct = (t_cub3D *)param;
+	}
 	// floor_casting(mystruct);
 	wall_casting(mystruct);
 	double	frameTime = 1.0 / FPS;
@@ -34,9 +39,14 @@ int	render_frame(void *param)
 
 int	key_press(int key, void *param)
 {
-	t_cub3D	*mystruct;
+	static t_cub3D	*mystruct = NULL;
+	static bool		first_time = true;
 
-	mystruct = (t_cub3D *)param;
+	if (first_time == true)
+	{
+		first_time = false;
+		mystruct = (t_cub3D *)param;
+	}
 	if (key == KEY_W)
 		mystruct->is_w_held = true;
 	else if (key == KEY_S)
@@ -49,14 +59,21 @@ int	key_press(int key, void *param)
 		mystruct->is_right_held = true;
 	else if (key == KEY_LEFT)
 		mystruct->is_left_held = true;
+	else if (key == KEY_ESC)
+		exit_program(mystruct);
 	return (0);
 }
 
 int	key_release(int key, void *param)
 {
-	t_cub3D	*mystruct;
+	static t_cub3D	*mystruct = NULL;
+	static bool		first_time = true;
 
-	mystruct = (t_cub3D *)param;
+	if (first_time == true)
+	{
+		first_time = false;
+		mystruct = (t_cub3D *)param;
+	}
 	if (key == KEY_W)
 		mystruct->is_w_held = false;
 	else if (key == KEY_S)
@@ -70,4 +87,13 @@ int	key_release(int key, void *param)
 	else if (key == KEY_LEFT)
 		mystruct->is_left_held = false;
 	return (0);
+}
+
+int	exit_program(void *param)
+{
+	t_cub3D	*mystruct;
+
+	mystruct = (t_cub3D *)param;
+	// free resources associated with mystruct
+	exit(EXIT_SUCCESS);
 }

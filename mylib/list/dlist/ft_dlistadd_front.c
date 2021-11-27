@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_nodbinadd_front.c                               :+:      :+:    :+:   */
+/*   ft_dlistadd_front.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,7 +12,7 @@
 
 #include "ft_libftdlist.h"
 
-void	ft_nodbinadd_front(t_dlist **lst, t_dlist *new)
+void	ft_dlistadd_front(t_dlist **lst, t_dlist *new)
 {
 	if (lst == NULL || new == NULL)
 		return ;

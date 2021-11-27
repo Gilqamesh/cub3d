@@ -29,7 +29,7 @@ static int	strArrLen(char **strArr)
 
 // Allocates and returns a NULL terminated string array that is the
 // concatenation of going through the list's NULL terminated str array contents
-char	**ft_nodbinstrarrjoin_from_back(t_dlist *list)
+char	**ft_dliststrarrjoin_from_back(t_dlist *list)
 {
 	int				len;
 	t_dlist			*cur;

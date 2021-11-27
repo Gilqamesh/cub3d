@@ -1,15 +1,15 @@
 #ifndef FT_LIBFTSLIST_H
 # define FT_LIBFTSLIST_H
 
+# include <stdlib.h>
+# include <stdbool.h>
+
 // Singly-linked list
 typedef struct s_list
 {
 	void			*content;
 	struct s_list	*next;
 }	t_list;
-
-# include <stdlib.h>
-# include <stdbool.h>
 
 // Adds the element 'new' at the end of the list.
 void	ft_lstadd_back(t_list **lst, t_list *new);

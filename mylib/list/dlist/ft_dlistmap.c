@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_nodbinmap.c                                     :+:      :+:    :+:   */
+/*   ft_dlistmap.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,7 +12,7 @@
 
 #include "ft_libftdlist.h"
 
-t_dlist	*ft_nodbinmap(t_dlist *lst, void *(*f)(void *), void (*del)(void *))
+t_dlist	*ft_dlistmap(t_dlist *lst, void *(*f)(void *), void (*del)(void *))
 {
 	t_dlist	*new_lst;
 	t_dlist	*head;
@@ -22,9 +22,9 @@ t_dlist	*ft_nodbinmap(t_dlist *lst, void *(*f)(void *), void (*del)(void *))
 	new_lst = head;
 	while (lst)
 	{
-		tmp = ft_nodbinnew((*f)(lst->content));
+		tmp = ft_dlistnew((*f)(lst->content));
 		if (!tmp)
-			ft_nodbinclear(&new_lst, del, -1);
+			ft_dlistclear(&new_lst, del, -1);
 		if (!head)
 		{
 			head = tmp;

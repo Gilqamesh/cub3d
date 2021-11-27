@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_nodbinclear.c                                   :+:      :+:    :+:   */
+/*   ft_dlistclear.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,7 +12,7 @@
 
 #include "ft_libftdlist.h"
 
-void	ft_nodbinclear(t_dlist **lst, void (*del)(void *), int n)
+void	ft_dlistclear(t_dlist **lst, void (*del)(void *), int n)
 {
 	t_dlist	*tmp;
 	t_dlist	**original;
@@ -23,7 +23,7 @@ void	ft_nodbinclear(t_dlist **lst, void (*del)(void *), int n)
 	while (*lst && n)
 	{
 		tmp = (*lst)->next;
-		ft_nodbindelone(*lst, del);
+		ft_dlistdelone(*lst, del);
 		*lst = (t_dlist *)0;
 		*lst = tmp;
 		if (n > 0 && !--n)

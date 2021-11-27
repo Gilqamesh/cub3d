@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_nodbinstr_to_strarr.c                           :+:      :+:    :+:   */
+/*   ft_dliststr_to_strarr.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -27,7 +27,7 @@ static void	concatenateResult(char **result, t_dlist *cur)
 
 // Allocates and returns a NULL terminated string array that is the
 // concatenation of going through the list's str contents
-char	**ft_nodbinstr_to_strarr(t_dlist *list)
+char	**ft_dliststr_to_strarr(t_dlist *list)
 {
 	int				len;
 	t_dlist			*cur;

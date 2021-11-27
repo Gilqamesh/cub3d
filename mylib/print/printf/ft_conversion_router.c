@@ -6,13 +6,14 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 19:24:57 by edavid            #+#    #+#             */
-/*   Updated: 2021/11/26 19:47:07 by edavid           ###   ########.fr       */
+/*   Updated: 2021/11/27 19:27:53 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_libftprint.h"
 
-void	ft_conversion_router(char conversion, t_printf *mystruct, va_list ap, int fd)
+void	ft_conversion_router(char conversion, t_printf *mystruct, va_list ap,
+int fd)
 {
 	if (conversion == 'c')
 		print_character(mystruct, (unsigned char)va_arg(ap, int), fd);

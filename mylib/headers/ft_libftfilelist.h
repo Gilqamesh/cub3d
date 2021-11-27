@@ -1,6 +1,8 @@
 #ifndef FT_LIBFTFILELIST_H
 # define FT_LIBFTFILELIST_H
 
+# include <stdlib.h>
+
 enum e_redirection_mode
 {
 	REDIR_VOID,
@@ -17,8 +19,6 @@ typedef struct s_filelist
 	enum e_redirection_mode	mode;
 	struct s_filelist		*next;
 }	t_filelist;
-
-# include <stdlib.h>
 
 // Adds the element 'new' at the end of the list.
 void		ft_filelistadd_back(t_filelist **lst, t_filelist *new);

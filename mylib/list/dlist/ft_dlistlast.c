@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_nodbinlast.c                                    :+:      :+:    :+:   */
+/*   ft_dlistlast.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,7 +12,7 @@
 
 #include "ft_libftdlist.h"
 
-t_dlist	*ft_nodbinlast(t_dlist *lst)
+t_dlist	*ft_dlistlast(t_dlist *lst)
 {
 	t_dlist	*prev;
 

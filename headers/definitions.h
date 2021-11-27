@@ -16,6 +16,7 @@
 # define KEY_A		0
 # define KEY_D		2
 # define KEY_S		1
+# define KEY_ESC	53
 # define PI			3.1415
 # define FPS		30.0
 # define TEXTURE_W  64

@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_nodbinsortedinsert_int.c                        :+:      :+:    :+:   */
+/*   ft_dlistsortedinsert_int.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,7 +12,7 @@
 
 #include "ft_libftdlist.h"
 
-void	ft_nodbinsortedinsert_int(t_dlist **lst, t_dlist *new)
+void	ft_dlistsortedinsert_int(t_dlist **lst, t_dlist *new)
 {
 	t_dlist	**tail;
 

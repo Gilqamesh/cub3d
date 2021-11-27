@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_nodbindelone.c                                  :+:      :+:    :+:   */
+/*   ft_dlistdelone.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,7 +12,7 @@
 
 #include "ft_libftdlist.h"
 
-void	ft_nodbindelone(t_dlist *lst, void (*del)(void *))
+void	ft_dlistdelone(t_dlist *lst, void (*del)(void *))
 {
 	if (lst == NULL || del == NULL)
 		return ;

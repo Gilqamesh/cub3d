@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_nodbinadd_back.c                                :+:      :+:    :+:   */
+/*   ft_dlistadd_back.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,7 +12,7 @@
 
 #include "ft_libftdlist.h"
 
-void	ft_nodbinadd_back(t_dlist **lst, t_dlist *new)
+void	ft_dlistadd_back(t_dlist **lst, t_dlist *new)
 {
 	t_dlist	*cur;
 

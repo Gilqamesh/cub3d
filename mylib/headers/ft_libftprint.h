@@ -50,10 +50,11 @@ int		ft_printf(const char *format, ...);
 int		ft_dprintf(int fd, const char *format, ...);
 int		ft_vdprintf(int fd, const char *format, va_list ap);
 void	ft_set_flags(char *format, t_printf *mystruct);
-void	ft_conversion_router(char conversion, t_printf *mystruct, va_list ap, int fd);
+void	ft_conversion_router(char conversion, t_printf *mystruct, va_list ap,
+			int fd);
 void	print_character(t_printf *mystruct, unsigned char c, int fd);
 void	print_string(t_printf *mystruct, char *str, int fd);
-void 	print_pointer(t_printf *mystruct, unsigned long addr, int fd);
+void	print_pointer(t_printf *mystruct, unsigned long addr, int fd);
 void	print_integer(t_printf *mystruct, int n, int fd);
 void	print_unsigned(t_printf *mystruct, unsigned int n, int fd);
 void	print_hexa(t_printf *mystruct, unsigned int n, char conversion, int fd);

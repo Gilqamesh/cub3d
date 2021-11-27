@@ -12,7 +12,6 @@
 
 #include "ft_libftprint.h"
 
-
 void	print_string(t_printf *mystruct, char *str, int fd)
 {
 	int	space_padding;
