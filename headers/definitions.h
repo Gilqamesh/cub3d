@@ -20,6 +20,7 @@
 # define FPS		30.0
 # define TEXTURE_W  64
 # define TEXTURE_H  64
+# define EPSILON	0.0000001
 
 // debugging
 # include <stdio.h>

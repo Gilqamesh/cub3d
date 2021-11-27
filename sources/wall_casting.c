@@ -6,10 +6,52 @@ void	wall_casting(t_cub3D *mystruct)
 
 	for (int x = 0; x < SCREEN_W; ++x)
     {
-		initialize_ray(mystruct, x, &p);
+		initialize_wall_ray(mystruct, x, &p);
 		perform_dda(mystruct, &p);
 		calculate_distance(&p);
 		draw_wall(mystruct, x, &p);
+	}
+}
+
+// initialize x-coordinate in camera space (cameraX)
+// calculate ray position and direction (rayDir vector)
+// initialize which box of the map we're in (mapX, mapY)
+// initialize length of ray from one x or y-side to next x or y-side (deltaDist vector)
+// calculate step and initialize sideDist
+void	initialize_wall_ray(t_cub3D *mystruct, int current_column, t_wall_cast_params *p)
+{
+	p->cameraX = 2.0 * current_column / SCREEN_W - 1;
+	p->rayDirX = mystruct->dirX + mystruct->planeX * p->cameraX;
+	p->rayDirY = mystruct->dirY + mystruct->planeY * p->cameraX;
+	p->mapX = (int)mystruct->posX;
+	p->mapY = (int)mystruct->posY;
+	if (ft_fabs(p->rayDirX) < EPSILON)
+		p->deltaDistX = INFINITY;
+	else
+		p->deltaDistX = ft_fabs(1.0 / p->rayDirX);
+	if (ft_fabs(p->rayDirY) < EPSILON)
+		p->deltaDistY = INFINITY;
+	else
+		p->deltaDistY = ft_fabs(1.0 / p->rayDirY);
+	if (p->rayDirX < 0)
+	{
+		p->stepX = -1;
+		p->sideDistX = (mystruct->posX - p->mapX) * p->deltaDistX;
+	}
+	else
+	{
+		p->stepX = 1;
+		p->sideDistX = (p->mapX + 1.0 - mystruct->posX) * p->deltaDistX;
+	}
+	if (p->rayDirY < 0)
+	{
+		p->stepY = -1;
+		p->sideDistY = (mystruct->posY - p->mapY) * p->deltaDistY;
+	}
+	else
+	{
+		p->stepY = 1;
+		p->sideDistY = (p->mapY + 1.0 - mystruct->posY) * p->deltaDistY;
 	}
 }
 
@@ -39,68 +81,26 @@ void	perform_dda(t_cub3D *mystruct, t_wall_cast_params *p)
 	}
 }
 
-// initialize x-coordinate in camera space (cameraX)
-// calculate ray position and direction (rayDir vector)
-// initialize which box of the map we're in (mapX, mapY)
-// initialize length of ray from one x or y-side to next x or y-side (deltaDist vector)
-// calculate step and initialize sideDist
-void	initialize_ray(t_cub3D *mystruct, int current_column, t_wall_cast_params *p)
-{
-	p->cameraX = 2 * current_column / (double)SCREEN_W - 1;
-	p->rayDirX = mystruct->dirX + mystruct->planeX * p->cameraX;
-	p->rayDirY = mystruct->dirY + mystruct->planeY * p->cameraX;
-	p->mapX = (int)mystruct->posX;
-	p->mapY = (int)mystruct->posY;
-	if (p->rayDirX == 0)
-		p->deltaDistX = INFINITY;
-	else
-		p->deltaDistX = fabs(1 / p->rayDirX);
-	if (p->rayDirY == 0)
-		p->deltaDistY = INFINITY;
-	else
-		p->deltaDistY = fabs(1 / p->rayDirY);
-	if (p->rayDirX < 0)
-	{
-		p->stepX = -1;
-		p->sideDistX = (mystruct->posX - p->mapX) * p->deltaDistX;
-	}
-	else
-	{
-		p->stepX = 1;
-		p->sideDistX = (p->mapX + 1.0 - mystruct->posX) * p->deltaDistX;
-	}
-	if (p->rayDirY < 0)
-	{
-		p->stepY = -1;
-		p->sideDistY = (mystruct->posY - p->mapY) * p->deltaDistY;
-	}
-	else
-	{
-		p->stepY = 1;
-		p->sideDistY = (p->mapY + 1.0 - mystruct->posY) * p->deltaDistY;
-	}
-}
-
 // Calculate distance projected on camera direction (Euclidean distance would give fisheye effect!)
 // Calculate height of line to draw on screen
 // calculate lowest and highest pixel to fill in current stripe
 void	calculate_distance(t_wall_cast_params *p)
 {
 	if (p->side == 0)
-		p->perpWallDist = (p->sideDistX - p->deltaDistX);
+		p->perpWallDist = p->sideDistX - p->deltaDistX;
 	else
-		p->perpWallDist = (p->sideDistY - p->deltaDistY);
+		p->perpWallDist = p->sideDistY - p->deltaDistY;
 	p->lineHeight = (int)(SCREEN_H / p->perpWallDist);
-	p->drawStart = -p->lineHeight / 2 + SCREEN_H / 2;
+	p->drawStart = -p->lineHeight / 2.0 + SCREEN_H / 2.0;
 	if (p->drawStart < 0)
 		p->drawStart = 0;
-	p->drawEnd = p->lineHeight / 2 + SCREEN_H / 2;
+	p->drawEnd = p->lineHeight / 2.0 + SCREEN_H / 2.0;
 	if (p->drawEnd >= SCREEN_H)
 		p->drawEnd = SCREEN_H - 1;
 }
 
 // Calculate where the wall was hit (wallX)
-// X coordinate of the texture (texX)
+// X coordinate of the texture (texX)j
 // How much to increase the texture coordinate per screen pixel (step)
 // Starting texture coordinate (texPos)
 // Each iteration:
@@ -121,7 +121,7 @@ void	draw_wall(t_cub3D *mystruct, int current_column, t_wall_cast_params *p)
 	w.texX = (int)(w.wallX * (double)TEXTURE_W);
 	if (p->side == 0 && p->rayDirX > 0)
 		w.texX = TEXTURE_W - w.texX - 1;
-	if (p->side == 1 && p->rayDirY < 0)
+	else if (p->side == 1 && p->rayDirY < 0)
 		w.texX = TEXTURE_W - w.texX - 1;
 	w.step = 1.0 * TEXTURE_H / p->lineHeight;
 	w.texPos = (p->drawStart - SCREEN_H / 2 + p->lineHeight / 2) * w.step;

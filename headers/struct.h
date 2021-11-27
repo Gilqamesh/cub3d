@@ -51,6 +51,11 @@ enum texture_name
 	COBBLE_STONE
 };
 
+# define FLOOR_TEXTURE WHITE_BRICK
+# define CEILING_TEXTURE WOOD
+
+# include <stdbool.h>
+
 typedef struct s_cub3D
 {
 	char				**map;
@@ -61,6 +66,7 @@ typedef struct s_cub3D
 	t_vars				vars;
 	double				posX; // x and y start position
 	double				posY;
+	double				posZ;
 	double				dirX; // initial direction vector
 	double				dirY;
 	double				planeX; // the 2d raycaster version of camera plane
@@ -68,6 +74,12 @@ typedef struct s_cub3D
 	double				moveSpeed;
 	double				rotSpeed;
 	t_data				*textures;
+	bool				is_w_held;
+	bool				is_a_held;
+	bool				is_s_held;
+	bool				is_d_held;
+	bool				is_left_held;
+	bool				is_right_held;
 }	t_cub3D;
 
 typedef struct s_args1

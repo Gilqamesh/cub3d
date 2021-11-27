@@ -10,8 +10,9 @@ void	init_struct(t_cub3D *mystruct)
 	mystruct->img.img = mlx_new_image(mystruct->vars.mlx, SCREEN_W, SCREEN_H);
 	mystruct->img.addr = mlx_get_data_addr(mystruct->img.img, &mystruct->img.bits_per_pixel,
 		&mystruct->img.line_length, &mystruct->img.endian);
-	mystruct->posX = 1.0;
-	mystruct->posY = 1.0;
+	mystruct->posX = 1.5;
+	mystruct->posY = 1.5;
+	mystruct->posZ = 0.5 * SCREEN_H;
 	mystruct->dirX = -1;
 	mystruct->dirY = 0;
 	mystruct->planeX = 0;
@@ -25,6 +26,8 @@ void	init_struct(t_cub3D *mystruct)
 
 void	install_hooks(t_cub3D *mystruct)
 {
+	mlx_do_key_autorepeatoff(mystruct->vars.mlx);
+	mlx_hook(mystruct->vars.win, 2, 1, key_press, mystruct);
+	mlx_hook(mystruct->vars.win, 3, 1 << 1, key_release, mystruct);
 	mlx_loop_hook(mystruct->vars.mlx, render_frame, mystruct);
-	mlx_key_hook(mystruct->vars.win, key_hook, mystruct);
 }
