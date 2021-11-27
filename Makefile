@@ -4,7 +4,7 @@ CFLAGS = -Wall -Wextra -Werror -O3
 PATH_MLX = mlx
 LIBS = -Lminilibx -lmlx -lm -lz -framework OpenGL -framework AppKit -Lmylib -lmylib
 SRC = 	main.c initialize.c utils.c hook.c destroy.c parsing.c wall_casting.c \
-		floor_casting.c image_manipulation.c update.c
+		floor_casting.c image_manipulation.c update.c draw.c
 HDIR = headers
 ODIR = objects
 SDIR = sources

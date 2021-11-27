@@ -10,6 +10,7 @@ int	main(int argc, char **argv)
 		ft_putendl_fd("Usage: ./cub3D <map_name.cub>", STDERR_FILENO);
 		exit(EXIT_FAILURE);
 	}
+	ft_bzero(&mystruct, sizeof(mystruct));
 	ft_extension_checker(argc, argv);
 	ft_input_parse(argv, &parse);
 	init_struct(&mystruct);

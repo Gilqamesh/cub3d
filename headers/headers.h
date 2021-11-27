@@ -16,6 +16,7 @@
 # include "floor_casting.h"
 # include "image_manipulation.h"
 # include "update.h"
+# include "draw.h"
 
 // Debug / not sure if can be used
 # include <stdio.h>

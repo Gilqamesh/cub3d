@@ -64,12 +64,12 @@ typedef struct s_cub3D
 	struct line_segment	*walls;
 	t_data				img;
 	t_vars				vars;
-	double				posX; // x and y start position
+	double				posX;
 	double				posY;
 	double				posZ;
-	double				dirX; // initial direction vector
+	double				dirX;
 	double				dirY;
-	double				planeX; // the 2d raycaster version of camera plane
+	double				planeX;
 	double				planeY;
 	double				moveSpeed;
 	double				rotSpeed;

@@ -12,7 +12,7 @@ void	my_mlx_pixel_put(t_data *data, double x, double y, unsigned int color)
 	*(unsigned int *)dst = color;
 }
 
-// Draws a vertical line
+// Draws a line
 void	verLine(t_cub3D *mystruct, int x, int y_start, int y_end, int color)
 {
 	for (int i = y_start; i <= y_end; ++i)

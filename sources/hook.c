@@ -13,12 +13,10 @@ int	render_frame(void *param)
 	}
 	// floor_casting(mystruct);
 	wall_casting(mystruct);
-	double	frameTime = 1.0 / FPS;
-	mystruct->moveSpeed = frameTime * 5.0;
-	mystruct->rotSpeed = frameTime * 4.0;
+	draw_crosshair(mystruct);
 	mlx_do_sync(mystruct->vars.mlx);
 	mlx_put_image_to_window(mystruct->vars.mlx, mystruct->vars.win, mystruct->img.img, 0, 0);
-	if (++counter == 3)
+	if (++counter == 2)
 	{
 		counter = 0;
 		if (mystruct->is_w_held)
@@ -34,8 +32,16 @@ int	render_frame(void *param)
 		if (mystruct->is_right_held)
 			update_position(mystruct, KEY_RIGHT);
 	}
+	update_mouse(mystruct);
 	return (0);
 }
+
+// double oldDirX = mystruct->dirX;
+// mystruct->dirX = mystruct->dirX * cos(-mystruct->rotSpeed) - mystruct->dirY * sin(-mystruct->rotSpeed);
+// mystruct->dirY = oldDirX * sin(-mystruct->rotSpeed) + mystruct->dirY * cos(-mystruct->rotSpeed);
+// double oldPlaneX = mystruct->planeX;
+// mystruct->planeX = mystruct->planeX * cos(-mystruct->rotSpeed) - mystruct->planeY * sin(-mystruct->rotSpeed);
+// mystruct->planeY = oldPlaneX * sin(-mystruct->rotSpeed) + mystruct->planeY * cos(-mystruct->rotSpeed);
 
 int	key_press(int key, void *param)
 {

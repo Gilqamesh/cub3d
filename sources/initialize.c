@@ -17,6 +17,10 @@ void	init_struct(t_cub3D *mystruct)
 	mystruct->dirY = 0;
 	mystruct->planeX = 0;
 	mystruct->planeY = 0.66;
+	mystruct->moveSpeed = 1.0 / FPS * 4.0;
+	mystruct->rotSpeed = 1.0 / FPS * 3.0;
+	mlx_mouse_hide();
+	mlx_mouse_move(mystruct->vars.win, SCREEN_W / 2, SCREEN_H / 2);
 	mystruct->textures = malloc(8 * sizeof(*mystruct->textures));
 	for (int i = 0; i < 8; ++i)
 		extract_image(&mystruct->textures[i], (t_args1){
