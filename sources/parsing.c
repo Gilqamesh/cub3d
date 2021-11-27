@@ -1,5 +1,20 @@
 #include "headers.h"
 
+void	ft_struct_printer(t_input_parse *parse)
+{
+	printf("NO: %s\n", parse->NO);
+	printf("SO: %s\n", parse->SO);
+	printf("WE: %s\n", parse->WE);
+	printf("EA: %s\n\n", parse->EA);
+	printf("F: %d\n", parse->F);
+	printf("C: %d\n\n", parse->C);
+	printf("Map Width: %d\n", parse->map_width);
+	printf("Map Height: %d\n\n", parse->map_height);
+	printf("Full: %d\n", parse->full);
+	printf("Len one_dim: %zu\n\n", ft_strlen(parse->one_dim));
+	printf("one_dim: %s\n", parse->one_dim);
+}
+
 void	ft_single_free(char **string)
 {
 	if (!string)
@@ -94,43 +109,48 @@ void	ft_texture_parser(char *line, t_input_parse *parse)
 	}
 }
 
+void	ft_gnl_to_one_dim(t_input_parse *parse)
+{
+	if (parse->map_width < (int)ft_strlen(parse->line))
+		parse->map_width = (int)ft_strlen(parse->line);
+	parse->map_height += 1;
+	parse->temp = parse->one_dim;
+	parse->one_dim = ft_strjoin(parse->temp, parse->line);
+	ft_single_free(&parse->temp);
+	ft_single_free(&parse->line);
+}
+
+void	ft_map_parse(t_input_parse *parse)
+{
+	parse->one_dim = ft_strdup("");
+	while (get_next_line(parse->fd, &parse->line) != 0)
+		ft_gnl_to_one_dim(parse);
+	ft_gnl_to_one_dim(parse);
+}
+
 void	ft_input_parse(char **argv, t_input_parse *parse)
 {
-	char	*line;
-
 	ft_bzero(parse, sizeof(*parse));
 	parse->fd = open(argv[1], O_RDONLY);
 	if (parse->fd == -1)
 		exit(EXIT_FAILURE);
-	while (get_next_line(parse->fd, &line) != 0 && parse->full == 0)
+	while (get_next_line(parse->fd, &parse->line) != 0 && parse->full == 0)
 	{
-		ft_texture_parser(line, parse);
-		ft_color_parser(line, parse);
+		ft_texture_parser(parse->line, parse);
+		ft_color_parser(parse->line, parse);
 		if (parse->NO != NULL && parse->NO != NULL && parse->WE != NULL
 			&& parse->EA != NULL && parse->F != 0 && parse->C != 0)
 			parse->full = 1;
 	}
-	parse->one_dim = ft_strdup("");
-	while (get_next_line(parse->fd, &line) != 0)
+	if (parse->full != 1)
 	{
-		parse->temp = parse->one_dim;
-		parse->one_dim = ft_strjoin(parse->temp, line);
-		ft_single_free(&parse->temp);
-		ft_single_free(&line);
+		ft_error_message("Wrong input\n");
+		close (parse->fd);
+		return ;
 	}
-	parse->temp = parse->one_dim;
-	parse->one_dim = ft_strjoin(parse->temp, line);
-	ft_single_free(&parse->temp);
-	ft_single_free(&line);
+	ft_map_parse(parse);
 	close (parse->fd);
-	printf("NO: %s\n", parse->NO);
-	printf("SO: %s\n", parse->SO);
-	printf("WE: %s\n", parse->WE);
-	printf("EA: %s\n\n", parse->EA);
-	printf("F: %d\n", parse->F);
-	printf("C: %d\n\n", parse->C);
-	printf("Full: %d\n", parse->full);
-	printf("one_dim: %s\n", parse->one_dim);
+	//ft_struct_printer(parse);
 }
 
 int	ft_extension_checker(int argc, char **argv)
@@ -148,9 +168,5 @@ int	ft_extension_checker(int argc, char **argv)
 		ft_error_message("Wrong input\n");
 		return (1);
 	}
-	printf("char: %c\n", argv[1][ft_strlen(argv[1]) - 4]);
-	printf("char: %c\n", argv[1][ft_strlen(argv[1]) - 3]);
-	printf("char: %c\n", argv[1][ft_strlen(argv[1]) - 2]);
-	printf("char: %c\n", argv[1][ft_strlen(argv[1]) - 1]);
 	return (0);
 }
