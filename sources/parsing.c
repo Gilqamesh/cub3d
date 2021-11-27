@@ -140,11 +140,12 @@ void	ft_input_parse(char **argv, t_input_parse *parse)
 	if (parse->full != 1)
 	{
 		ft_error_message("Wrong input\n");
-		return (1);
+		close (parse->fd);
+		return ;
 	}
 	ft_map_parse(parse);
 	close (parse->fd);
-	ft_result_tester(parse);
+	//ft_result_tester(parse);
 }
 
 int	ft_extension_checker(int argc, char **argv)
