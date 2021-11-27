@@ -1,6 +1,6 @@
 #include "headers.h"
 
-void	ft_result_tester(t_input_parse *parse)
+void	ft_struct_printer(t_input_parse *parse)
 {
 	printf("NO: %s\n", parse->NO);
 	printf("SO: %s\n", parse->SO);
@@ -8,8 +8,10 @@ void	ft_result_tester(t_input_parse *parse)
 	printf("EA: %s\n\n", parse->EA);
 	printf("F: %d\n", parse->F);
 	printf("C: %d\n\n", parse->C);
+	printf("Map Width: %d\n", parse->map_width);
+	printf("Map Height: %d\n\n", parse->map_height);
 	printf("Full: %d\n", parse->full);
-	printf("Len one_dim: %zu\n", ft_strlen(parse->one_dim));
+	printf("Len one_dim: %zu\n\n", ft_strlen(parse->one_dim));
 	printf("one_dim: %s\n", parse->one_dim);
 }
 
@@ -107,20 +109,23 @@ void	ft_texture_parser(char *line, t_input_parse *parse)
 	}
 }
 
-void	ft_map_parse(t_input_parse *parse)
+void	ft_gnl_to_one_dim(t_input_parse *parse)
 {
-	parse->one_dim = ft_strdup("");
-	while (get_next_line(parse->fd, &parse->line) != 0)
-	{
-		parse->temp = parse->one_dim;
-		parse->one_dim = ft_strjoin(parse->temp, parse->line);
-		ft_single_free(&parse->temp);
-		ft_single_free(&parse->line);
-	}
+	if (parse->map_width < (int)ft_strlen(parse->line))
+		parse->map_width = (int)ft_strlen(parse->line);
+	parse->map_height += 1;
 	parse->temp = parse->one_dim;
 	parse->one_dim = ft_strjoin(parse->temp, parse->line);
 	ft_single_free(&parse->temp);
 	ft_single_free(&parse->line);
+}
+
+void	ft_map_parse(t_input_parse *parse)
+{
+	parse->one_dim = ft_strdup("");
+	while (get_next_line(parse->fd, &parse->line) != 0)
+		ft_gnl_to_one_dim(parse);
+	ft_gnl_to_one_dim(parse);
 }
 
 void	ft_input_parse(char **argv, t_input_parse *parse)
@@ -145,7 +150,7 @@ void	ft_input_parse(char **argv, t_input_parse *parse)
 	}
 	ft_map_parse(parse);
 	close (parse->fd);
-	//ft_result_tester(parse);
+	//ft_struct_printer(parse);
 }
 
 int	ft_extension_checker(int argc, char **argv)
