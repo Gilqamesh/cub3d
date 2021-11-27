@@ -94,6 +94,7 @@ typedef struct s_input_parse
 
 	int		fd;
 	int		full;
+	char	*line;
 	char	*temp;
 	char	*one_dim;
 }	t_input_parse;
