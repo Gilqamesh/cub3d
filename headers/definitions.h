@@ -6,7 +6,8 @@
 # define TITLE		"cub3D"
 # define mapWidth	24
 # define mapHeight	24
-# define INFINITY	1e30
+// Redefined macro from <math.h>
+// # define INFINITY	1e30
 # define KEY_LEFT	123
 # define KEY_UP		126
 # define KEY_DOWN	125
