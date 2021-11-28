@@ -97,6 +97,12 @@ typedef struct s_args1
 	t_point	cell_size;
 }	t_args1;
 
+typedef struct s_map
+{
+	char			*map_line;
+	struct s_map	*next;
+}			t_map;
+
 typedef struct s_input_parse
 {
 	char	*NO;
@@ -116,8 +122,9 @@ typedef struct s_input_parse
 	int		fd;
 	int		full;
 	char	*line;
-	char	*temp;
-	char	*one_dim;
+
+	t_map	*map;
+
 }	t_input_parse;
 
 #endif /* STRUCT_H */
