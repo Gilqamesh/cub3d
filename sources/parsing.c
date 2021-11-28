@@ -1,17 +1,18 @@
 #include "headers.h"
 
-void	ft_print_linked_list(t_map *map)
+void	ft_print_linked_list(t_input_parse *parse)
 {
-	t_map *temporary = map;
+	t_map *temporary = parse->map;
 
 	while (temporary != NULL)
 	{
 		printf("%s\n", temporary->map_line);
 		temporary = temporary->next;
 	}
+	printf("\n");
 }
 
-void	ft_struct_printer(t_input_parse *parse, t_map *map)
+void	ft_struct_printer(t_input_parse *parse)
 {
 	printf("NO: %s\n", parse->NO);
 	printf("SO: %s\n", parse->SO);
@@ -22,9 +23,6 @@ void	ft_struct_printer(t_input_parse *parse, t_map *map)
 	printf("Map Width: %d\n", parse->map_width);
 	printf("Map Height: %d\n\n", parse->map_height);
 	printf("Full: %d\n", parse->full);
-	printf("Len one_dim: %zu\n\n", ft_strlen(parse->one_dim));
-	printf("one_dim: %s\n", parse->one_dim);
-	ft_print_linked_list(map);
 }
 
 void	ft_single_free(char **string)
@@ -121,23 +119,44 @@ void	ft_texture_parser(char *line, t_input_parse *parse)
 	}
 }
 
-void	ft_gnl_to_one_dim(t_input_parse *parse)
+// void	ft_gnl_to_one_dim(t_input_parse *parse)
+// {
+// 	if (parse->map_width < (int)ft_strlen(parse->line))
+// 		parse->map_width = (int)ft_strlen(parse->line);
+// 	parse->map_height += 1;
+// 	parse->temp = parse->one_dim;
+// 	parse->one_dim = ft_strjoin(parse->temp, parse->line);
+// 	ft_single_free(&parse->temp);
+// 	ft_single_free(&parse->line);
+// }
+
+t_map	*ft_map_to_ll(t_input_parse *parse)
 {
+	t_map *map = malloc(sizeof(t_map));
+	map->map_line = parse->line;
+	map->next = NULL;
+	return (map);
+}
+
+void	ft_gnl_to_ll(t_input_parse *parse)
+{
+	t_map *tmp;
 	if (parse->map_width < (int)ft_strlen(parse->line))
 		parse->map_width = (int)ft_strlen(parse->line);
 	parse->map_height += 1;
-	parse->temp = parse->one_dim;
-	parse->one_dim = ft_strjoin(parse->temp, parse->line);
-	ft_single_free(&parse->temp);
-	ft_single_free(&parse->line);
+	tmp = ft_map_to_ll(parse);
+	tmp->next = parse->map;
+	parse->map = tmp;
 }
 
 void	ft_map_parse(t_input_parse *parse)
 {
-	parse->one_dim = ft_strdup("");
 	while (get_next_line(parse->fd, &parse->line) != 0)
-		ft_gnl_to_one_dim(parse);
-	ft_gnl_to_one_dim(parse);
+	{
+		ft_gnl_to_ll(parse);
+	}
+	ft_gnl_to_ll(parse);
+	ft_print_linked_list(parse);
 }
 
 void	ft_input_parse(char **argv, t_input_parse *parse)
@@ -162,7 +181,7 @@ void	ft_input_parse(char **argv, t_input_parse *parse)
 	}
 	ft_map_parse(parse);
 	close (parse->fd);
-	//ft_struct_printer(parse, map);
+	ft_struct_printer(parse);
 }
 
 int	ft_extension_checker(int argc, char **argv)
