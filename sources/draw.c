@@ -47,5 +47,7 @@ void	draw_minimap(t_cub3D *mystruct)
 	my_mlx_pixel_put(&mystruct->real_time_minimap_img, REALTIME_MINIMAP_W / 2.0 - 1, REALTIME_MINIMAP_H / 2.0, RED);
 	my_mlx_pixel_put(&mystruct->real_time_minimap_img, REALTIME_MINIMAP_W / 2.0, REALTIME_MINIMAP_H / 2.0 + 1, RED);
 	my_mlx_pixel_put(&mystruct->real_time_minimap_img, REALTIME_MINIMAP_W / 2.0, REALTIME_MINIMAP_H / 2.0 - 1, RED);
+	draw_line(&mystruct->real_time_minimap_img, (t_point){REALTIME_MINIMAP_W / 2.0, REALTIME_MINIMAP_H / 2.0},
+		(t_point){mystruct->dirX * 10 + REALTIME_MINIMAP_W / 2.0, mystruct->dirY * 10 + REALTIME_MINIMAP_H / 2.0}, RED);
 	mlx_put_image_to_window(mystruct->vars.mlx, mystruct->vars.win, mystruct->real_time_minimap_img.img, 0, 0);
 }

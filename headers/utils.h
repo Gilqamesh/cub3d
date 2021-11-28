@@ -15,5 +15,6 @@ void	get_part_of_img(t_vars vars, t_data *img,
 void	extract_image(t_data *images, t_args1 args1);
 void	resize_img(t_vars vars, t_data *img, t_point old_params,
 t_point new_params);
+void	draw_line(t_data *data, t_point A, t_point B, int color);
 
 #endif /* UTILS_H */

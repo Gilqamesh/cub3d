@@ -22,7 +22,7 @@ int	render_frame(void *param)
 	draw_minimap(mystruct);
 	update_position(mystruct);
 	update_mouse(mystruct);
-	// print_debug(mystruct);
+	print_debug(mystruct);
 	mlx_do_sync(mystruct->vars.mlx);
 	return (0);
 }
