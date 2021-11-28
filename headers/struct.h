@@ -116,4 +116,10 @@ typedef struct s_input_parse
 	char	*one_dim;
 }	t_input_parse;
 
+typedef struct s_map
+{
+	char			map_line;
+	struct s_map	*next;
+}			t_map;
+
 #endif /* STRUCT_H */
