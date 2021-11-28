@@ -1,6 +1,17 @@
 #include "headers.h"
 
-void	ft_struct_printer(t_input_parse *parse)
+void	ft_print_linked_list(t_map *map)
+{
+	t_map *temporary = map;
+
+	while (temporary != NULL)
+	{
+		printf("%s\n", temporary->map_line);
+		temporary = temporary->next;
+	}
+}
+
+void	ft_struct_printer(t_input_parse *parse, t_map *map)
 {
 	printf("NO: %s\n", parse->NO);
 	printf("SO: %s\n", parse->SO);
@@ -13,6 +24,7 @@ void	ft_struct_printer(t_input_parse *parse)
 	printf("Full: %d\n", parse->full);
 	printf("Len one_dim: %zu\n\n", ft_strlen(parse->one_dim));
 	printf("one_dim: %s\n", parse->one_dim);
+	ft_print_linked_list(map);
 }
 
 void	ft_single_free(char **string)
@@ -150,7 +162,7 @@ void	ft_input_parse(char **argv, t_input_parse *parse)
 	}
 	ft_map_parse(parse);
 	close (parse->fd);
-	//ft_struct_printer(parse);
+	//ft_struct_printer(parse, map);
 }
 
 int	ft_extension_checker(int argc, char **argv)
