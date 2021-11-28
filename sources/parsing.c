@@ -122,6 +122,7 @@ t_map	*ft_map_to_ll(t_input_parse *parse)
 void	ft_gnl_to_ll(t_input_parse *parse)
 {
 	t_map *tmp;
+
 	if (parse->map_width < (int)ft_strlen(parse->line))
 		parse->map_width = (int)ft_strlen(parse->line);
 	parse->map_height += 1;
@@ -137,7 +138,7 @@ void	ft_map_parse(t_input_parse *parse)
 		ft_gnl_to_ll(parse);
 	}
 	ft_gnl_to_ll(parse);
-	ft_print_linked_list(parse);
+	//ft_print_linked_list(parse);
 }
 
 void	ft_input_parse(char **argv, t_input_parse *parse)
