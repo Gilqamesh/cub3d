@@ -14,7 +14,8 @@ enum color
 	BLUE = 0x000000ff,
 	YELLOW = 0x00ffff00,
 	WHITE = 0x00ffffff,
-	BLACK = 0x00000000
+	BLACK = 0x00000000,
+	BLANK = 0xff000000
 };
 
 typedef struct s_line_segment
@@ -62,7 +63,7 @@ typedef struct s_cub3D
 	int					map_height;
 	int					map_width;
 	struct line_segment	*walls;
-	t_data				img;
+	t_data				canvas;
 	t_vars				vars;
 	double				posX;
 	double				posY;
@@ -82,6 +83,11 @@ typedef struct s_cub3D
 	bool				is_right_held;
 	bool				is_paused;
 	t_data				pause_img;
+	t_data				minimap_img;
+	t_data				minimap_wall_img;
+	t_data				minimap_blank_img;
+	t_data				real_time_minimap_img;
+	long int			prev_timestamp;
 }	t_cub3D;
 
 typedef struct s_args1

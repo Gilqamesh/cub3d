@@ -93,3 +93,8 @@ void	update_position(t_cub3D *mystruct)
 	if (mystruct->is_right_held)
 		update_position_by_key(mystruct, KEY_RIGHT);
 }
+
+void	update_canvas(t_cub3D *mystruct)
+{
+	mlx_put_image_to_window(mystruct->vars.mlx, mystruct->vars.win, mystruct->canvas.img, 0, 0);
+}

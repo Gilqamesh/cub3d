@@ -22,8 +22,8 @@ t_point new_params)
 	int		y;
 	int		x;
 
-	ratio_w = (double)new_params.x / old_params.x;
-	ratio_h = (double)new_params.y / old_params.y;
+	ratio_w = (double)(new_params.x - 1) / old_params.x;
+	ratio_h = (double)(new_params.y - 1) / old_params.y;
 	new_img.img = mlx_new_image(vars.mlx, new_params.x, new_params.y);
 	new_img.addr = mlx_get_data_addr(new_img.img, &new_img.bits_per_pixel,
 		&new_img.line_length, &new_img.endian);
@@ -33,8 +33,7 @@ t_point new_params)
 		x = -1;
 		while (++x < old_params.x)
 			my_mlx_pixel_put(&new_img, x * ratio_w, y * ratio_h,
-				*(int *)(img->addr + y * img->line_length + x
-					* (img->bits_per_pixel / 8)));
+				get_color(img, x, y));
 	}
 	mlx_destroy_image(vars.mlx, img->img);
 	*img = new_img;
@@ -59,8 +58,7 @@ t_point bot_left, t_point top_right)
 		A.y = 0;
 		while (++A.x < top_right.x)
 		{
-			my_mlx_pixel_put(&new_img, A.y, B.y, *(int *)(img->addr + B.x
-				* img->line_length + A.x * (img->bits_per_pixel / 8)));
+			my_mlx_pixel_put(&new_img, A.y, B.y, get_color(img, A.x, B.x));
 			++A.y;
 		}
 		++B.y;
@@ -69,16 +67,19 @@ t_point bot_left, t_point top_right)
 	*img = new_img;
 }
 
-void	make_image_transparent(t_data *img, int width, int height)
+// alpha ranges from 0 to 255
+void	make_image_transparent(t_data *img, int width, int height, int alpha)
 {
 	int	x;
 	int	y;
+	int	alpha_mask;
 
+	alpha_mask = alpha << 24;
 	y = -1;
 	while (++y < height)
 	{
 		x = -1;
 		while (++x < width)
-			my_mlx_pixel_put(img, x, y, get_color(img, x, y) | 0x78000000);
+			my_mlx_pixel_put(img, x, y, get_color(img, x, y) | alpha_mask);
 	}
 }
