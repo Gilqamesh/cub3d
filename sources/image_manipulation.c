@@ -22,8 +22,8 @@ t_point new_params)
 	int		y;
 	int		x;
 
-	ratio_w = (double)(new_params.x - 1) / old_params.x;
-	ratio_h = (double)(new_params.y - 1) / old_params.y;
+	ratio_w = (double)(new_params.x - 1) / (old_params.x - 1);
+	ratio_h = (double)(new_params.y - 1) / (old_params.y - 1);
 	new_img.img = mlx_new_image(vars.mlx, new_params.x, new_params.y);
 	new_img.addr = mlx_get_data_addr(new_img.img, &new_img.bits_per_pixel,
 		&new_img.line_length, &new_img.endian);
@@ -50,11 +50,11 @@ t_point bot_left, t_point top_right)
 		ft_abs_int(bot_left.y - top_right.y));
 	new_img.addr = mlx_get_data_addr(new_img.img, &new_img.bits_per_pixel,
 		&new_img.line_length, &new_img.endian);
-	B.x = top_right.y;
+	B.x = top_right.y - 1;
 	B.y = 0;
 	while (++B.x < bot_left.y)
 	{
-		A.x = bot_left.x;
+		A.x = bot_left.x - 1;
 		A.y = 0;
 		while (++A.x < top_right.x)
 		{

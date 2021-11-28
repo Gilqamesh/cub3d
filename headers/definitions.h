@@ -17,7 +17,8 @@
 # define KEY_ESC				53
 # define KEY_P					35
 # define PI						3.1415
-# define FPS					30.0
+# define MOVE_SPEED				(1.0 / 15.0)
+# define ROTATE_SPEED			(1.0 / 30.0)
 # define TEXTURE_W  			64
 # define TEXTURE_H  			64
 # define EPSILON				0.0000001

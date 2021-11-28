@@ -118,13 +118,13 @@ void	draw_wall(t_cub3D *mystruct, int current_column, t_wall_cast_params *p)
 	else
 		w.wallX = mystruct->posX + p->perpWallDist * p->rayDirX;
 	w.wallX -= floor(w.wallX);
-	w.texX = (int)(w.wallX * (double)TEXTURE_W);
+	w.texX = (int)(w.wallX * TEXTURE_W);
 	if (p->side == 0 && p->rayDirX > 0)
 		w.texX = TEXTURE_W - w.texX - 1;
 	else if (p->side == 1 && p->rayDirY < 0)
 		w.texX = TEXTURE_W - w.texX - 1;
-	w.step = 1.0 * TEXTURE_H / p->lineHeight;
-	w.texPos = (p->drawStart - SCREEN_H / 2 + p->lineHeight / 2) * w.step;
+	w.step = (double)TEXTURE_H / p->lineHeight;
+	w.texPos = (p->drawStart + (p->lineHeight - SCREEN_H) / 2.0) * w.step;
 	verLine(mystruct, current_column, 0, SCREEN_H - 1, BLACK);
 	for (int y = p->drawStart; y < p->drawEnd; ++y)
 	{

@@ -1,6 +1,8 @@
 #ifndef STRUCT_H
 # define STRUCT_H
 
+# include <stdbool.h>
+
 typedef struct s_point
 {
 	int	x;
@@ -52,10 +54,8 @@ enum texture_name
 	COBBLE_STONE
 };
 
-# define FLOOR_TEXTURE WHITE_BRICK
-# define CEILING_TEXTURE WOOD
-
-# include <stdbool.h>
+# define FLOOR_TEXTURE		WHITE_BRICK
+# define CEILING_TEXTURE	WOOD
 
 typedef struct s_cub3D
 {
@@ -72,8 +72,6 @@ typedef struct s_cub3D
 	double				dirY;
 	double				planeX;
 	double				planeY;
-	double				moveSpeed;
-	double				rotSpeed;
 	t_data				*textures;
 	bool				is_w_held;
 	bool				is_a_held;

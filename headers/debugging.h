@@ -8,6 +8,6 @@
 
 long int	get_current_timestamp(void);
 long int	timval_to_microseconds(struct timeval *t);
-void		display_fps(t_cub3D *mystruct);
+void		print_debug(t_cub3D *mystruct);
 
 #endif /* DEBUGGING_H */

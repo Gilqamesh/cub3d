@@ -18,8 +18,6 @@ void	init_struct(t_cub3D *mystruct)
 	mystruct->dirY = 0;
 	mystruct->planeX = 0;
 	mystruct->planeY = 0.66;
-	mystruct->moveSpeed = 1.0 / FPS * 2.0;
-	mystruct->rotSpeed = 1.0 / FPS;
 	mlx_mouse_hide();
 	mlx_mouse_move(mystruct->vars.win, SCREEN_W / 2, SCREEN_H / 2);
 	mystruct->textures = malloc(8 * sizeof(*mystruct->textures));

@@ -4,49 +4,49 @@ void	update_position_by_key(t_cub3D *mystruct, int key)
 {
 	if (key == KEY_W)
 	{
-		if (mystruct->map [(int)(mystruct->posY)][(int)(mystruct->posX + mystruct->dirX * mystruct->moveSpeed)] == '0')
-			mystruct->posX += mystruct->dirX * mystruct->moveSpeed;
-		if (mystruct->map [(int)(mystruct->posY + mystruct->dirY * mystruct->moveSpeed)][(int)(mystruct->posX)] == '0')
-			mystruct->posY += mystruct->dirY * mystruct->moveSpeed;
+		if (mystruct->map [(int)(mystruct->posY)][(int)(mystruct->posX + mystruct->dirX * MOVE_SPEED)] == '0')
+			mystruct->posX += mystruct->dirX * MOVE_SPEED;
+		if (mystruct->map [(int)(mystruct->posY + mystruct->dirY * MOVE_SPEED)][(int)(mystruct->posX)] == '0')
+			mystruct->posY += mystruct->dirY * MOVE_SPEED;
 	}
 	else if (key == KEY_S)
 	{
-		if (mystruct->map [(int)(mystruct->posY)][(int)(mystruct->posX - mystruct->dirX * mystruct->moveSpeed)] == '0')
-			mystruct->posX -= mystruct->dirX * mystruct->moveSpeed;
-		if (mystruct->map [(int)(mystruct->posY - mystruct->dirY * mystruct->moveSpeed)][(int)(mystruct->posX)] == '0')
-			mystruct->posY -= mystruct->dirY * mystruct->moveSpeed;
+		if (mystruct->map [(int)(mystruct->posY)][(int)(mystruct->posX - mystruct->dirX * MOVE_SPEED)] == '0')
+			mystruct->posX -= mystruct->dirX * MOVE_SPEED;
+		if (mystruct->map [(int)(mystruct->posY - mystruct->dirY * MOVE_SPEED)][(int)(mystruct->posX)] == '0')
+			mystruct->posY -= mystruct->dirY * MOVE_SPEED;
 	}
 	else if (key == KEY_A)
 	{	
-		if (mystruct->map [(int)(mystruct->posY)][(int)(mystruct->posX - mystruct->dirY * mystruct->moveSpeed)] == '0')
-			mystruct->posX -= mystruct->dirY * mystruct->moveSpeed;
-		if (mystruct->map [(int)(mystruct->posY + mystruct->dirX * mystruct->moveSpeed)][(int)(mystruct->posX)] == '0')
-			mystruct->posY += mystruct->dirX * mystruct->moveSpeed;
+		if (mystruct->map [(int)(mystruct->posY)][(int)(mystruct->posX - mystruct->dirY * MOVE_SPEED)] == '0')
+			mystruct->posX -= mystruct->dirY * MOVE_SPEED;
+		if (mystruct->map [(int)(mystruct->posY + mystruct->dirX * MOVE_SPEED)][(int)(mystruct->posX)] == '0')
+			mystruct->posY += mystruct->dirX * MOVE_SPEED;
 	}
 	else if (key == KEY_D)
 	{
-		if (mystruct->map [(int)(mystruct->posY)][(int)(mystruct->posX + mystruct->dirY * mystruct->moveSpeed)] == '0')
-			mystruct->posX += mystruct->dirY * mystruct->moveSpeed;
-		if (mystruct->map [(int)(mystruct->posY - mystruct->dirX * mystruct->moveSpeed)][(int)(mystruct->posX)] == '0')
-			mystruct->posY -= mystruct->dirX * mystruct->moveSpeed;
+		if (mystruct->map [(int)(mystruct->posY)][(int)(mystruct->posX + mystruct->dirY * MOVE_SPEED)] == '0')
+			mystruct->posX += mystruct->dirY * MOVE_SPEED;
+		if (mystruct->map [(int)(mystruct->posY - mystruct->dirX * MOVE_SPEED)][(int)(mystruct->posX)] == '0')
+			mystruct->posY -= mystruct->dirX * MOVE_SPEED;
 	}
 	else if (key == KEY_RIGHT)
 	{
 		double oldDirX = mystruct->dirX;
-		mystruct->dirX = mystruct->dirX * cos(-mystruct->rotSpeed) - mystruct->dirY * sin(-mystruct->rotSpeed);
-		mystruct->dirY = oldDirX * sin(-mystruct->rotSpeed) + mystruct->dirY * cos(-mystruct->rotSpeed);
+		mystruct->dirX = mystruct->dirX * cos(-ROTATE_SPEED) - mystruct->dirY * sin(-ROTATE_SPEED);
+		mystruct->dirY = oldDirX * sin(-ROTATE_SPEED) + mystruct->dirY * cos(-ROTATE_SPEED);
 		double oldPlaneX = mystruct->planeX;
-		mystruct->planeX = mystruct->planeX * cos(-mystruct->rotSpeed) - mystruct->planeY * sin(-mystruct->rotSpeed);
-		mystruct->planeY = oldPlaneX * sin(-mystruct->rotSpeed) + mystruct->planeY * cos(-mystruct->rotSpeed);
+		mystruct->planeX = mystruct->planeX * cos(-ROTATE_SPEED) - mystruct->planeY * sin(-ROTATE_SPEED);
+		mystruct->planeY = oldPlaneX * sin(-ROTATE_SPEED) + mystruct->planeY * cos(-ROTATE_SPEED);
 	}
 	else if (key == KEY_LEFT)
 	{
 		double oldDirX = mystruct->dirX;
-		mystruct->dirX = mystruct->dirX * cos(mystruct->rotSpeed) - mystruct->dirY * sin(mystruct->rotSpeed);
-		mystruct->dirY = oldDirX * sin(mystruct->rotSpeed) + mystruct->dirY * cos(mystruct->rotSpeed);
+		mystruct->dirX = mystruct->dirX * cos(ROTATE_SPEED) - mystruct->dirY * sin(ROTATE_SPEED);
+		mystruct->dirY = oldDirX * sin(ROTATE_SPEED) + mystruct->dirY * cos(ROTATE_SPEED);
 		double oldPlaneX = mystruct->planeX;
-		mystruct->planeX = mystruct->planeX * cos(mystruct->rotSpeed) - mystruct->planeY * sin(mystruct->rotSpeed);
-		mystruct->planeY = oldPlaneX * sin(mystruct->rotSpeed) + mystruct->planeY * cos(mystruct->rotSpeed);
+		mystruct->planeX = mystruct->planeX * cos(ROTATE_SPEED) - mystruct->planeY * sin(ROTATE_SPEED);
+		mystruct->planeY = oldPlaneX * sin(ROTATE_SPEED) + mystruct->planeY * cos(ROTATE_SPEED);
 	}
 }
 
