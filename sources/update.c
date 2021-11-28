@@ -1,6 +1,6 @@
 #include "headers.h"
 
-void	update_position(t_cub3D *mystruct, int key)
+void	update_position_by_key(t_cub3D *mystruct, int key)
 {
 	if (key == KEY_W)
 	{
@@ -76,4 +76,20 @@ void	update_mouse(t_cub3D *mystruct)
 	mystruct->planeX = mystruct->planeX * cos(mapDeltaX / 100.0) - mystruct->planeY * sin(mapDeltaX / 100.0);
 	mystruct->planeY = oldPlaneX * sin(mapDeltaX / 100.0) + mystruct->planeY * cos(mapDeltaX / 100.0);
 	mlx_mouse_move(mystruct->vars.win, SCREEN_W / 2, SCREEN_H / 2);
+}
+
+void	update_position(t_cub3D *mystruct)
+{
+	if (mystruct->is_w_held)
+		update_position_by_key(mystruct, KEY_W);
+	if (mystruct->is_s_held)
+		update_position_by_key(mystruct, KEY_S);
+	if (mystruct->is_a_held)
+		update_position_by_key(mystruct, KEY_A);
+	if (mystruct->is_d_held)
+		update_position_by_key(mystruct, KEY_D);
+	if (mystruct->is_left_held)
+		update_position_by_key(mystruct, KEY_LEFT);
+	if (mystruct->is_right_held)
+		update_position_by_key(mystruct, KEY_RIGHT);
 }

@@ -3,3 +3,5 @@
 2. The macro named FPS doesn't really make sense, rework movespeed and rotspeed
 3. Implement line draw function and replace utils/verLine
 4. Floor/Ceiling textures are misaligned for some reason from the wall, they appear to be ~swimming
+5. Load crosshair from texture
+6. FPS counter would be cool

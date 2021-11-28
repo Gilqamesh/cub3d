@@ -4,34 +4,23 @@ int	render_frame(void *param)
 {
 	static t_cub3D	*mystruct = NULL;
 	static bool		first_time = true;
-	static int		counter = 0;
 
 	if (first_time == true)
 	{
 		first_time = false;
 		mystruct = (t_cub3D *)param;
 	}
+	if (mystruct->is_paused == true)
+	{
+		draw_pause_screen(mystruct);
+		return (0);
+	}
 	// floor_casting(mystruct);
 	wall_casting(mystruct);
 	draw_crosshair(mystruct);
 	mlx_do_sync(mystruct->vars.mlx);
 	mlx_put_image_to_window(mystruct->vars.mlx, mystruct->vars.win, mystruct->img.img, 0, 0);
-	if (++counter == 2)
-	{
-		counter = 0;
-		if (mystruct->is_w_held)
-			update_position(mystruct, KEY_W);
-		if (mystruct->is_s_held)
-			update_position(mystruct, KEY_S);
-		if (mystruct->is_a_held)
-			update_position(mystruct, KEY_A);
-		if (mystruct->is_d_held)
-			update_position(mystruct, KEY_D);
-		if (mystruct->is_left_held)
-			update_position(mystruct, KEY_LEFT);
-		if (mystruct->is_right_held)
-			update_position(mystruct, KEY_RIGHT);
-	}
+	update_position(mystruct);
 	update_mouse(mystruct);
 	return (0);
 }
@@ -67,6 +56,19 @@ int	key_press(int key, void *param)
 		mystruct->is_left_held = true;
 	else if (key == KEY_ESC)
 		exit_program(mystruct);
+	else if (key == KEY_P)
+	{
+		if (mystruct->is_paused == false)
+		{
+			mystruct->is_paused = true;
+			mlx_mouse_show();
+		}
+		else
+		{
+			mystruct->is_paused = false;
+			mlx_mouse_hide();
+		}
+	}
 	return (0);
 }
 

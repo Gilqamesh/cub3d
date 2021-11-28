@@ -68,3 +68,17 @@ t_point bot_left, t_point top_right)
 	mlx_destroy_image(vars.mlx, img->img);
 	*img = new_img;
 }
+
+void	make_image_transparent(t_data *img, int width, int height)
+{
+	int	x;
+	int	y;
+
+	y = -1;
+	while (++y < height)
+	{
+		x = -1;
+		while (++x < width)
+			my_mlx_pixel_put(img, x, y, get_color(img, x, y) | 0x78000000);
+	}
+}

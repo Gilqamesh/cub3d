@@ -80,6 +80,8 @@ typedef struct s_cub3D
 	bool				is_d_held;
 	bool				is_left_held;
 	bool				is_right_held;
+	bool				is_paused;
+	t_data				pause_img;
 }	t_cub3D;
 
 typedef struct s_args1

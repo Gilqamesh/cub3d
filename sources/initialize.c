@@ -17,8 +17,8 @@ void	init_struct(t_cub3D *mystruct)
 	mystruct->dirY = 0;
 	mystruct->planeX = 0;
 	mystruct->planeY = 0.66;
-	mystruct->moveSpeed = 1.0 / FPS * 4.0;
-	mystruct->rotSpeed = 1.0 / FPS * 3.0;
+	mystruct->moveSpeed = 1.0 / FPS * 2.0;
+	mystruct->rotSpeed = 1.0 / FPS;
 	mlx_mouse_hide();
 	mlx_mouse_move(mystruct->vars.win, SCREEN_W / 2, SCREEN_H / 2);
 	mystruct->textures = malloc(8 * sizeof(*mystruct->textures));
@@ -26,6 +26,9 @@ void	init_struct(t_cub3D *mystruct)
 		extract_image(&mystruct->textures[i], (t_args1){
 			(t_point){i * TEXTURE_W, TEXTURE_H - 1}, (t_point){(i + 1) * TEXTURE_W - 1, 0},
 			"assets/wolftextures.xpm", &mystruct->vars, (t_point){TEXTURE_W, TEXTURE_H}});
+	extract_image(&mystruct->pause_img, (t_args1){
+		(t_point){0, 680}, (t_point){1006, 0}, "assets/pause.xpm", &mystruct->vars, (t_point){SCREEN_W + 1, SCREEN_H + 1}});
+	make_image_transparent(&mystruct->pause_img, SCREEN_W + 1, SCREEN_H + 1);
 }
 
 void	install_hooks(t_cub3D *mystruct)
