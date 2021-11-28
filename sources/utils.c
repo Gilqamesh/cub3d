@@ -16,7 +16,7 @@ void	my_mlx_pixel_put(t_data *data, double x, double y, unsigned int color)
 void	verLine(t_cub3D *mystruct, int x, int y_start, int y_end, int color)
 {
 	for (int i = y_start; i <= y_end; ++i)
-		my_mlx_pixel_put(&mystruct->img, x, i, color);
+		my_mlx_pixel_put(&mystruct->canvas, x, i, color);
 }
 
 unsigned int	get_color(t_data *data, double x, double y)

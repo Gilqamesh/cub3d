@@ -18,7 +18,7 @@
 # include "update.h"
 # include "draw.h"
 
-// Debug / not sure if can be used
-# include <stdio.h>
+// DEBUG
+# include "debugging.h"
 
 #endif /* HEADERS_H */

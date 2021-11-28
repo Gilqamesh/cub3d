@@ -18,10 +18,12 @@ int	render_frame(void *param)
 	// floor_casting(mystruct);
 	wall_casting(mystruct);
 	draw_crosshair(mystruct);
-	mlx_do_sync(mystruct->vars.mlx);
-	mlx_put_image_to_window(mystruct->vars.mlx, mystruct->vars.win, mystruct->img.img, 0, 0);
+	update_canvas(mystruct);
+	draw_minimap(mystruct);
 	update_position(mystruct);
 	update_mouse(mystruct);
+	display_fps(mystruct);
+	mlx_do_sync(mystruct->vars.mlx);
 	return (0);
 }
 
