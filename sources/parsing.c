@@ -25,14 +25,6 @@ void	ft_struct_printer(t_input_parse *parse)
 	printf("Full: %d\n", parse->full);
 }
 
-void	ft_single_free(char **string)
-{
-	if (!string)
-		return ;
-	free(*string);
-	*string = 0;
-}
-
 void	ft_error_message(char *str)
 {
 	ft_putstr_fd("Error\n", 2);
@@ -118,17 +110,6 @@ void	ft_texture_parser(char *line, t_input_parse *parse)
 			parse->EA = &line[ft_first_x_finder(line, '.')];
 	}
 }
-
-// void	ft_gnl_to_one_dim(t_input_parse *parse)
-// {
-// 	if (parse->map_width < (int)ft_strlen(parse->line))
-// 		parse->map_width = (int)ft_strlen(parse->line);
-// 	parse->map_height += 1;
-// 	parse->temp = parse->one_dim;
-// 	parse->one_dim = ft_strjoin(parse->temp, parse->line);
-// 	ft_single_free(&parse->temp);
-// 	ft_single_free(&parse->line);
-// }
 
 t_map	*ft_map_to_ll(t_input_parse *parse)
 {
