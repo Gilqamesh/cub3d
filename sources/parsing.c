@@ -218,9 +218,8 @@ void	ft_input_parse(int argc, char **argv, t_input_parse *parse)
 	}
 	if (parse->full != 1)
 	{
-		ft_error_message("Wrong input\n");
 		close (parse->fd);
-		return ;
+		ft_error_message("Wrong input\n");
 	}
 	ft_map_parse(parse);
 	ft_ll_to_2d(parse);
