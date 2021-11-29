@@ -5,11 +5,12 @@ int	render_frame(void *param)
 	static t_cub3D	*mystruct = NULL;
 	static bool		first_time = true;
 
-	PRINT_HERE();
 	if (first_time == true)
 	{
 		first_time = false;
 		mystruct = (t_cub3D *)param;
+		mlx_mouse_hide();
+		mlx_mouse_move(mystruct->vars.win, SCREEN_W / 2, SCREEN_H / 2);
 	}
 	if (mystruct->is_paused == true)
 	{
@@ -21,7 +22,7 @@ int	render_frame(void *param)
 	PRINT_HERE();
 	wall_casting(mystruct);
 	PRINT_HERE();
-	sprite_casting(mystruct);
+	// sprite_casting(mystruct);
 	PRINT_HERE();
 	draw_crosshair(mystruct);
 	PRINT_HERE();
@@ -32,8 +33,7 @@ int	render_frame(void *param)
 	PRINT_HERE();
 	update_mouse(mystruct);
 	PRINT_HERE();
-	print_debug(mystruct);
-	PRINT_HERE();
+	// print_debug(mystruct);
 	// mlx_do_sync(mystruct->vars.mlx);
 	return (0);
 }

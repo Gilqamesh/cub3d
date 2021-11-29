@@ -7,15 +7,10 @@ void	wall_casting(t_cub3D *mystruct)
 
 	for (int x = 0; x < SCREEN_W; ++x)
     {
-		PRINT_HERE();
 		initialize_wall_ray(mystruct, x, &p);
-		PRINT_HERE();
 		perform_dda(mystruct, &p);
-		PRINT_HERE();
 		calculate_distance(&p);
-		PRINT_HERE();
 		draw_wall(mystruct, x, &p);
-		PRINT_HERE();
 		mystruct->ZBuffer[x] = p.perpWallDist;
 	}
 }
@@ -71,30 +66,21 @@ void	perform_dda(t_cub3D *mystruct, t_wall_cast_params *p)
 	hit = 0;
 	while (hit == 0)
 	{
-		PRINT_HERE();
 		if (p->sideDistX < p->sideDistY)
 		{
-			PRINT_HERE();
 			p->sideDistX += p->deltaDistX;
 			p->mapX += p->stepX;
 			p->side = 0;
-			PRINT_HERE();
 		}
 		else
 		{
-			PRINT_HERE();
 			p->sideDistY += p->deltaDistY;
 			p->mapY += p->stepY;
 			p->side = 1;
-			PRINT_HERE();
 		}
-		PRINT_HERE();
-		printf("%d %d %c\n", p->mapY, p->mapX, mystruct->map[p->mapY][p->mapX]);
-		if (mystruct->map[p->mapY][p->mapX] > '0' && mystruct->map[p->mapY][p->mapX] < '9')
+		if (mystruct->map[p->mapY][p->mapX] > '0')
 			hit = 1;
-		PRINT_HERE();
 	}
-	PRINT_HERE();
 }
 
 // Calculate distance projected on camera direction (Euclidean distance would give fisheye effect!)

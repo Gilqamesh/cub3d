@@ -65,13 +65,16 @@ static void	sort_sprites(t_cub3D *mystruct)
 
 void	sprite_casting(t_cub3D *mystruct)
 {
+	PRINT_HERE();
 	for (int i = 0; i < mystruct->n_of_sprites_on_map; ++i)
 	{
 		mystruct->sprites[i].distance = (mystruct->posX - mystruct->sprites[i].posX)
 			* (mystruct->posX - mystruct->sprites[i].posX) + (mystruct->posY
 			- mystruct->sprites[i].posY) * (mystruct->posY - mystruct->sprites[i].posY);
 	}
+	PRINT_HERE();
 	sort_sprites(mystruct);
+	PRINT_HERE();
 
 	for (int i = 0; i < mystruct->n_of_sprites_on_map; ++i)
 	{
@@ -81,19 +84,26 @@ void	sprite_casting(t_cub3D *mystruct)
 
 		// Transform sprite with the inverse camera matrix
 		// Required for correct matrix multiplication
+		PRINT_HERE();
 		double	invDet = 1.0 / (mystruct->planeX * mystruct->dirY - mystruct->dirX * mystruct->planeY);
+		PRINT_HERE();
 
 		// This is actually the depth inside the screen, that what Z is in 3D
+		PRINT_HERE();
 		double	transformX = invDet * (mystruct->dirY * spriteX - mystruct->dirX * spriteY);
 		double	transformY = invDet * (-mystruct->planeY * spriteX + mystruct->planeX * spriteY);
+		PRINT_HERE();
 
 		int		spriteScreenX = (int)(SCREEN_W / 2.0 * (1 + transformX / transformY));
 
 		// Calculate height of the sprite on screen
 		// Using 'transformY' instead of the real distance prevents fisheye
+		PRINT_HERE();
 		int		spriteHeight = ft_fabs((int)(SCREEN_H / transformY));
+		PRINT_HERE();
 		// Calculate lowest and highest pixel to fill in current stripe
 		int		drawStartY = -spriteHeight / 2.0 + SCREEN_H / 2.0;
+		PRINT_HERE();
 		if (drawStartY < 0)
 			drawStartY = 0;
 		int		drawEndY = spriteHeight / 2.0 + SCREEN_H / 2.0;
@@ -112,7 +122,9 @@ void	sprite_casting(t_cub3D *mystruct)
 		// Loop through every vertical stripe of the sprite on screen
 		for (int stripe = drawStartX; stripe < drawEndX; ++stripe)
 		{
+			PRINT_HERE();
 			int	texX = (int)(256 * (stripe - (-spriteWidth / 2.0 + spriteScreenX)) * TEXTURE_W / spriteWidth) / 256;
+			PRINT_HERE();
 			// The conditions in the if are:
 			// 1) it's in front of camera plane so you don't see things behind you
 			// 2) it's on the screen (left)
@@ -120,16 +132,29 @@ void	sprite_casting(t_cub3D *mystruct)
 			// 4) ZBuffer, with perpendicular distance
 			if (transformY > 0 && stripe > 0 && stripe < SCREEN_W && transformY < mystruct->ZBuffer[stripe])
 			{
+				PRINT_HERE();
 				// For every pixel of the current stripe
 				for (int y = drawStartY; y < drawEndY; ++y)
 				{
 					// 256 and 128 factors to avoid floats
+					PRINT_HERE();
 					int				d = y * 256 - SCREEN_H * 128 + spriteHeight * 128;
+					PRINT_HERE();
 					int				texY = (d * TEXTURE_H / (double)spriteHeight) / 256;
 					// Get current color from the texture
+					PRINT_HERE();
+					printf("texX: %d, texY: %d\n", texX, texY);
+					if (texY >= TEXTURE_H || texX >= TEXTURE_W)
+					{
+						printf("No\n");
+						exit(1);
+					}
+					printf("stripe: %d\n", stripe);
 					unsigned int	color = get_color(mystruct->sprites[i].img, texX, texY);
+					PRINT_HERE();
 					if ((color & 0x00ffffff) != 0)
 						my_mlx_pixel_put(&mystruct->canvas, stripe, y, color);
+					PRINT_HERE();
 				}
 			}
 		}

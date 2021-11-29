@@ -24,7 +24,7 @@ typedef struct s_line_segment
 {
 	t_point			A;
 	t_point			B;
-	unsigned int	color;
+	int	color;
 }	t_line_segment;
 
 typedef struct s_data

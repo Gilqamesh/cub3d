@@ -13,9 +13,7 @@ int	main(int argc, char **argv)
 	}
 	ft_bzero(&mystruct, sizeof(mystruct));
 	// ft_input_parse(argc, argv, &parse);
-	PRINT_HERE();
 	init_struct(&mystruct, &parse);
-	PRINT_HERE();
 	// build_tree();
 	install_hooks(&mystruct);
 	mlx_loop(mystruct.vars.mlx);

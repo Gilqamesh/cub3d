@@ -6,6 +6,12 @@ void	extract_image(t_data *images, t_args1 args1)
 
 	images->img = mlx_xpm_file_to_image(args1.vars->mlx, args1.filePath,
 		&parameters.x, &parameters.y);
+	if (args1.B.x - args1.A.x > parameters.x || args1.A.y - args1.B.y > parameters.y)
+	{
+		PRINT_HERE();
+		exit(1);
+	}
+	printf("real width and height: %d %d, requested parameters: %d %d\n", parameters.x, parameters.y, args1.B.x, args1.A.y - args1.B.y);
 	images->addr = mlx_get_data_addr(images->img, &images->bits_per_pixel,
 		&images->line_length, &images->endian);
 	get_part_of_img(*args1.vars, images, args1.A, args1.B);
@@ -50,17 +56,15 @@ t_point bot_left, t_point top_right)
 		ft_abs_int(bot_left.y - top_right.y));
 	new_img.addr = mlx_get_data_addr(new_img.img, &new_img.bits_per_pixel,
 		&new_img.line_length, &new_img.endian);
-	B.x = top_right.y - 1;
-	B.y = 0;
-	while (++B.x < bot_left.y)
+
+	B.y = -1;
+	A.y = top_right.y - 1;
+	while (++A.y < bot_left.y)
 	{
 		A.x = bot_left.x - 1;
-		A.y = 0;
+		B.x = -1;
 		while (++A.x < top_right.x)
-		{
-			my_mlx_pixel_put(&new_img, A.y, B.y, get_color(img, A.x, B.x));
-			++A.y;
-		}
+			my_mlx_pixel_put(&new_img, B.x++, B.y, get_color(img, A.x, A.y));
 		++B.y;
 	}
 	mlx_destroy_image(vars.mlx, img->img);

@@ -147,7 +147,7 @@ static void	high_slope_logic(t_data *data, t_line_segment s, t_point delta)
 }
 
 // Based on Bresenham's algorithm
-void	draw_line(t_data *data, t_point A, t_point B, unsigned int color)
+void	draw_line(t_data *data, t_point A, t_point B, int color)
 {
 	t_point	delta;
 
