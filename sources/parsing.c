@@ -2,8 +2,9 @@
 
 void	ft_print_linked_list(t_input_parse *parse)
 {
-	t_map *temporary = parse->map;
+	t_map	*temporary;
 
+	temporary = parse->map;
 	while (temporary != NULL)
 	{
 		printf("%s\n", temporary->map_line);
@@ -23,6 +24,8 @@ void	ft_struct_printer(t_input_parse *parse)
 	printf("Map Width: %d\n", parse->map_width);
 	printf("Map Height: %d\n\n", parse->map_height);
 	printf("Full: %d\n", parse->full);
+	printf("2D Array: %s\n\n", parse->two_d_array[13]);
+	ft_print_linked_list(parse);
 }
 
 void	ft_error_message(char *str)
@@ -111,9 +114,27 @@ void	ft_texture_parser(char *line, t_input_parse *parse)
 	}
 }
 
+void	ft_ll_to_2d(t_input_parse *parse)
+{
+	t_map	*temporary;
+
+	parse->two_d_array = malloc(parse->map_height * parse->map_width + 1);
+	temporary = parse->map;
+	parse->i = parse->map_height;
+	parse->two_d_array[parse->i] = NULL;
+	while (temporary != NULL)
+	{
+		parse->i--;
+		parse->two_d_array[parse->i] = temporary->map_line;
+		temporary = temporary->next;
+	}
+}
+
 t_map	*ft_map_to_ll(t_input_parse *parse)
 {
-	t_map *map = malloc(sizeof(t_map));
+	t_map	*map;
+
+	map = malloc(sizeof(t_map));
 	map->map_line = parse->line;
 	map->next = NULL;
 	return (map);
@@ -121,7 +142,7 @@ t_map	*ft_map_to_ll(t_input_parse *parse)
 
 void	ft_gnl_to_ll(t_input_parse *parse)
 {
-	t_map *tmp;
+	t_map	*tmp;
 
 	if (parse->map_width < (int)ft_strlen(parse->line))
 		parse->map_width = (int)ft_strlen(parse->line);
@@ -134,11 +155,8 @@ void	ft_gnl_to_ll(t_input_parse *parse)
 void	ft_map_parse(t_input_parse *parse)
 {
 	while (get_next_line(parse->fd, &parse->line) != 0)
-	{
 		ft_gnl_to_ll(parse);
-	}
 	ft_gnl_to_ll(parse);
-	ft_print_linked_list(parse);
 }
 
 int	ft_extension_checker(int argc, char **argv)
@@ -148,10 +166,12 @@ int	ft_extension_checker(int argc, char **argv)
 		ft_error_message("Wrong input\n");
 		return (1);
 	}
-	else if (!(argv[1][ft_strlen(argv[1]) - 4] == '.'
+	if (ft_strlen(argv[1]) < 4)
+		ft_error_message("Wrong input\n");
+	if (!(argv[1][ft_strlen(argv[1]) - 4] == '.'
 		&& argv[1][ft_strlen(argv[1]) - 3] == 'c'
 		&& argv[1][ft_strlen(argv[1]) - 2] == 'u'
-		&& argv[1][ft_strlen(argv[1]) - 1] == 'b')) //why not segfault with 1.cu
+		&& argv[1][ft_strlen(argv[1]) - 1] == 'b'))
 	{
 		ft_error_message("Wrong input\n");
 		return (1);
@@ -181,7 +201,7 @@ void	ft_input_parse(int argc, char **argv, t_input_parse *parse)
 		return ;
 	}
 	ft_map_parse(parse);
-	//ft_ll_to_2d();
+	ft_ll_to_2d(parse);
 	close (parse->fd);
-	ft_struct_printer(parse);
+	//ft_struct_printer(parse);
 }

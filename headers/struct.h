@@ -121,7 +121,9 @@ typedef struct s_input_parse
 
 	int		fd;
 	int		full;
+	int		i;
 	char	*line;
+	char	**two_d_array;
 
 	t_map	*map;
 
