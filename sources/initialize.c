@@ -163,11 +163,11 @@ void	init_sprites(t_cub3D *mystruct)
 {
 	int	sprite_index;
 
+	mystruct->n_of_sprites_on_map = 10;
 	mystruct->sprites = ft_calloc(mystruct->n_of_sprites_on_map, sizeof(*mystruct->sprites));
 	for (int i = 0; i < mystruct->n_of_sprites_on_map; ++i)
 		mystruct->sprites[i].img = &mystruct->textures[LAMP];
 	sprite_index = 0;
-	mystruct->n_of_sprites_on_map = 10;
 	for (int y = 0; y < mystruct->map_height; ++y)
 	{
 		for (int x = 0; x < mystruct->map_width; ++x)
