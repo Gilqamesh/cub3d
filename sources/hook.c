@@ -2,6 +2,7 @@
 
 int	render_frame(void *param)
 {
+	static int var;
 	static t_cub3D	*mystruct = NULL;
 	static bool		first_time = true;
 
@@ -15,6 +16,11 @@ int	render_frame(void *param)
 		draw_pause_screen(mystruct);
 		return (0);
 	}
+	if (++var == 100)
+	{	
+		var = 0;
+		system("leaks cub3D");
+	}
 	floor_casting(mystruct);
 	wall_casting(mystruct);
 	sprite_casting(mystruct);
@@ -23,7 +29,7 @@ int	render_frame(void *param)
 	draw_minimap(mystruct);
 	update_position(mystruct);
 	update_mouse(mystruct);
-	print_debug(mystruct);
+	//print_debug(mystruct);
 	mlx_do_sync(mystruct->vars.mlx);
 	return (0);
 }

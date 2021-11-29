@@ -214,6 +214,7 @@ void	ft_input_parse(int argc, char **argv, t_input_parse *parse)
 		if (parse->NO != NULL && parse->NO != NULL && parse->WE != NULL
 			&& parse->EA != NULL && parse->F != 0 && parse->C != 0)
 			parse->full = 1;
+		free(parse->line);
 	}
 	if (parse->full != 1)
 	{
