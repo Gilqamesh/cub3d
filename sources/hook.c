@@ -5,6 +5,7 @@ int	render_frame(void *param)
 	static t_cub3D	*mystruct = NULL;
 	static bool		first_time = true;
 
+	PRINT_HERE();
 	if (first_time == true)
 	{
 		first_time = false;
@@ -15,16 +16,25 @@ int	render_frame(void *param)
 		draw_pause_screen(mystruct);
 		return (0);
 	}
+	PRINT_HERE();
 	floor_casting(mystruct);
+	PRINT_HERE();
 	wall_casting(mystruct);
+	PRINT_HERE();
 	sprite_casting(mystruct);
+	PRINT_HERE();
 	draw_crosshair(mystruct);
+	PRINT_HERE();
 	update_canvas(mystruct);
-	draw_minimap(mystruct);
+	PRINT_HERE();
+	// draw_minimap(mystruct);
 	update_position(mystruct);
+	PRINT_HERE();
 	update_mouse(mystruct);
+	PRINT_HERE();
 	print_debug(mystruct);
-	mlx_do_sync(mystruct->vars.mlx);
+	PRINT_HERE();
+	// mlx_do_sync(mystruct->vars.mlx);
 	return (0);
 }
 

@@ -8,3 +8,4 @@
 7. Polish extract image function
 8. Angle jumping between 80 and 100 instead of staying at 90, hmm..
 9. Polish line draw function
+10. Don't store last line of gnl if there are additional stuff in the file after the map

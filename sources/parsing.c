@@ -116,30 +116,31 @@ void	ft_texture_parser(char *line, t_input_parse *parse)
 
 void	ft_one_line_2d(t_input_parse *parse, char *map_line)
 {
+	int	i;
 	int	j;
+	int	index;
 
 	j = 0;
 	parse->two_d_array[parse->i] = malloc((parse->map_width + 1)
 			* sizeof(char));
-	while (j < parse->map_width - 1)
+	index = 0;
+	while (j < (int)ft_strlen(map_line))
 	{
-		if (j > ((int)ft_strlen(map_line) - 1))
-			parse->two_d_array[parse->i][j] = '*';
-		else if (map_line[j] == ' ')
-			parse->two_d_array[parse->i][j] = '*';
-		else if (map_line[j] == '\t')
+		if (map_line[j] == '\t')
 		{
-			parse->two_d_array[parse->i][j] = '*';
-			parse->two_d_array[parse->i][j + 1] = '*';
-			parse->two_d_array[parse->i][j + 2] = '*';
-			parse->two_d_array[parse->i][j + 3] = '*';
-			j += 3;
+			i = -1;
+			while (++i < 4)
+				parse->two_d_array[parse->i][index++] = '*';
 		}
+		else if (map_line[j] == ' ')
+			parse->two_d_array[parse->i][index++] = '*';
 		else
-			parse->two_d_array[parse->i][j] = map_line[j];
-		j++;
+			parse->two_d_array[parse->i][index++] = map_line[j];
+		++j;
 	}
-	parse->two_d_array[parse->i][j] = '\0';
+	while (index < parse->map_width)
+		parse->two_d_array[parse->i][index++] = '*';
+	parse->two_d_array[parse->i][index] = '\0';
 }
 
 void	ft_ll_to_2d(t_input_parse *parse)
@@ -224,5 +225,5 @@ void	ft_input_parse(int argc, char **argv, t_input_parse *parse)
 	ft_map_parse(parse);
 	ft_ll_to_2d(parse);
 	close (parse->fd);
-	//ft_struct_printer(parse);
+	// ft_struct_printer(parse);
 }

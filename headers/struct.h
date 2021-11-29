@@ -55,11 +55,19 @@ enum texture_name
 	BARREL,
 	PILLAR,
 	LAMP,
-	N_OF_ELEMENTS
+	N_OF_TEXTURES
 };
 
 # define FLOOR_TEXTURE		WHITE_BRICK
 # define CEILING_TEXTURE	WOOD
+
+typedef struct s_sprite
+{
+	t_data	*img;
+	int		distance;
+	double	posX;
+	double	posY;
+}	t_sprite;
 
 typedef struct s_cub3D
 {
@@ -91,6 +99,8 @@ typedef struct s_cub3D
 	t_data				real_time_minimap_img;
 	long int			prev_timestamp;
 	int					n_of_sprites_on_map;
+	t_sprite			*sprites;
+	double				*ZBuffer;
 }	t_cub3D;
 
 typedef struct s_args1
