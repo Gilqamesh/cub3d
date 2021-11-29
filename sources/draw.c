@@ -35,7 +35,8 @@ void	draw_minimap(t_cub3D *mystruct)
 		{
 			minimapX = mystruct->posX * MINIMAP_CELL_X - REALTIME_MINIMAP_W / 2.0 + x;
 			minimapY = mystruct->posY * MINIMAP_CELL_Y - REALTIME_MINIMAP_H / 2.0 + y;
-			if (minimapX >= 0 && minimapX < MINIMAP_WIDTH && minimapY >= 0 && minimapY < MINIMAP_HEIGHT)
+			if (minimapX >= 0 && minimapX < MINIMAP_CELL_X * mystruct->map_width
+				&& minimapY >= 0 && minimapY < MINIMAP_CELL_Y * mystruct->map_height)
 				my_mlx_pixel_put(&mystruct->real_time_minimap_img, x, REALTIME_MINIMAP_H -  y - 1,
 					get_color(&mystruct->minimap_img, minimapX, minimapY));
 			else

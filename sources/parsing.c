@@ -139,7 +139,7 @@ void	ft_one_line_2d(t_input_parse *parse, char *map_line)
 			parse->two_d_array[parse->i][j] = map_line[j];
 		j++;
 	}
-	parse->two_d_array[parse->i][j] = '*';
+	parse->two_d_array[parse->i][j] = '\0';
 }
 
 void	ft_ll_to_2d(t_input_parse *parse)

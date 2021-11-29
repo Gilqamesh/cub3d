@@ -4,8 +4,6 @@
 # define SCREEN_W				640
 # define SCREEN_H				480
 # define TITLE					"cub3D"
-# define mapWidth				24
-# define mapHeight				24
 # define KEY_LEFT				123
 # define KEY_UP					126
 # define KEY_DOWN				125
@@ -27,8 +25,6 @@
 # define MINIMAP_CELL_Y			SCREEN_H / 40
 # define MINIMAP_N_OF_CELL_X	10
 # define MINIMAP_N_OF_CELL_Y	10
-# define MINIMAP_WIDTH			(MINIMAP_CELL_X * mapWidth)
-# define MINIMAP_HEIGHT			(MINIMAP_CELL_Y * mapHeight)
 # define REALTIME_MINIMAP_W		(MINIMAP_CELL_X * MINIMAP_N_OF_CELL_X)
 # define REALTIME_MINIMAP_H		(MINIMAP_CELL_Y * MINIMAP_N_OF_CELL_Y)
 
