@@ -12,6 +12,7 @@ int	main(int argc, char **argv)
 	}
 	ft_bzero(&mystruct, sizeof(mystruct));
 	ft_input_parse(argc, argv, &parse);
+	mystruct->map = parse->two_array;
 	init_struct(&mystruct);
 	// build_tree();
 	install_hooks(&mystruct);
