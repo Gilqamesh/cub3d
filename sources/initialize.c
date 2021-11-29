@@ -16,8 +16,8 @@ void	init_struct(t_cub3D *mystruct, t_input_parse *parse)
 	mystruct->planeY = 0.66;
 	mlx_mouse_hide();
 	mlx_mouse_move(mystruct->vars.win, SCREEN_W / 2, SCREEN_H / 2);
-	mystruct->textures = malloc(8 * sizeof(*mystruct->textures));
-	for (int i = 0; i < 8; ++i)
+	mystruct->textures = malloc(N_OF_ELEMENTS * sizeof(*mystruct->textures));
+	for (int i = 0; i < N_OF_ELEMENTS; ++i)
 		extract_image(&mystruct->textures[i], (t_args1){
 			(t_point){i * TEXTURE_W, TEXTURE_H}, (t_point){(i + 1) * TEXTURE_W, 0},
 			"assets/wolftextures.xpm", &mystruct->vars, (t_point){TEXTURE_W, TEXTURE_H}});

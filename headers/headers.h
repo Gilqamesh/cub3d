@@ -17,6 +17,7 @@
 # include "image_manipulation.h"
 # include "update.h"
 # include "draw.h"
+# include "sprite_casting.h"
 
 // DEBUG
 # include "debugging.h"

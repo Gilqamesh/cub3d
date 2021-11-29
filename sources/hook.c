@@ -17,6 +17,7 @@ int	render_frame(void *param)
 	}
 	floor_casting(mystruct);
 	wall_casting(mystruct);
+	sprite_casting(mystruct);
 	draw_crosshair(mystruct);
 	update_canvas(mystruct);
 	draw_minimap(mystruct);

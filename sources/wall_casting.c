@@ -76,7 +76,7 @@ void	perform_dda(t_cub3D *mystruct, t_wall_cast_params *p)
 			p->mapY += p->stepY;
 			p->side = 1;
 		}
-		if (mystruct->map[p->mapY][p->mapX] > '0')
+		if (mystruct->map[p->mapY][p->mapX] > '0' && mystruct->map[p->mapY][p->mapX] < '9')
 			hit = 1;
 	}
 }
@@ -100,7 +100,7 @@ void	calculate_distance(t_wall_cast_params *p)
 }
 
 // Calculate where the wall was hit (wallX)
-// X coordinate of the texture (texX)j
+// X coordinate of the texture (texX)
 // How much to increase the texture coordinate per screen pixel (step)
 // Starting texture coordinate (texPos)
 // Each iteration:

@@ -8,7 +8,7 @@
 void	floor_casting(t_cub3D *mystruct)
 {
 	t_floor_cast_params	p;
-	unsigned int	color;
+	unsigned int		color;
 
 	for (int y = 0; y < SCREEN_H; ++y)
 	{
@@ -31,9 +31,10 @@ void	floor_casting(t_cub3D *mystruct)
 
 void	initialize_floor_ray(t_cub3D *mystruct, int current_row, t_floor_cast_params *p)
 {
-	p->rowDistance = (mystruct->posZ) / (current_row - SCREEN_H / 2);
+	p->rowDistance = current_row == SCREEN_H / 2 ? INFINITY
+		: (mystruct->posZ) / (current_row - SCREEN_H / 2);
 	p->floorStepX = p->rowDistance * 2.0 * mystruct->planeX / SCREEN_W;
 	p->floorStepY = p->rowDistance * 2.0 * mystruct->planeY / SCREEN_W;
-	p->floorX = mystruct->posX + p->rowDistance * mystruct->dirX - mystruct->planeX;
-	p->floorY = mystruct->posY + p->rowDistance * mystruct->dirY - mystruct->planeY;
+	p->floorX = mystruct->posX + p->rowDistance * (mystruct->dirX - mystruct->planeX);
+	p->floorY = mystruct->posY + p->rowDistance * (mystruct->dirY - mystruct->planeY);
 }
