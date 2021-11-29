@@ -15,7 +15,7 @@ int	render_frame(void *param)
 		draw_pause_screen(mystruct);
 		return (0);
 	}
-	// floor_casting(mystruct);
+	floor_casting(mystruct);
 	wall_casting(mystruct);
 	draw_crosshair(mystruct);
 	update_canvas(mystruct);
