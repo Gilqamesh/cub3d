@@ -119,7 +119,9 @@ void	ft_one_line_2d(t_input_parse *parse, char *map_line)
 	int	j;
 
 	j = 0;
-	while (j < parse->map_width)
+	parse->two_d_array[parse->i] = malloc((parse->map_width + 1)
+			* sizeof(char));
+	while (j < parse->map_width - 1)
 	{
 		if (j > ((int)ft_strlen(map_line) - 1))
 			parse->two_d_array[parse->i][j] = '*';
@@ -128,30 +130,30 @@ void	ft_one_line_2d(t_input_parse *parse, char *map_line)
 		else if (map_line[j] == '\t')
 		{
 			parse->two_d_array[parse->i][j] = '*';
-			parse->two_d_array[parse->i][j] = '*';
-			parse->two_d_array[parse->i][j] = '*';
-			parse->two_d_array[parse->i][j] = '*';
+			parse->two_d_array[parse->i][j + 1] = '*';
+			parse->two_d_array[parse->i][j + 2] = '*';
+			parse->two_d_array[parse->i][j + 3] = '*';
 			j += 3;
 		}
 		else
 			parse->two_d_array[parse->i][j] = map_line[j];
 		j++;
 	}
+	parse->two_d_array[parse->i][j] = '*';
 }
 
 void	ft_ll_to_2d(t_input_parse *parse)
 {
 	t_map	*temporary;
 
-	parse->two_d_array = malloc(parse->map_height * parse->map_width + 1);
+	parse->two_d_array = malloc((parse->map_height + 1) * sizeof(char *));
 	temporary = parse->map;
 	parse->i = parse->map_height;
 	parse->two_d_array[parse->i] = NULL;
 	while (temporary != NULL)
 	{
 		parse->i -= 1;
-		//ft_one_line_2d(parse, temporary->map_line);
-		//parse->two_d_array[parse->i] = temporary->map_line;
+		ft_one_line_2d(parse, temporary->map_line);
 		temporary = temporary->next;
 	}
 }
