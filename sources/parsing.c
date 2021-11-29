@@ -138,11 +138,30 @@ void	ft_map_parse(t_input_parse *parse)
 		ft_gnl_to_ll(parse);
 	}
 	ft_gnl_to_ll(parse);
-	//ft_print_linked_list(parse);
+	ft_print_linked_list(parse);
 }
 
-void	ft_input_parse(char **argv, t_input_parse *parse)
+int	ft_extension_checker(int argc, char **argv)
 {
+	if (argc != 2)
+	{
+		ft_error_message("Wrong input\n");
+		return (1);
+	}
+	else if (!(argv[1][ft_strlen(argv[1]) - 4] == '.'
+		&& argv[1][ft_strlen(argv[1]) - 3] == 'c'
+		&& argv[1][ft_strlen(argv[1]) - 2] == 'u'
+		&& argv[1][ft_strlen(argv[1]) - 1] == 'b')) //why not segfault with 1.cu
+	{
+		ft_error_message("Wrong input\n");
+		return (1);
+	}
+	return (0);
+}
+
+void	ft_input_parse(int argc, char **argv, t_input_parse *parse)
+{
+	ft_extension_checker(argc, argv);
 	ft_bzero(parse, sizeof(*parse));
 	parse->fd = open(argv[1], O_RDONLY);
 	if (parse->fd == -1)
@@ -162,24 +181,7 @@ void	ft_input_parse(char **argv, t_input_parse *parse)
 		return ;
 	}
 	ft_map_parse(parse);
+	//ft_ll_to_2d();
 	close (parse->fd);
 	ft_struct_printer(parse);
-}
-
-int	ft_extension_checker(int argc, char **argv)
-{
-	if (argc != 2)
-	{
-		ft_error_message("Wrong input\n");
-		return (1);
-	}
-	else if (!(argv[1][ft_strlen(argv[1]) - 4] == '.'
-		&& argv[1][ft_strlen(argv[1]) - 3] == 'c'
-		&& argv[1][ft_strlen(argv[1]) - 2] == 'u'
-		&& argv[1][ft_strlen(argv[1]) - 1] == 'b')) //why not segfault with 1.cu
-	{
-		ft_error_message("Wrong input\n");
-		return (1);
-	}
-	return (0);
 }

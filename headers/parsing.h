@@ -4,8 +4,8 @@
 # include "struct.h"
 # include <fcntl.h>	
 
+void	ft_input_parse(int argc, char **argv, t_input_parse *parse);
 int		ft_extension_checker(int argc, char **argv);
-void	ft_input_parse(char **argv, t_input_parse *parse);
 void	ft_map_parse(t_input_parse *parse);
 void	ft_gnl_to_ll(t_input_parse *parse);
 t_map	*ft_map_to_ll(t_input_parse *parse);
