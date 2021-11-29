@@ -114,6 +114,31 @@ void	ft_texture_parser(char *line, t_input_parse *parse)
 	}
 }
 
+void	ft_one_line_2d(t_input_parse *parse, char *map_line)
+{
+	int	j;
+
+	j = 0;
+	while (j < parse->map_width)
+	{
+		if (j > ((int)ft_strlen(map_line) - 1))
+			parse->two_d_array[parse->i][j] = '*';
+		else if (map_line[j] == ' ')
+			parse->two_d_array[parse->i][j] = '*';
+		else if (map_line[j] == '\t')
+		{
+			parse->two_d_array[parse->i][j] = '*';
+			parse->two_d_array[parse->i][j] = '*';
+			parse->two_d_array[parse->i][j] = '*';
+			parse->two_d_array[parse->i][j] = '*';
+			j += 3;
+		}
+		else
+			parse->two_d_array[parse->i][j] = map_line[j];
+		j++;
+	}
+}
+
 void	ft_ll_to_2d(t_input_parse *parse)
 {
 	t_map	*temporary;
@@ -124,8 +149,9 @@ void	ft_ll_to_2d(t_input_parse *parse)
 	parse->two_d_array[parse->i] = NULL;
 	while (temporary != NULL)
 	{
-		parse->i--;
-		parse->two_d_array[parse->i] = temporary->map_line;
+		parse->i -= 1;
+		//ft_one_line_2d(parse, temporary->map_line);
+		//parse->two_d_array[parse->i] = temporary->map_line;
 		temporary = temporary->next;
 	}
 }
@@ -159,24 +185,17 @@ void	ft_map_parse(t_input_parse *parse)
 	ft_gnl_to_ll(parse);
 }
 
-int	ft_extension_checker(int argc, char **argv)
+void	ft_extension_checker(int argc, char **argv)
 {
 	if (argc != 2)
-	{
 		ft_error_message("Wrong input\n");
-		return (1);
-	}
-	if (ft_strlen(argv[1]) < 4)
+	else if (ft_strlen(argv[1]) < 4)
 		ft_error_message("Wrong input\n");
-	if (!(argv[1][ft_strlen(argv[1]) - 4] == '.'
+	else if (!(argv[1][ft_strlen(argv[1]) - 4] == '.'
 		&& argv[1][ft_strlen(argv[1]) - 3] == 'c'
 		&& argv[1][ft_strlen(argv[1]) - 2] == 'u'
 		&& argv[1][ft_strlen(argv[1]) - 1] == 'b'))
-	{
 		ft_error_message("Wrong input\n");
-		return (1);
-	}
-	return (0);
 }
 
 void	ft_input_parse(int argc, char **argv, t_input_parse *parse)
