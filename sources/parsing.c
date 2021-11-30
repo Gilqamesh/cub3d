@@ -141,6 +141,7 @@ void	ft_one_line_2d(t_input_parse *parse, char *map_line)
 	while (index < parse->map_width)
 		parse->two_d_array[parse->i][index++] = '*';
 	parse->two_d_array[parse->i][index] = '\0';
+	ft_printf("Hey: %s parse->i: %d\n", parse->two_d_array[parse->i], parse->i);
 }
 
 void	ft_ll_to_2d(t_input_parse *parse)

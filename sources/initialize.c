@@ -21,13 +21,24 @@ void	init_struct(t_cub3D *mystruct, t_input_parse *parse)
 			(t_point){i * TEXTURE_W, TEXTURE_H}, (t_point){(i + 1) * TEXTURE_W, 0},
 			"assets/wolftextures.xpm", &mystruct->vars, (t_point){TEXTURE_W, TEXTURE_H}});
 	extract_image(&mystruct->textures[LAMP], (t_args1){
-		(t_point){640, TEXTURE_H}, (t_point){683, 0}, "assets/wolftextures.xpm",
+		(t_point){640, TEXTURE_H}, (t_point){682, 0}, "assets/wolftextures.xpm",
 		&mystruct->vars, (t_point){TEXTURE_W, TEXTURE_H}});
 	extract_image(&mystruct->pause_img, (t_args1){
 		(t_point){0, 681}, (t_point){1007, 0}, "assets/pause.xpm", &mystruct->vars, (t_point){SCREEN_W, SCREEN_H}});
 	make_image_transparent(&mystruct->pause_img, SCREEN_W, SCREEN_H, 120);
+	extract_image(&mystruct->wall_textures[NORTH_WALL_TEXTURE], (t_args1){
+			(t_point){0, 320}, (t_point){320, 0}, "assets/NORTH_WALL.xpm", &mystruct->vars, (t_point){TEXTURE_W, TEXTURE_H}});
+	extract_image(&mystruct->wall_textures[EAST_WALL_TEXTURE], (t_args1){
+			(t_point){0, 320}, (t_point){320, 0}, "assets/EAST_WALL.xpm", &mystruct->vars, (t_point){TEXTURE_W, TEXTURE_H}});
+	extract_image(&mystruct->wall_textures[SOUTH_WALL_TEXTURE], (t_args1){
+			(t_point){0, 320}, (t_point){320, 0}, "assets/SOUTH_WALL.xpm", &mystruct->vars, (t_point){TEXTURE_W, TEXTURE_H}});
+	extract_image(&mystruct->wall_textures[WEST_WALL_TEXTURE], (t_args1){
+			(t_point){0, 320}, (t_point){320, 0}, "assets/WEST_WALL.xpm", &mystruct->vars, (t_point){TEXTURE_W, TEXTURE_H}});
+	PRINT_HERE();
 	init_minimap_img(mystruct);
+	PRINT_HERE();
 	init_sprites(mystruct);
+	PRINT_HERE();
 	mystruct->prev_timestamp = get_current_timestamp();
 }
 
@@ -46,22 +57,33 @@ void	init_minimap_img(t_cub3D *mystruct)
 	int		y;
 	t_point	i;
 
+	PRINT_HERE();
 	extract_image(&mystruct->minimap_wall_img, (t_args1){
 		(t_point){0, 320}, (t_point){320, 0}, "assets/minimap_wall.xpm", &mystruct->vars,
 		(t_point){MINIMAP_CELL_X, MINIMAP_CELL_Y}});
+	PRINT_HERE();
 	extract_image(&mystruct->minimap_blank_img, (t_args1){
 		(t_point){0, 320}, (t_point){320, 0}, "assets/minimap_blank.xpm", &mystruct->vars,
 		(t_point){MINIMAP_CELL_X, MINIMAP_CELL_Y}});
+	PRINT_HERE();
 	mystruct->minimap_img.img = mlx_new_image(mystruct->vars.mlx, MINIMAP_CELL_X * mystruct->map_width,
 		MINIMAP_CELL_Y * mystruct->map_height);
+	PRINT_HERE();
 	mystruct->minimap_img.addr = mlx_get_data_addr(mystruct->minimap_img.img, &mystruct->minimap_img.bits_per_pixel,
 		&mystruct->minimap_img.line_length, &mystruct->minimap_img.endian);
+	PRINT_HERE();
 	y = -1;
 	while (++y < mystruct->map_height)
 	{
 		x = -1;
 		while (++x < mystruct->map_width)
 		{
+			PRINT_HERE();
+			printf("x: %d y: %d\n", x, y);
+			ft_printf("%p\n", mystruct->map);
+			ft_printf("%s\n", mystruct->map[y]);
+			printf("%c\n", mystruct->map[y][x]);
+			PRINT_HERE();
 			if (mystruct->map[y][x] == '0')
 			{
 				i.y = -1;
@@ -84,17 +106,29 @@ void	init_minimap_img(t_cub3D *mystruct)
 							get_color(&mystruct->minimap_wall_img, i.x, i.y));
 				}
 			}
+			PRINT_HERE();
 		}
 	}
+	PRINT_HERE();
 	make_image_transparent(&mystruct->minimap_img, MINIMAP_CELL_X * mystruct->map_width, MINIMAP_CELL_Y * mystruct->map_height, 150);
+	PRINT_HERE();
 	mystruct->real_time_minimap_img.img = mlx_new_image(mystruct->vars.mlx, REALTIME_MINIMAP_W, REALTIME_MINIMAP_H);
+	PRINT_HERE();
 	mystruct->real_time_minimap_img.addr = mlx_get_data_addr(mystruct->real_time_minimap_img.img, &mystruct->real_time_minimap_img.bits_per_pixel,
 		&mystruct->real_time_minimap_img.line_length, &mystruct->real_time_minimap_img.endian);
+	PRINT_HERE();
 }
 
 void	init_map(t_cub3D *mystruct, t_input_parse *parse)
 {
 	mystruct->map = parse->two_d_array;
+	ft_printf("Map addresses: %p %p\n", mystruct->map, parse->two_d_array);
+	for (int i = 0; i < parse->map_height; ++i)
+	{
+		for (int j = 0; j < parse->map_width; ++j)
+			ft_printf("%c ", parse->two_d_array[i][j]);
+		ft_printf("\n");
+	}
 	mystruct->map_height = parse->map_height;
 	mystruct->map_width = parse->map_width;
 }

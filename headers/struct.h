@@ -58,6 +58,15 @@ enum texture_name
 	N_OF_TEXTURES
 };
 
+enum wall_textures
+{
+	NORTH_WALL_TEXTURE,
+	WEST_WALL_TEXTURE,
+	SOUTH_WALL_TEXTURE,
+	EAST_WALL_TEXTURE,
+	N_OF_WALL_TEXTURES
+};
+
 # define FLOOR_TEXTURE		WHITE_BRICK
 # define CEILING_TEXTURE	WOOD
 
@@ -101,6 +110,7 @@ typedef struct s_cub3D
 	int					n_of_sprites_on_map;
 	t_sprite			*sprites;
 	double				*ZBuffer;
+	t_data				*wall_textures;
 }	t_cub3D;
 
 typedef struct s_args1

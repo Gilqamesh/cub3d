@@ -101,6 +101,44 @@ void	calculate_distance(t_wall_cast_params *p)
 		p->drawEnd = SCREEN_H - 1;
 }
 
+static int	get_wall_texture(t_wall_cast_params *p)
+{
+	if (p->stepX == 1)
+	{
+		if (p->stepY == 1) // NE
+		{
+			if (p->side == 0) // vertical wall hit
+				return (EAST_WALL_TEXTURE);
+			else // horizontal hit
+				return (NORTH_WALL_TEXTURE);
+		}
+		else // SE
+		{
+			if (p->side == 0)
+				return (EAST_WALL_TEXTURE);
+			else
+				return (SOUTH_WALL_TEXTURE);
+		}
+	}
+	else
+	{
+		if (p->stepY == 1) // NW
+		{
+			if (p->side == 0)
+				return (WEST_WALL_TEXTURE);
+			else
+				return (NORTH_WALL_TEXTURE);
+		}
+		else // SW
+		{
+			if (p->side == 0)
+				return (WEST_WALL_TEXTURE);
+			else
+				return (SOUTH_WALL_TEXTURE);
+		}
+	}
+}
+
 // Calculate where the wall was hit (wallX)
 // X coordinate of the texture (texX)
 // How much to increase the texture coordinate per screen pixel (step)
@@ -114,6 +152,7 @@ void	calculate_distance(t_wall_cast_params *p)
 void	draw_wall(t_cub3D *mystruct, int current_column, t_wall_cast_params *p)
 {
 	t_draw_wall_params	w;
+	int					wall_texture;
 
 	if (p->side == 0)
 		w.wallX = mystruct->posY + p->perpWallDist * p->rayDirY;
@@ -127,12 +166,12 @@ void	draw_wall(t_cub3D *mystruct, int current_column, t_wall_cast_params *p)
 		w.texX = TEXTURE_W - w.texX - 1;
 	w.step = (double)TEXTURE_H / p->lineHeight;
 	w.texPos = (p->drawStart + (p->lineHeight - SCREEN_H) / 2.0) * w.step;
-	// verLine(mystruct, current_column, 0, SCREEN_H - 1, BLACK);
+	wall_texture = get_wall_texture(p);
 	for (int y = p->drawStart; y < p->drawEnd; ++y)
 	{
 		w.texY = (int)w.texPos & (TEXTURE_H - 1);
 		w.texPos += w.step;
-		w.color = get_color(&mystruct->textures[mystruct->map[p->mapY][p->mapX] - '0' - 1], w.texX, w.texY);
+		w.color = get_color(&mystruct->wall_textures[wall_texture], w.texX, w.texY);
 		if (p->side == 1)
 			w.color = (w.color >> 1) & 8355711;
 		my_mlx_pixel_put(&mystruct->canvas, current_column, y, w.color);
