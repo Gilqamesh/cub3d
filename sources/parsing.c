@@ -215,12 +215,12 @@ void	ft_input_parse(int argc, char **argv, t_input_parse *parse)
 		if (parse->NO != NULL && parse->NO != NULL && parse->WE != NULL
 			&& parse->EA != NULL && parse->F != 0 && parse->C != 0)
 			parse->full = 1;
+		free(parse->line);
 	}
 	if (parse->full != 1)
 	{
-		ft_error_message("Wrong input\n");
 		close (parse->fd);
-		return ;
+		ft_error_message("Wrong input\n");
 	}
 	ft_map_parse(parse);
 	ft_ll_to_2d(parse);
