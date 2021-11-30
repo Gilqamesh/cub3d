@@ -18,6 +18,8 @@ int	render_frame(void *param)
 		draw_pause_screen(mystruct);
 		return (0);
 	}
+	if (++mystruct->n_of_renders == 30 / 4)
+		mystruct->n_of_renders = 0;
 	// if (++var == 100)
 	// {	
 	// 	var = 0;
@@ -31,8 +33,8 @@ int	render_frame(void *param)
 	draw_minimap(mystruct);
 	update_position(mystruct);
 	update_mouse(mystruct);
-	//print_debug(mystruct);
-	// mlx_do_sync(mystruct->vars.mlx);
+	print_debug(mystruct);
+	mlx_do_sync(mystruct->vars.mlx);
 	return (0);
 }
 

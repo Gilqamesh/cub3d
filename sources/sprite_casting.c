@@ -75,6 +75,11 @@ void	sprite_casting(t_cub3D *mystruct)
 
 	for (int i = 0; i < mystruct->n_of_sprites_on_map; ++i)
 	{
+		// Change state of sprites for animation
+		if (mystruct->n_of_renders == 0 && mystruct->sprites[i].name == SPRITE_GOGGLE)
+			if (++mystruct->sprites[i].index_of_sprite == 8)
+				mystruct->sprites[i].index_of_sprite = 0;
+
 		// Translate sprite position to relative to camera
 		double	spriteX = mystruct->sprites[i].posX - mystruct->posX;
 		double	spriteY = mystruct->sprites[i].posY - mystruct->posY;
@@ -127,7 +132,8 @@ void	sprite_casting(t_cub3D *mystruct)
 					int				d = y * 256 - SCREEN_H * 128 + spriteHeight * 128;
 					int				texY = (d * TEXTURE_H / (double)spriteHeight) / 256;
 					// Get current color from the texture
-					unsigned int	color = get_color(mystruct->sprites[i].img, texX, texY);
+					unsigned int	color = get_color(&mystruct->sprites[i].img[mystruct->sprites[i].index_of_sprite],
+						texX, texY);
 					if ((color & 0x00ffffff) != 0)
 						my_mlx_pixel_put(&mystruct->canvas, stripe, y, color);
 				}

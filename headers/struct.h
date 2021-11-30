@@ -59,12 +59,22 @@ enum texture_name
 # define FLOOR_TEXTURE		WHITE_BRICK
 # define CEILING_TEXTURE	WOOD
 
+enum sprite_name
+{
+	SPRITE_LAMP,
+	SPRITE_GOGGLE,
+	N_OF_SPRITES
+};
+
+// index_of_sprite for sprites where img holds multiple sprites
 typedef struct s_sprite
 {
-	t_data	*img;
-	int		distance;
-	double	posX;
-	double	posY;
+	t_data				*img;
+	int					index_of_sprite;
+	int					distance;
+	enum sprite_name	name;
+	double				posX;
+	double				posY;
 }	t_sprite;
 
 typedef struct s_map
@@ -130,6 +140,7 @@ typedef struct s_cub3D
 	bool				is_left_held;
 	bool				is_right_held;
 	bool				is_paused;
+	t_data				*goggles;
 	t_data				pause_img;
 	t_data				minimap_img;
 	t_data				minimap_wall_img;
@@ -144,6 +155,7 @@ typedef struct s_cub3D
 	t_door				door_to_interact_with;
 	t_data				minimap_door_closed_img;
 	t_data				minimap_door_open_img;
+	int					n_of_renders;
 }	t_cub3D;
 
 typedef struct s_args1

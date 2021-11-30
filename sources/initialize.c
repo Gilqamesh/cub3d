@@ -14,6 +14,11 @@ void	init_struct(t_cub3D *mystruct)
 	mystruct->dirY = 0;
 	mystruct->planeX = 0;
 	mystruct->planeY = 0.66;
+	mystruct->goggles = malloc(8 * sizeof(*mystruct->goggles));
+	for (int i = 0; i < 8; ++i)
+		extract_image(&mystruct->goggles[i], (t_args1){
+			(t_point){i * 64, 64}, (t_point){(i + 1) * 64, 0}, "assets/goggles.xpm",
+			&mystruct->vars, (t_point){TEXTURE_W, TEXTURE_H}});
 	mystruct->textures = malloc(N_OF_TEXTURES * sizeof(*mystruct->textures));
 	extract_image(&mystruct->textures[TEXTURE_DOOR], (t_args1){
 		(t_point){0, 320}, (t_point){320, 0}, "assets/door.xpm",
@@ -143,8 +148,14 @@ void	init_sprites(t_cub3D *mystruct)
 
 	mystruct->n_of_sprites_on_map = 20;
 	mystruct->sprites = ft_calloc(mystruct->n_of_sprites_on_map, sizeof(*mystruct->sprites));
-	for (int i = 0; i < mystruct->n_of_sprites_on_map; ++i)
+	for (int i = 0; i < mystruct->n_of_sprites_on_map - 1; ++i)
+	{
 		mystruct->sprites[i].img = &mystruct->textures[TEXTURE_LAMP];
+		mystruct->sprites[i].name = SPRITE_LAMP;
+	}
+	mystruct->sprites[mystruct->n_of_sprites_on_map - 1].img
+		= mystruct->goggles;
+	mystruct->sprites[mystruct->n_of_sprites_on_map - 1].name = SPRITE_GOGGLE;
 	sprite_index = 0;
 	for (int y = 0; y < mystruct->map_height; ++y)
 	{
@@ -155,7 +166,7 @@ void	init_sprites(t_cub3D *mystruct)
 				mystruct->sprites[sprite_index].posX = x + 0.5;
 				mystruct->sprites[sprite_index].posY = y + 0.5;
 				if (++sprite_index == mystruct->n_of_sprites_on_map)
-					return ;
+					break ;
 			}
 		}
 	}
