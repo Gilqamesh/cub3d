@@ -1,6 +1,6 @@
 #include "headers.h"
 
-void	my_mlx_pixel_put(t_data *data, double x, double y, int color)
+void	my_mlx_pixel_put(t_data *data, double x, double y, unsigned int color)
 {
 	char	*dst;
 	int		a;
@@ -12,7 +12,7 @@ void	my_mlx_pixel_put(t_data *data, double x, double y, int color)
 	*(unsigned int *)dst = color;
 }
 
-int	get_color(t_data *data, double x, double y)
+unsigned int	get_color(t_data *data, double x, double y)
 {
 	char	*dst;
 	int		a;

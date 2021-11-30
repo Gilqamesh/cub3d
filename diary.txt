@@ -1,16 +1,22 @@
-1. Player's direction vector and the camera's plane vector getting updated with sin/cos, might need to readjust them once
-	in a while to avoid losing precision so that they are perpendicular to each other
-2. The macro named FPS doesn't really make sense, rework movespeed and rotspeed
-3. Replace utils/verLine with linedraw function
-4. Floor/Ceiling textures are misaligned for some reason from the wall, they appear to be ~swimming
-5. Load crosshair from texture
-6. Polish minimap textures
-7. Polish extract image function
-8. Angle jumping between 80 and 100 instead of staying at 90, hmm..
-9. Polish line draw function
-10. Don't store last line of gnl if there are additional stuff in the file after the map
-11. Polish init_minimap_img function
-12. Need: sprite to display something that the player is holding, like a sword
-13. Head bobbling during movement
-14. Randomly placed sprites on the map, hide goggle behind a closed door
-15. When goggle is picked up, remove it from the map and change some attributes of the player, like zoomability
+Polish minimap textures
+
+Polish extract image function
+
+Angle jumping between 80 and 100 instead of staying at 90, hmm..
+
+Polish line draw function
+
+Don't store last line of gnl if there are additional stuff in the file after the map
+
+Polish init_minimap_img function
+
+Need: sprite to display something that the player is holding, like a sword
+
+Head bobbling during movement
+
+Randomly placed sprites on the map, hide goggle behind a closed door
+
+When goggle is picked up, remove it from the map and change some attributes of the player, like zoomability
+
+Make player collision based on a circle instead of a single pixel to have a better feel for collision
+while walking around the map

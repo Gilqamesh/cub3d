@@ -42,5 +42,6 @@
 # define DOOR_OPEN_CHAR			'o'
 # define DOOR_CLOSED_CHAR		'd'
 # define SPACE_CHAR				'0'
+# define CROSSHAIR_SIZE			25
 
 #endif /* DEFINITIONS_H */

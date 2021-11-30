@@ -24,7 +24,7 @@ typedef struct s_line_segment
 {
 	t_point			A;
 	t_point			B;
-	int				color;
+	unsigned int	color;
 }	t_line_segment;
 
 typedef struct s_data
@@ -156,6 +156,7 @@ typedef struct s_cub3D
 	t_data				minimap_door_closed_img;
 	t_data				minimap_door_open_img;
 	int					n_of_renders;
+	t_data				crosshair_img;
 }	t_cub3D;
 
 typedef struct s_args1

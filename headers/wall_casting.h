@@ -47,7 +47,7 @@ typedef struct s_draw_wall_params
 	int				texY;
 	double			step;
 	double			texPos;
-	int	color;
+	unsigned int	color;
 }	t_draw_wall_params;
 
 void	wall_casting(t_cub3D *mystruct);

@@ -28,10 +28,14 @@ int	render_frame(void *param)
 	floor_casting(mystruct);
 	wall_casting(mystruct);
 	sprite_casting(mystruct);
-	draw_crosshair(mystruct);
+	PRINT_HERE();
 	update_canvas(mystruct);
+	draw_crosshair(mystruct);
+	PRINT_HERE();
 	draw_minimap(mystruct);
+	PRINT_HERE();
 	update_position(mystruct);
+	PRINT_HERE();
 	update_mouse(mystruct);
 	print_debug(mystruct);
 	mlx_do_sync(mystruct->vars.mlx);

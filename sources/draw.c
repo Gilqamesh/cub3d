@@ -2,15 +2,8 @@
 
 void	draw_crosshair(t_cub3D *mystruct)
 {
-	int	i;
-
-	i = -2;
-	while (++i < 2)
-		verLine(mystruct, SCREEN_W / 2 - i, SCREEN_H / 2 - 10, SCREEN_H / 2 + 10, RED);
-	i = -2;
-	while (++i < 2)
-		for (int x = SCREEN_W / 2 - 10; x < SCREEN_W / 2 + 10; ++x)
-			my_mlx_pixel_put(&mystruct->canvas, x, SCREEN_H / 2 - i, RED);
+	mlx_put_image_to_window(mystruct->vars.mlx, mystruct->vars.win, mystruct->crosshair_img.img,
+		SCREEN_W / 2 - CROSSHAIR_SIZE / 2, SCREEN_H / 2 - CROSSHAIR_SIZE / 2);
 }
 
 void	draw_pause_screen(t_cub3D *mystruct)
@@ -55,7 +48,7 @@ void	draw_minimap(t_cub3D *mystruct)
 }
 
 // Draws a vertical line
-void	verLine(t_cub3D *mystruct, int x, int y_start, int y_end, int color)
+void	verLine(t_cub3D *mystruct, int x, int y_start, int y_end, unsigned int color)
 {
 	for (int i = y_start; i <= y_end; ++i)
 		my_mlx_pixel_put(&mystruct->canvas, x, i, color);
@@ -151,7 +144,7 @@ static void	high_slope_logic(t_data *data, t_line_segment s, t_point delta)
 }
 
 // Based on Bresenham's algorithm
-void	draw_line(t_data *data, t_point A, t_point B, int color)
+void	draw_line(t_data *data, t_point A, t_point B, unsigned int color)
 {
 	t_point	delta;
 
@@ -163,7 +156,7 @@ void	draw_line(t_data *data, t_point A, t_point B, int color)
 		high_slope_logic(data, (t_line_segment){A, B, color}, delta);
 }
 
-void	draw_filled_circle(t_data *data, t_point center, int radius, int color)
+void	draw_filled_circle(t_data *data, t_point center, int radius, unsigned int color)
 {
 	t_point	iter;
 
