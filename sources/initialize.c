@@ -26,7 +26,8 @@ void	init_struct(t_cub3D *mystruct, t_input_parse *parse)
 	extract_image(&mystruct->pause_img, (t_args1){
 		(t_point){0, 681}, (t_point){1007, 0}, "assets/pause.xpm", &mystruct->vars, (t_point){SCREEN_W, SCREEN_H}});
 	make_image_transparent(&mystruct->pause_img, SCREEN_W, SCREEN_H, 120);
-	// init_minimap_img(mystruct);
+	PRINT_HERE();
+	init_minimap_img(mystruct);
 	PRINT_HERE();
 	init_sprites(mystruct);
 	PRINT_HERE();
@@ -97,45 +98,9 @@ void	init_minimap_img(t_cub3D *mystruct)
 
 void	init_map(t_cub3D *mystruct, t_input_parse *parse)
 {
-	(void)parse;
-	mystruct->map = malloc(24 * sizeof(*mystruct->map));
-	for (int i = 0; i < 24; ++i)
-		mystruct->map[i] = malloc(24);
-	int worldMap[24][24]=
-	{
-	{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-	{2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{5,0,0,0,0,0,2,2,2,2,2,0,0,0,0,3,0,3,0,3,0,0,0,1},
-	{6,0,0,0,0,0,2,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{7,0,0,0,0,0,2,0,0,0,2,0,0,0,0,3,0,0,0,3,0,0,0,1},
-	{8,0,0,0,0,0,2,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{9,0,0,0,0,0,2,2,0,2,2,0,0,0,0,3,0,3,0,3,0,0,0,1},
-	{10,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{11,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{1,4,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{1,4,0,4,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{1,4,0,0,0,0,5,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{1,4,0,4,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{1,4,0,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{1,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{1,4,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
-	};
-	for (int i = 0; i < 24; ++i)
-		for (int j = 0; j < 24; ++j)
-			mystruct->map[i][j] = worldMap[i][j] + '0';
-	// mystruct->map = parse->two_d_array;
-	mystruct->map_height = 24;
-	mystruct->map_width = 24;
-	// mystruct->map_height = parse->map_height;
-	// mystruct->map_width = parse->map_width;
+	mystruct->map = parse->two_d_array;
+	mystruct->map_height = parse->map_height;
+	mystruct->map_width = parse->map_width;
 	// printf("%d %d %p\n", parse->map_height, parse->map_width, parse->two_d_array);
 }
 
@@ -148,7 +113,7 @@ void	init_position(t_cub3D *mystruct)
 		for (int x = 0; x < mystruct->map_width; ++x)
 		{
 			c = mystruct->map[y][x];
-			if (c == '0' || c == 'N' || c == 'S' || c == 'W' || c == 'E')
+			if (c == 'N' || c == 'S' || c == 'W' || c == 'E')
 			{
 				mystruct->map[y][x] = '0';
 				mystruct->posX = x + 0.5;
@@ -163,7 +128,7 @@ void	init_sprites(t_cub3D *mystruct)
 {
 	int	sprite_index;
 
-	mystruct->n_of_sprites_on_map = 10;
+	mystruct->n_of_sprites_on_map = 20;
 	mystruct->sprites = ft_calloc(mystruct->n_of_sprites_on_map, sizeof(*mystruct->sprites));
 	for (int i = 0; i < mystruct->n_of_sprites_on_map; ++i)
 		mystruct->sprites[i].img = &mystruct->textures[LAMP];

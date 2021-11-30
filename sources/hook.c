@@ -22,13 +22,13 @@ int	render_frame(void *param)
 	PRINT_HERE();
 	wall_casting(mystruct);
 	PRINT_HERE();
-	// sprite_casting(mystruct);
+	sprite_casting(mystruct);
 	PRINT_HERE();
 	draw_crosshair(mystruct);
 	PRINT_HERE();
 	update_canvas(mystruct);
 	PRINT_HERE();
-	// draw_minimap(mystruct);
+	draw_minimap(mystruct);
 	update_position(mystruct);
 	PRINT_HERE();
 	update_mouse(mystruct);

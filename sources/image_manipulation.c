@@ -57,12 +57,12 @@ t_point bot_left, t_point top_right)
 	new_img.addr = mlx_get_data_addr(new_img.img, &new_img.bits_per_pixel,
 		&new_img.line_length, &new_img.endian);
 
-	B.y = -1;
+	B.y = 0;
 	A.y = top_right.y - 1;
 	while (++A.y < bot_left.y)
 	{
 		A.x = bot_left.x - 1;
-		B.x = -1;
+		B.x = 0;
 		while (++A.x < top_right.x)
 			my_mlx_pixel_put(&new_img, B.x++, B.y, get_color(img, A.x, A.y));
 		++B.y;

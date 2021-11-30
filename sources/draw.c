@@ -24,8 +24,8 @@ void	draw_minimap(t_cub3D *mystruct)
 {
 	int		x;
 	int		y;
-	double	minimapX;
-	double	minimapY;
+	int		minimapX;
+	int		minimapY;
 
 	y = -1;
 	while (++y < REALTIME_MINIMAP_H)
@@ -37,10 +37,14 @@ void	draw_minimap(t_cub3D *mystruct)
 			minimapY = mystruct->posY * MINIMAP_CELL_Y - REALTIME_MINIMAP_H / 2.0 + y;
 			if (minimapX >= 0 && minimapX < MINIMAP_CELL_X * mystruct->map_width
 				&& minimapY >= 0 && minimapY < MINIMAP_CELL_Y * mystruct->map_height)
+			{
 				my_mlx_pixel_put(&mystruct->real_time_minimap_img, x, REALTIME_MINIMAP_H -  y - 1,
 					get_color(&mystruct->minimap_img, minimapX, minimapY));
+			}
 			else
+			{
 				my_mlx_pixel_put(&mystruct->real_time_minimap_img, x, REALTIME_MINIMAP_H -  y - 1, BLANK);
+			}
 		}
 	}
 	draw_filled_circle(&mystruct->real_time_minimap_img, (t_point){REALTIME_MINIMAP_W / 2.0, REALTIME_MINIMAP_H / 2.0},
