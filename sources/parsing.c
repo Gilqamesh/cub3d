@@ -245,7 +245,10 @@ void	ft_map_parse(t_input_parse *parse)
 {
 	while (get_next_line(parse->fd, &parse->line) != 0)
 		ft_gnl_to_ll(parse);
-	ft_gnl_to_ll(parse);
+	//if (!parse->line)
+	//	ft_error_message("Wrong input\n");
+	//else
+		ft_gnl_to_ll(parse);
 }
 
 void	ft_extension_checker(int argc, char **argv)
