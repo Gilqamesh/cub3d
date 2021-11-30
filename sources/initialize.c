@@ -21,18 +21,14 @@ void	init_struct(t_cub3D *mystruct, t_input_parse *parse)
 			(t_point){i * TEXTURE_W, TEXTURE_H}, (t_point){(i + 1) * TEXTURE_W, 0},
 			"assets/wolftextures.xpm", &mystruct->vars, (t_point){TEXTURE_W, TEXTURE_H}});
 	extract_image(&mystruct->textures[LAMP], (t_args1){
-		(t_point){640, TEXTURE_H}, (t_point){682, 0}, "assets/wolftextures.xpm",
+		(t_point){640, TEXTURE_H}, (t_point){683, 0}, "assets/wolftextures.xpm",
 		&mystruct->vars, (t_point){TEXTURE_W, TEXTURE_H}});
 	extract_image(&mystruct->pause_img, (t_args1){
 		(t_point){0, 681}, (t_point){1007, 0}, "assets/pause.xpm", &mystruct->vars, (t_point){SCREEN_W, SCREEN_H}});
 	make_image_transparent(&mystruct->pause_img, SCREEN_W, SCREEN_H, 120);
-	PRINT_HERE();
 	init_minimap_img(mystruct);
-	PRINT_HERE();
 	init_sprites(mystruct);
-	PRINT_HERE();
 	mystruct->prev_timestamp = get_current_timestamp();
-	PRINT_HERE();
 }
 
 void	install_hooks(t_cub3D *mystruct)
@@ -101,7 +97,6 @@ void	init_map(t_cub3D *mystruct, t_input_parse *parse)
 	mystruct->map = parse->two_d_array;
 	mystruct->map_height = parse->map_height;
 	mystruct->map_width = parse->map_width;
-	// printf("%d %d %p\n", parse->map_height, parse->map_width, parse->two_d_array);
 }
 
 void	init_position(t_cub3D *mystruct)

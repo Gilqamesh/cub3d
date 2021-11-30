@@ -1,19 +1,43 @@
 #include "headers.h"
 
+static void	validify_image_params(t_args1 *args1, t_point parameters)
+{
+	if (args1->A.x < 0)
+		args1->A.x = 0;
+	if (args1->A.x > parameters.x)
+		args1->A.x = parameters.x;
+	if (args1->B.x < 0)
+		args1->B.x = 0;
+	if (args1->B.x > parameters.x)
+		args1->B.x = parameters.x;
+	if (args1->A.y < 0)
+		args1->A.y = 0;
+	if (args1->A.y > parameters.y)
+		args1->A.y = parameters.y;
+	if (args1->B.y < 0)
+		args1->B.y = 0;
+	if (args1->B.y > parameters.y)
+		args1->B.y = parameters.y;
+}
+
 void	extract_image(t_data *images, t_args1 args1)
 {
 	t_point	parameters;
 
 	images->img = mlx_xpm_file_to_image(args1.vars->mlx, args1.filePath,
 		&parameters.x, &parameters.y);
-	if (args1.B.x - args1.A.x > parameters.x || args1.A.y - args1.B.y > parameters.y)
-	{
-		PRINT_HERE();
-		exit(1);
-	}
-	printf("real width and height: %d %d, requested parameters: %d %d\n", parameters.x, parameters.y, args1.B.x, args1.A.y - args1.B.y);
 	images->addr = mlx_get_data_addr(images->img, &images->bits_per_pixel,
 		&images->line_length, &images->endian);
+	if (args1.A.x < 0 || args1.B.x < 0 || args1.A.y < 0 || args1.B.y < 0
+		|| args1.A.x > parameters.x || args1.B.x > parameters.x
+		|| args1.A.y > parameters.y || args1.B.y > parameters.y)
+	{
+		ft_dprintf(STDERR_FILENO, "Warning: wrong parameters in extract image, requested parameters: "\
+			"w: %d h: %d x0: %d x1: %d y0: %d y1: %d, but image %s has parameters width %d and height %d\n",
+			ft_abs_int(args1.A.x - args1.B.x), ft_abs_int(args1.A.y - args1.B.y), args1.A.x, args1.B.x,
+			args1.A.y, args1.B.y, args1.filePath, parameters.x, parameters.y);
+		validify_image_params(&args1, parameters);
+	}
 	get_part_of_img(*args1.vars, images, args1.A, args1.B);
 	resize_img(*args1.vars, images, (t_point){args1.B.x - args1.A.x,
 		args1.A.y - args1.B.y}, args1.cell_size);

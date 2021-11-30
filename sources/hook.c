@@ -24,18 +24,12 @@ int	render_frame(void *param)
 	// 	system("leaks cub3D");
 	// }
 	floor_casting(mystruct);
-	PRINT_HERE();
 	wall_casting(mystruct);
-	PRINT_HERE();
 	sprite_casting(mystruct);
-	PRINT_HERE();
 	draw_crosshair(mystruct);
-	PRINT_HERE();
 	update_canvas(mystruct);
-	PRINT_HERE();
 	draw_minimap(mystruct);
 	update_position(mystruct);
-	PRINT_HERE();
 	update_mouse(mystruct);
 	//print_debug(mystruct);
 	// mlx_do_sync(mystruct->vars.mlx);
