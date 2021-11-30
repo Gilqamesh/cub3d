@@ -10,3 +10,7 @@
 9. Polish line draw function
 10. Don't store last line of gnl if there are additional stuff in the file after the map
 11. Polish init_minimap_img function
+12. Need: sprite to display something that the player is holding, like a sword
+13. Head bobbling during movement
+14. Randomly placed sprites on the map, hide goggle behind a closed door
+15. When goggle is picked up, remove it from the map and change some attributes of the player, like zoomability
