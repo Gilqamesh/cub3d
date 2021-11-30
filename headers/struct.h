@@ -134,6 +134,10 @@ typedef struct s_input_parse
 	int		fd;
 	int		full;
 	int		i;
+
+	int		row;
+	int		col;
+
 	char	*line;
 	char	**two_d_array;
 
