@@ -5,10 +5,12 @@ void	wall_casting(t_cub3D *mystruct)
 {
 	t_wall_cast_params	p;
 
+	mystruct->looking_at_door = false;
 	for (int x = 0; x < SCREEN_W; ++x)
     {
+		ft_bzero(&p, sizeof(p));
 		initialize_wall_ray(mystruct, x, &p);
-		perform_dda(mystruct, &p);
+		perform_dda(mystruct, x, &p);
 		calculate_distance(&p);
 		draw_wall(mystruct, x, &p);
 		mystruct->ZBuffer[x] = p.perpWallDist;
@@ -59,12 +61,10 @@ void	initialize_wall_ray(t_cub3D *mystruct, int current_column, t_wall_cast_para
 
 // Jump to next map square, either in x-direction, or in y-direction
 // Each iteration check if the ray has hit a wall
-void	perform_dda(t_cub3D *mystruct, t_wall_cast_params *p)
+void	perform_dda(t_cub3D *mystruct, int current_column, t_wall_cast_params *p)
 {
-	int	hit;
-
-	hit = 0;
-	while (hit == 0)
+	p->hit = '\0';
+	while (!p->hit)
 	{
 		if (p->sideDistX < p->sideDistY)
 		{
@@ -78,8 +78,24 @@ void	perform_dda(t_cub3D *mystruct, t_wall_cast_params *p)
 			p->mapY += p->stepY;
 			p->side = 1;
 		}
-		if (mystruct->map[p->mapY][p->mapX] > '0')
-			hit = 1;
+		if (mystruct->map[p->mapY][p->mapX] == WALL_CHAR
+			|| mystruct->map[p->mapY][p->mapX] == DOOR_CLOSED_CHAR)
+			p->hit = mystruct->map[p->mapY][p->mapX];
+		if (current_column == SCREEN_W / 2 && (mystruct->map[p->mapY][p->mapX] == DOOR_OPEN_CHAR
+			|| mystruct->map[p->mapY][p->mapX] == DOOR_CLOSED_CHAR))
+		{
+			mystruct->looking_at_door = true;
+			if (mystruct->map[p->mapY][p->mapX] == DOOR_CLOSED_CHAR)
+				mystruct->door_to_interact_with.opened = false;
+			else
+				mystruct->door_to_interact_with.opened = true;
+			if (p->side == 0)
+				mystruct->door_to_interact_with.distance_from_player = p->sideDistX - p->deltaDistX;
+			else
+				mystruct->door_to_interact_with.distance_from_player = p->sideDistY - p->deltaDistY;
+			mystruct->door_to_interact_with.coordinates.x = p->mapX;
+			mystruct->door_to_interact_with.coordinates.y = p->mapY;
+		}
 	}
 }
 
@@ -108,16 +124,16 @@ static int	get_wall_texture(t_wall_cast_params *p)
 		if (p->stepY == 1) // NE
 		{
 			if (p->side == 0) // vertical wall hit
-				return (EAST_WALL_TEXTURE);
+				return (TEXTURE_EAST_WALL);
 			else // horizontal hit
-				return (NORTH_WALL_TEXTURE);
+				return (TEXTURE_NORTH_WALL);
 		}
 		else // SE
 		{
 			if (p->side == 0)
-				return (EAST_WALL_TEXTURE);
+				return (TEXTURE_EAST_WALL);
 			else
-				return (SOUTH_WALL_TEXTURE);
+				return (TEXTURE_SOUTH_WALL);
 		}
 	}
 	else
@@ -125,16 +141,16 @@ static int	get_wall_texture(t_wall_cast_params *p)
 		if (p->stepY == 1) // NW
 		{
 			if (p->side == 0)
-				return (WEST_WALL_TEXTURE);
+				return (TEXTURE_WEST_WALL);
 			else
-				return (NORTH_WALL_TEXTURE);
+				return (TEXTURE_NORTH_WALL);
 		}
 		else // SW
 		{
 			if (p->side == 0)
-				return (WEST_WALL_TEXTURE);
+				return (TEXTURE_WEST_WALL);
 			else
-				return (SOUTH_WALL_TEXTURE);
+				return (TEXTURE_SOUTH_WALL);
 		}
 	}
 }
@@ -152,7 +168,7 @@ static int	get_wall_texture(t_wall_cast_params *p)
 void	draw_wall(t_cub3D *mystruct, int current_column, t_wall_cast_params *p)
 {
 	t_draw_wall_params	w;
-	int					wall_texture;
+	int					texture_index;
 
 	if (p->side == 0)
 		w.wallX = mystruct->posY + p->perpWallDist * p->rayDirY;
@@ -166,12 +182,15 @@ void	draw_wall(t_cub3D *mystruct, int current_column, t_wall_cast_params *p)
 		w.texX = TEXTURE_W - w.texX - 1;
 	w.step = (double)TEXTURE_H / p->lineHeight;
 	w.texPos = (p->drawStart + (p->lineHeight - SCREEN_H) / 2.0) * w.step;
-	wall_texture = get_wall_texture(p);
+	if (p->hit == WALL_CHAR)
+		texture_index = get_wall_texture(p);
+	else
+		texture_index = TEXTURE_DOOR;
 	for (int y = p->drawStart; y < p->drawEnd; ++y)
 	{
 		w.texY = (int)w.texPos & (TEXTURE_H - 1);
 		w.texPos += w.step;
-		w.color = get_color(&mystruct->wall_textures[wall_texture], w.texX, w.texY);
+		w.color = get_color(&mystruct->textures[texture_index], w.texX, w.texY);
 		if (p->side == 1)
 			w.color = (w.color >> 1) & 8355711;
 		my_mlx_pixel_put(&mystruct->canvas, current_column, y, w.color);

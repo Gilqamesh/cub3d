@@ -1,10 +1,10 @@
 #include "headers.h"
 
-void	ft_print_linked_list(t_input_parse *parse)
+void	ft_print_linked_list(t_cub3D *mystruct)
 {
 	t_map	*temporary;
 
-	temporary = parse->map;
+	temporary = mystruct->parse.map;
 	while (temporary != NULL)
 	{
 		printf("%s\n", temporary->map_line);
@@ -13,19 +13,19 @@ void	ft_print_linked_list(t_input_parse *parse)
 	printf("\n");
 }
 
-void	ft_struct_printer(t_input_parse *parse)
+void	ft_struct_printer(t_cub3D *mystruct)
 {
-	printf("NO: %s\n", parse->NO);
-	printf("SO: %s\n", parse->SO);
-	printf("WE: %s\n", parse->WE);
-	printf("EA: %s\n\n", parse->EA);
-	printf("F: %d\n", parse->F);
-	printf("C: %d\n\n", parse->C);
-	printf("Map Width: %d\n", parse->map_width);
-	printf("Map Height: %d\n\n", parse->map_height);
-	printf("Full: %d\n", parse->full);
-	printf("2D Array: %s\n\n", parse->two_d_array[13]);
-	ft_print_linked_list(parse);
+	printf("NO: %s\n", mystruct->parse.NO);
+	printf("SO: %s\n", mystruct->parse.SO);
+	printf("WE: %s\n", mystruct->parse.WE);
+	printf("EA: %s\n\n", mystruct->parse.EA);
+	printf("F: %d\n", mystruct->parse.F);
+	printf("C: %d\n\n", mystruct->parse.C);
+	printf("Map Width: %d\n", mystruct->parse.map_width);
+	printf("Map Height: %d\n\n", mystruct->parse.map_height);
+	printf("Full: %d\n", mystruct->parse.full);
+	printf("2D Array: %s\n\n", mystruct->map[13]);
+	ft_print_linked_list(mystruct);
 }
 
 void	ft_error_message(char *str)
@@ -91,97 +91,97 @@ void	ft_rgb_to_dec(char *line, int *f_or_c)
 		*f_or_c += ft_atoi(&line[i]);
 }
 
-void	ft_color_parser(char *line, t_input_parse *parse)
+void	ft_color_parser(char *line, t_cub3D *mystruct)
 {
 	if (line[0] == 'F')
-		ft_rgb_to_dec(line, &parse->F);
+		ft_rgb_to_dec(line, &mystruct->parse.F);
 	if (line[0] == 'C')
-		ft_rgb_to_dec(line, &parse->C);
+		ft_rgb_to_dec(line, &mystruct->parse.C);
 }
 
-void	ft_texture_parser(char *line, t_input_parse *parse)
+void	ft_texture_parser(char *line, t_cub3D *mystruct)
 {
 	if (ft_first_x_finder(line, '.') != -1)
 	{
 		if (line[0] == 'N' && line[1] == 'O')
-			parse->NO = &line[ft_first_x_finder(line, '.')];
+			mystruct->parse.NO = &line[ft_first_x_finder(line, '.')];
 		if (line[0] == 'S' && line[1] == 'O')
-			parse->SO = &line[ft_first_x_finder(line, '.')];
+			mystruct->parse.SO = &line[ft_first_x_finder(line, '.')];
 		if (line[0] == 'W' && line[1] == 'E')
-			parse->WE = &line[ft_first_x_finder(line, '.')];
+			mystruct->parse.WE = &line[ft_first_x_finder(line, '.')];
 		if (line[0] == 'E' && line[1] == 'A')
-			parse->EA = &line[ft_first_x_finder(line, '.')];
+			mystruct->parse.EA = &line[ft_first_x_finder(line, '.')];
 	}
 }
 
-void	ft_map_checker2(t_input_parse *parse)
+void	ft_map_checker2(t_cub3D *mystruct)
 {
 	int	i;
 
 	i = 0;
-	while (i < parse->map_width)
+	while (i < mystruct->parse.map_width)
 	{
-		if (parse->two_d_array[0][i] != '*'
-			&& parse->two_d_array[0][i] != '1')
+		if (mystruct->map[0][i] != '*'
+			&& mystruct->map[0][i] != '1')
 			ft_error_message("Wrong input\n");
-		if (parse->two_d_array[parse->map_height - 1][i] != '*'
-			&& parse->two_d_array[parse->map_height - 1][i] != '1')
+		if (mystruct->map[mystruct->parse.map_height - 1][i] != '*'
+			&& mystruct->map[mystruct->parse.map_height - 1][i] != '1')
 			ft_error_message("Wrong input\n");
 		i++;
 	}
 	i = 0;
-	while (i < parse->map_height)
+	while (i < mystruct->parse.map_height)
 	{
-		if (parse->two_d_array[i][0] != '*'
-			&& parse->two_d_array[i][0] != '1')
+		if (mystruct->map[i][0] != '*'
+			&& mystruct->map[i][0] != '1')
 			ft_error_message("Wrong input\n");
-		if (parse->two_d_array[i][parse->map_width - 1] != '*'
-			&& parse->two_d_array[i][parse->map_width - 1] != '1')
+		if (mystruct->map[i][mystruct->parse.map_width - 1] != '*'
+			&& mystruct->map[i][mystruct->parse.map_width - 1] != '1')
 			ft_error_message("Wrong input\n");
 		i++;
 	}
 }
 
-void	ft_element_check(t_input_parse *parse, int y, int x)
+void	ft_element_check(t_cub3D *mystruct, int y, int x)
 {
-	if (parse->two_d_array[parse->row + y][parse->col + x] != '*'
-		&& parse->two_d_array[parse->row + y][parse->col + x] != '1')
+	if (mystruct->map[mystruct->parse.row + y][mystruct->parse.col + x] != '*'
+		&& mystruct->map[mystruct->parse.row + y][mystruct->parse.col + x] != '1')
 		ft_error_message("Wrong input\n");
 }
 
-void	ft_map_checker(t_input_parse *parse)
+void	ft_map_checker(t_cub3D *mystruct)
 {
-	ft_map_checker2(parse);
-	while (parse->row < parse->map_height)
+	ft_map_checker2(mystruct);
+	while (mystruct->parse.row < mystruct->parse.map_height)
 	{
-		parse->col = 0;
-		while (parse->col < parse->map_width)
+		mystruct->parse.col = 0;
+		while (mystruct->parse.col < mystruct->parse.map_width)
 		{
-			if (parse->two_d_array[parse->row][parse->col] == '*')
+			if (mystruct->map[mystruct->parse.row][mystruct->parse.col] == '*')
 			{
-				if (parse->row != 0)
-					ft_element_check(parse, -1, 0);
-				if (parse->row != parse->map_height - 1)
-					ft_element_check(parse, 1, 0);
-				if (parse->col != 0)
-					ft_element_check(parse, 0, -1);
-				if (parse->col != parse->map_width - 1)
-					ft_element_check(parse, 0, 1);
+				if (mystruct->parse.row != 0)
+					ft_element_check(mystruct, -1, 0);
+				if (mystruct->parse.row != mystruct->parse.map_height - 1)
+					ft_element_check(mystruct, 1, 0);
+				if (mystruct->parse.col != 0)
+					ft_element_check(mystruct, 0, -1);
+				if (mystruct->parse.col != mystruct->parse.map_width - 1)
+					ft_element_check(mystruct, 0, 1);
 			}
-			parse->col += 1;
+			mystruct->parse.col += 1;
 		}
-		parse->row += 1;
+		mystruct->parse.row += 1;
 	}
 }
 
-void	ft_one_line_2d(t_input_parse *parse, char *map_line)
+void	ft_one_line_2d(t_cub3D *mystruct, char *map_line)
 {
 	int	i;
 	int	j;
 	int	index;
 
 	j = 0;
-	parse->two_d_array[parse->i] = malloc((parse->map_width + 1)
+	mystruct->map[mystruct->parse.i] = malloc((mystruct->parse.map_width + 1)
 			* sizeof(char));
 	index = 0;
 	while (j < (int)ft_strlen(map_line))
@@ -190,66 +190,65 @@ void	ft_one_line_2d(t_input_parse *parse, char *map_line)
 		{
 			i = -1;
 			while (++i < 4)
-				parse->two_d_array[parse->i][index++] = '*';
+				mystruct->map[mystruct->parse.i][index++] = '*';
 		}
 		else if (map_line[j] == ' ')
-			parse->two_d_array[parse->i][index++] = '*';
+			mystruct->map[mystruct->parse.i][index++] = '*';
 		else
-			parse->two_d_array[parse->i][index++] = map_line[j];
+			mystruct->map[mystruct->parse.i][index++] = map_line[j];
 		++j;
 	}
-	while (index < parse->map_width)
-		parse->two_d_array[parse->i][index++] = '*';
-	parse->two_d_array[parse->i][index] = '\0';
-	ft_printf("Hey: %s parse->i: %d\n", parse->two_d_array[parse->i], parse->i);
+	while (index < mystruct->parse.map_width)
+		mystruct->map[mystruct->parse.i][index++] = '*';
+	mystruct->map[mystruct->parse.i][index] = '\0';
 }
 
-void	ft_ll_to_2d(t_input_parse *parse)
+void	ft_ll_to_2d(t_cub3D *mystruct)
 {
 	t_map	*temporary;
 
-	parse->two_d_array = malloc((parse->map_height + 1) * sizeof(char *));
-	temporary = parse->map;
-	parse->i = parse->map_height;
-	parse->two_d_array[parse->i] = NULL;
+	mystruct->map = malloc((mystruct->parse.map_height + 1) * sizeof(char *));
+	temporary = mystruct->parse.map;
+	mystruct->parse.i = mystruct->parse.map_height;
+	mystruct->map[mystruct->parse.i] = NULL;
 	while (temporary != NULL)
 	{
-		parse->i -= 1;
-		ft_one_line_2d(parse, temporary->map_line);
+		mystruct->parse.i -= 1;
+		ft_one_line_2d(mystruct, temporary->map_line);
 		temporary = temporary->next;
 	}
 }
 
-t_map	*ft_map_to_ll(t_input_parse *parse)
+t_map	*ft_map_to_ll(t_cub3D *mystruct)
 {
 	t_map	*map;
 
 	map = malloc(sizeof(t_map));
-	map->map_line = parse->line;
+	map->map_line = mystruct->parse.line;
 	map->next = NULL;
 	return (map);
 }
 
-void	ft_gnl_to_ll(t_input_parse *parse)
+void	ft_gnl_to_ll(t_cub3D *mystruct)
 {
 	t_map	*tmp;
 
-	if (parse->map_width < (int)ft_strlen(parse->line))
-		parse->map_width = (int)ft_strlen(parse->line);
-	parse->map_height += 1;
-	tmp = ft_map_to_ll(parse);
-	tmp->next = parse->map;
-	parse->map = tmp;
+	if (mystruct->parse.map_width < (int)ft_strlen(mystruct->parse.line))
+		mystruct->parse.map_width = (int)ft_strlen(mystruct->parse.line);
+	mystruct->parse.map_height += 1;
+	tmp = ft_map_to_ll(mystruct);
+	tmp->next = mystruct->parse.map;
+	mystruct->parse.map = tmp;
 }
 
-void	ft_map_parse(t_input_parse *parse)
+void	ft_map_parse(t_cub3D *mystruct)
 {
-	while (get_next_line(parse->fd, &parse->line) != 0)
-		ft_gnl_to_ll(parse);
-	if (ft_strlen(parse->line) == 0)
+	while (get_next_line(mystruct->parse.fd, &mystruct->parse.line) != 0)
+		ft_gnl_to_ll(mystruct);
+	if (ft_strlen(mystruct->parse.line) == 0)
 		ft_error_message("Wrong input\n");
 	else
-		ft_gnl_to_ll(parse);
+		ft_gnl_to_ll(mystruct);
 }
 
 void	ft_extension_checker(int argc, char **argv)
@@ -265,30 +264,32 @@ void	ft_extension_checker(int argc, char **argv)
 		ft_error_message("Wrong input\n");
 }
 
-void	ft_input_parse(int argc, char **argv, t_input_parse *parse)
+void	ft_input_parse(int argc, char **argv, t_cub3D *mystruct)
 {
 	ft_extension_checker(argc, argv);
-	ft_bzero(parse, sizeof(*parse));
-	parse->fd = open(argv[1], O_RDONLY);
-	if (parse->fd == -1)
+	ft_bzero(mystruct, sizeof(*mystruct));
+	mystruct->parse.fd = open(argv[1], O_RDONLY);
+	if (mystruct->parse.fd == -1)
 		exit(EXIT_FAILURE);
-	while (get_next_line(parse->fd, &parse->line) != 0 && parse->full == 0)
+	while (get_next_line(mystruct->parse.fd, &mystruct->parse.line) != 0 && mystruct->parse.full == 0)
 	{
-		ft_texture_parser(parse->line, parse);
-		ft_color_parser(parse->line, parse);
-		if (parse->NO != NULL && parse->NO != NULL && parse->WE != NULL
-			&& parse->EA != NULL && parse->F != 0 && parse->C != 0)
-			parse->full = 1;
-		free(parse->line);
+		ft_texture_parser(mystruct->parse.line, mystruct);
+		ft_color_parser(mystruct->parse.line, mystruct);
+		if (mystruct->parse.NO != NULL && mystruct->parse.NO != NULL && mystruct->parse.WE != NULL
+			&& mystruct->parse.EA != NULL && mystruct->parse.F != 0 && mystruct->parse.C != 0)
+			mystruct->parse.full = 1;
+		free(mystruct->parse.line);
 	}
-	if (parse->full != 1)
+	if (mystruct->parse.full != 1)
 	{
-		close (parse->fd);
+		close (mystruct->parse.fd);
 		ft_error_message("Wrong input\n");
 	}
-	ft_map_parse(parse);
-	ft_ll_to_2d(parse);
-	ft_map_checker(parse);
-	close (parse->fd);
-	//ft_struct_printer(parse);
+	ft_map_parse(mystruct);
+	ft_ll_to_2d(mystruct);
+	ft_map_checker(mystruct);
+	mystruct->map_width = mystruct->parse.map_width;
+	mystruct->map_height = mystruct->parse.map_height;
+	close(mystruct->parse.fd);
+	//ft_struct_printer(mystruct);
 }

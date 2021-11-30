@@ -32,6 +32,7 @@ typedef struct s_wall_cast_params
 	int		lineHeight;
 	int		drawStart;
 	int		drawEnd;
+	char	hit;
 }	t_wall_cast_params;
 
 // wallX		where the wall was hit
@@ -50,7 +51,7 @@ typedef struct s_draw_wall_params
 }	t_draw_wall_params;
 
 void	wall_casting(t_cub3D *mystruct);
-void	perform_dda(t_cub3D *mystruct, t_wall_cast_params *p);
+void	perform_dda(t_cub3D *mystruct, int current_column, t_wall_cast_params *p);
 void	initialize_wall_ray(t_cub3D *mystruct, int current_column, t_wall_cast_params *p);
 void	calculate_distance(t_wall_cast_params *p);
 void	draw_wall(t_cub3D *mystruct, int current_column, t_wall_cast_params *p);

@@ -1,33 +1,40 @@
 #include "headers.h"
 
+static bool	can_we_move_to(char c)
+{
+	if (c != WALL_CHAR && c != DOOR_CLOSED_CHAR)
+		return (true);
+	return (false);
+}
+
 void	update_position_by_key(t_cub3D *mystruct, int key)
 {
 	if (key == KEY_W)
 	{
-		if (mystruct->map [(int)(mystruct->posY)][(int)(mystruct->posX + mystruct->dirX * MOVE_SPEED)] == '0')
+		if (can_we_move_to(mystruct->map[(int)(mystruct->posY)][(int)(mystruct->posX + mystruct->dirX * MOVE_SPEED)]))
 			mystruct->posX += mystruct->dirX * MOVE_SPEED;
-		if (mystruct->map [(int)(mystruct->posY + mystruct->dirY * MOVE_SPEED)][(int)(mystruct->posX)] == '0')
+		if (can_we_move_to(mystruct->map [(int)(mystruct->posY + mystruct->dirY * MOVE_SPEED)][(int)(mystruct->posX)]))
 			mystruct->posY += mystruct->dirY * MOVE_SPEED;
 	}
 	else if (key == KEY_S)
 	{
-		if (mystruct->map [(int)(mystruct->posY)][(int)(mystruct->posX - mystruct->dirX * MOVE_SPEED)] == '0')
+		if (can_we_move_to(mystruct->map[(int)(mystruct->posY)][(int)(mystruct->posX - mystruct->dirX * MOVE_SPEED)]))
 			mystruct->posX -= mystruct->dirX * MOVE_SPEED;
-		if (mystruct->map [(int)(mystruct->posY - mystruct->dirY * MOVE_SPEED)][(int)(mystruct->posX)] == '0')
+		if (can_we_move_to(mystruct->map[(int)(mystruct->posY - mystruct->dirY * MOVE_SPEED)][(int)(mystruct->posX)]))
 			mystruct->posY -= mystruct->dirY * MOVE_SPEED;
 	}
 	else if (key == KEY_A)
 	{	
-		if (mystruct->map [(int)(mystruct->posY)][(int)(mystruct->posX - mystruct->dirY * MOVE_SPEED)] == '0')
+		if (can_we_move_to(mystruct->map[(int)(mystruct->posY)][(int)(mystruct->posX - mystruct->dirY * MOVE_SPEED)]))
 			mystruct->posX -= mystruct->dirY * MOVE_SPEED;
-		if (mystruct->map [(int)(mystruct->posY + mystruct->dirX * MOVE_SPEED)][(int)(mystruct->posX)] == '0')
+		if (can_we_move_to(mystruct->map[(int)(mystruct->posY + mystruct->dirX * MOVE_SPEED)][(int)(mystruct->posX)]))
 			mystruct->posY += mystruct->dirX * MOVE_SPEED;
 	}
 	else if (key == KEY_D)
 	{
-		if (mystruct->map [(int)(mystruct->posY)][(int)(mystruct->posX + mystruct->dirY * MOVE_SPEED)] == '0')
+		if (can_we_move_to(mystruct->map[(int)(mystruct->posY)][(int)(mystruct->posX + mystruct->dirY * MOVE_SPEED)]))
 			mystruct->posX += mystruct->dirY * MOVE_SPEED;
-		if (mystruct->map [(int)(mystruct->posY - mystruct->dirX * MOVE_SPEED)][(int)(mystruct->posX)] == '0')
+		if (can_we_move_to(mystruct->map[(int)(mystruct->posY - mystruct->dirX * MOVE_SPEED)][(int)(mystruct->posX)]))
 			mystruct->posY -= mystruct->dirX * MOVE_SPEED;
 	}
 	else if (key == KEY_RIGHT)

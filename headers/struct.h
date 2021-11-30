@@ -44,27 +44,16 @@ typedef struct s_vars
 
 enum texture_name
 {
-	FLAG,
-	RED_BRICK,
-	PURPLE_BRICK,
-	WHITE_BRICK,
-	BLUE_BRICK,
-	MOSS_BRICK,
-	WOOD,
-	COBBLE_STONE,
-	BARREL,
-	PILLAR,
-	LAMP,
+	TEXTURE_DOOR,
+	TEXTURE_BARREL,
+	TEXTURE_PILLAR,
+	TEXTURE_LAMP,
+	TEXTURE_NORTH_WALL,
+	TEXTURE_WEST_WALL,
+	TEXTURE_SOUTH_WALL,
+	TEXTURE_EAST_WALL,
+	TEXTURE_N_OF_WALL,
 	N_OF_TEXTURES
-};
-
-enum wall_textures
-{
-	NORTH_WALL_TEXTURE,
-	WEST_WALL_TEXTURE,
-	SOUTH_WALL_TEXTURE,
-	EAST_WALL_TEXTURE,
-	N_OF_WALL_TEXTURES
 };
 
 # define FLOOR_TEXTURE		WHITE_BRICK
@@ -77,50 +66,6 @@ typedef struct s_sprite
 	double	posX;
 	double	posY;
 }	t_sprite;
-
-typedef struct s_cub3D
-{
-	char				**map;
-	int					map_height;
-	int					map_width;
-	struct line_segment	*walls;
-	t_data				canvas;
-	t_vars				vars;
-	double				posX;
-	double				posY;
-	double				posZ;
-	double				dirX;
-	double				dirY;
-	double				planeX;
-	double				planeY;
-	t_data				*textures;
-	bool				is_w_held;
-	bool				is_a_held;
-	bool				is_s_held;
-	bool				is_d_held;
-	bool				is_left_held;
-	bool				is_right_held;
-	bool				is_paused;
-	t_data				pause_img;
-	t_data				minimap_img;
-	t_data				minimap_wall_img;
-	t_data				minimap_blank_img;
-	t_data				real_time_minimap_img;
-	long int			prev_timestamp;
-	int					n_of_sprites_on_map;
-	t_sprite			*sprites;
-	double				*ZBuffer;
-	t_data				*wall_textures;
-}	t_cub3D;
-
-typedef struct s_args1
-{
-	t_point	A;
-	t_point	B;
-	char	*filePath;
-	t_vars	*vars;
-	t_point	cell_size;
-}	t_args1;
 
 typedef struct s_map
 {
@@ -154,5 +99,60 @@ typedef struct s_input_parse
 	t_map	*map;
 
 }	t_input_parse;
+
+typedef struct s_door
+{
+	t_point	coordinates;
+	bool	opened;
+	double	distance_from_player;
+}	t_door;
+
+typedef struct s_cub3D
+{
+	char				**map;
+	int					map_height;
+	int					map_width;
+	struct line_segment	*walls;
+	t_data				canvas;
+	t_vars				vars;
+	double				posX;
+	double				posY;
+	double				posZ;
+	double				dirX;
+	double				dirY;
+	double				planeX;
+	double				planeY;
+	t_data				*textures;
+	bool				is_w_held;
+	bool				is_a_held;
+	bool				is_s_held;
+	bool				is_d_held;
+	bool				is_left_held;
+	bool				is_right_held;
+	bool				is_paused;
+	t_data				pause_img;
+	t_data				minimap_img;
+	t_data				minimap_wall_img;
+	t_data				minimap_blank_img;
+	t_data				real_time_minimap_img;
+	long int			prev_timestamp;
+	int					n_of_sprites_on_map;
+	t_sprite			*sprites;
+	double				*ZBuffer;
+	t_input_parse		parse;
+	bool				looking_at_door;
+	t_door				door_to_interact_with;
+	t_data				minimap_door_closed_img;
+	t_data				minimap_door_open_img;
+}	t_cub3D;
+
+typedef struct s_args1
+{
+	t_point	A;
+	t_point	B;
+	char	*filePath;
+	t_vars	*vars;
+	t_point	cell_size;
+}	t_args1;
 
 #endif /* STRUCT_H */

@@ -3,7 +3,6 @@
 int	main(int argc, char **argv)
 {
 	t_cub3D			mystruct;
-	t_input_parse 	parse;
 
 	if (argc != 2)
 	{
@@ -11,8 +10,8 @@ int	main(int argc, char **argv)
 		exit(EXIT_FAILURE);
 	}
 	ft_bzero(&mystruct, sizeof(mystruct));
-	ft_input_parse(argc, argv, &parse);
-	init_struct(&mystruct, &parse);
+	ft_input_parse(argc, argv, &mystruct);
+	init_struct(&mystruct);
 	// build_tree();
 	install_hooks(&mystruct);
 	mlx_loop(mystruct.vars.mlx);

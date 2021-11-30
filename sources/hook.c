@@ -105,6 +105,22 @@ int	key_release(int key, void *param)
 		mystruct->is_right_held = false;
 	else if (key == KEY_LEFT)
 		mystruct->is_left_held = false;
+	else if (key == KEY_E && mystruct->looking_at_door
+		&& mystruct->door_to_interact_with.distance_from_player < 2)
+	{
+		if (mystruct->door_to_interact_with.opened == true)
+		{
+			mystruct->door_to_interact_with.opened = false;
+			mystruct->map[mystruct->door_to_interact_with.coordinates.y]
+				[mystruct->door_to_interact_with.coordinates.x] = DOOR_CLOSED_CHAR;
+		}
+		else
+		{
+			mystruct->door_to_interact_with.opened = true;
+			mystruct->map[mystruct->door_to_interact_with.coordinates.y]
+				[mystruct->door_to_interact_with.coordinates.x] = DOOR_OPEN_CHAR;
+		}
+	}
 	return (0);
 }
 
@@ -115,4 +131,46 @@ int	exit_program(void *param)
 	mystruct = (t_cub3D *)param;
 	// free resources associated with mystruct
 	exit(EXIT_SUCCESS);
+}
+
+int	mouse_press(int button, int x, int y, void *param)
+{
+	static bool		first_time = true;
+	static t_cub3D	*mystruct = NULL;
+
+	if (first_time == true)
+	{
+		first_time = false;
+		mystruct = (t_cub3D *)param;
+	}
+	(void)x;
+	(void)y;
+	if (button == MOUSE_ZOOM_FORWARD)
+	{
+		if (sqrt(mystruct->dirX * mystruct->dirX + mystruct->dirY * mystruct->dirY)
+			< ft_minofint(REALTIME_MINIMAP_W / 2 / MINIMAP_N_OF_CELL_X - 1,
+			REALTIME_MINIMAP_H / 2 / MINIMAP_N_OF_CELL_Y) - 1)
+		{
+			mystruct->dirX *= 1 + ZOOM_FACTOR / 100.0;
+			mystruct->dirY *= 1 + ZOOM_FACTOR / 100.0;
+		}
+	}
+	else if (button == MOUSE_ZOOM_BACKWARD)
+	{
+		if (sqrt(mystruct->dirX * mystruct->dirX + mystruct->dirY * mystruct->dirY) > 0.2)
+		{
+			mystruct->dirX *= 1 - ZOOM_FACTOR / 100.0;
+			mystruct->dirY *= 1 - ZOOM_FACTOR / 100.0;
+		}
+	}
+	return (0);
+}
+
+int	mouse_release(int button, int x, int y, void *param)
+{
+	(void)button;
+	(void)x;
+	(void)y;
+	(void)param;
+	return (0);
 }

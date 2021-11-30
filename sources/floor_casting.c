@@ -8,7 +8,6 @@
 void	floor_casting(t_cub3D *mystruct)
 {
 	t_floor_cast_params	p;
-	unsigned int		color;
 
 	for (int y = 0; y < SCREEN_H; ++y)
 	{
@@ -19,12 +18,8 @@ void	floor_casting(t_cub3D *mystruct)
 			p.ty = (int)(TEXTURE_H * (p.floorY - (int)p.floorY)) & (TEXTURE_H - 1);
 			p.floorX += p.floorStepX;
 			p.floorY += p.floorStepY;
-			color = get_color(&mystruct->textures[FLOOR_TEXTURE], p.tx, p.ty);
-			color = (color >> 1) & 8355711;
-			my_mlx_pixel_put(&mystruct->canvas, x, y, color);
-			color = get_color(&mystruct->textures[CEILING_TEXTURE], p.tx, p.ty);
-			color = (color >> 1) & 8355711;
-			my_mlx_pixel_put(&mystruct->canvas, x, SCREEN_H - y - 1, color);
+			my_mlx_pixel_put(&mystruct->canvas, x, y, (mystruct->parse.F >> 1) & 8355711);
+			my_mlx_pixel_put(&mystruct->canvas, x, SCREEN_H - y - 1, (mystruct->parse.C >> 1) & 8355711);
 		}
 	}
 }

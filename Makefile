@@ -32,8 +32,9 @@ fclean:
 re:
 	make clean
 	make all
-bonus:
-	make $(NAME)
+bonus: clean
+bonus: CFLAGS += -D BONUS
+bonus: $(NAME)
 fcleanall:
 	make fclean
 	$(MAKE) fcleanall --directory=mylib
