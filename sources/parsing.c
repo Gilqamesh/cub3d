@@ -123,10 +123,10 @@ void	ft_map_checker2(t_input_parse *parse)
 	{
 		if (parse->two_d_array[0][i] != '*'
 			&& parse->two_d_array[0][i] != '1')
-				ft_error_message("Wrong input\n");
+			ft_error_message("Wrong input\n");
 		if (parse->two_d_array[parse->map_height - 1][i] != '*'
 			&& parse->two_d_array[parse->map_height - 1][i] != '1')
-				ft_error_message("Wrong input\n");
+			ft_error_message("Wrong input\n");
 		i++;
 	}
 	i = 0;
@@ -134,10 +134,10 @@ void	ft_map_checker2(t_input_parse *parse)
 	{
 		if (parse->two_d_array[i][0] != '*'
 			&& parse->two_d_array[i][0] != '1')
-				ft_error_message("Wrong input\n");
+			ft_error_message("Wrong input\n");
 		if (parse->two_d_array[i][parse->map_width - 1] != '*'
 			&& parse->two_d_array[i][parse->map_width - 1] != '1')
-				ft_error_message("Wrong input\n");
+			ft_error_message("Wrong input\n");
 		i++;
 	}
 }
@@ -146,7 +146,7 @@ void	ft_element_check(t_input_parse *parse, int y, int x)
 {
 	if (parse->two_d_array[parse->row + y][parse->col + x] != '*'
 		&& parse->two_d_array[parse->row + y][parse->col + x] != '1')
-			ft_error_message("Wrong input\n");
+		ft_error_message("Wrong input\n");
 }
 
 void	ft_map_checker(t_input_parse *parse)
