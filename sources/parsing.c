@@ -77,10 +77,27 @@ int	ft_first_x_finder(char *line, char x)
 	return (-1);
 }
 
+void	ft_color_error_checker(char *line)
+{
+	int	i;
+
+	i = 0;
+	while (line[i] != '\0')
+	{
+		if (line[i] != ',' && !ft_isdigit(line[i]))
+		{
+			printf("Hello\n");
+			ft_error_message("Wrong input\n");
+		}
+		i++;
+	}
+}
+
 void	ft_rgb_to_dec(char *line, int *f_or_c)
 {
 	int	i;
 
+	printf("%s\n", line);
 	i = ft_digit_finder(line);
 	*f_or_c += ft_atoi(&line[i]) << 16;
 	i += ft_intlen(ft_atoi(&line[i])) + 1;
@@ -145,7 +162,8 @@ void	ft_map_checker2(t_cub3D *mystruct)
 void	ft_element_check(t_cub3D *mystruct, int y, int x)
 {
 	if (mystruct->map[mystruct->parse.row + y][mystruct->parse.col + x] != '*'
-		&& mystruct->map[mystruct->parse.row + y][mystruct->parse.col + x] != '1')
+		&& mystruct->map[mystruct->parse.row + y]
+				[mystruct->parse.col + x] != '1')
 		ft_error_message("Wrong input\n");
 }
 
@@ -271,12 +289,15 @@ void	ft_input_parse(int argc, char **argv, t_cub3D *mystruct)
 	mystruct->parse.fd = open(argv[1], O_RDONLY);
 	if (mystruct->parse.fd == -1)
 		exit(EXIT_FAILURE);
-	while (get_next_line(mystruct->parse.fd, &mystruct->parse.line) != 0 && mystruct->parse.full == 0)
+	while (get_next_line(mystruct->parse.fd, &mystruct->parse.line)
+		!= 0 && mystruct->parse.full == 0)
 	{
 		ft_texture_parser(mystruct->parse.line, mystruct);
 		ft_color_parser(mystruct->parse.line, mystruct);
-		if (mystruct->parse.NO != NULL && mystruct->parse.NO != NULL && mystruct->parse.WE != NULL
-			&& mystruct->parse.EA != NULL && mystruct->parse.F != 0 && mystruct->parse.C != 0)
+		if (mystruct->parse.NO != NULL && mystruct->parse.NO
+			!= NULL && mystruct->parse.WE != NULL
+			&& mystruct->parse.EA != NULL && mystruct->parse.F
+			!= 0 && mystruct->parse.C != 0)
 			mystruct->parse.full = 1;
 		free(mystruct->parse.line);
 	}
@@ -291,5 +312,9 @@ void	ft_input_parse(int argc, char **argv, t_cub3D *mystruct)
 	mystruct->map_width = mystruct->parse.map_width;
 	mystruct->map_height = mystruct->parse.map_height;
 	close(mystruct->parse.fd);
-	//ft_struct_printer(mystruct);
+	ft_struct_printer(mystruct);
+	//check with access if path are accesible
+	//check for weird characters in map 
+	//check for weird characters in colors
+	//000 of color does not work
 }
