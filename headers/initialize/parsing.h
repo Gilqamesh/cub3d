@@ -16,6 +16,8 @@ void	ft_map_char_checker(t_cub3D *mystruct, char *str);
 void	ft_texture_color_parse(t_cub3D *mystruct);
 void	ft_different_line_checker(char *str);
 void	ft_texture_parser(char *line, t_cub3D *mystruct);
+void	ft_no_so(char *line, t_cub3D *mystruct);
+void	ft_we_ae(char *line, t_cub3D *mystruct);
 void	ft_color_parser(char *line, t_cub3D *mystruct);
 void	ft_rgb_to_dec(char *line, int *f_or_c);
 void	ft_color_error_checker(char *line);

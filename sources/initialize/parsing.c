@@ -190,30 +190,48 @@ void	ft_color_parser(char *line, t_cub3D *mystruct)
 	}
 }
 
+void	ft_we_ae(char *line, t_cub3D *mystruct)
+{
+	if (line[0] == 'W' && line[1] == 'E' && mystruct->parse.we_full == 1)
+		ft_error_message("Wrong input\n");
+	if (line[0] == 'W' && line[1] == 'E' && mystruct->parse.we_full == 0)
+	{
+		mystruct->parse.WE = &line[ft_first_x_finder(line, '.')];
+		mystruct->parse.we_full = 1;
+	}
+	if (line[0] == 'E' && line[1] == 'A' && mystruct->parse.ea_full == 1)
+		ft_error_message("Wrong input\n");
+	if (line[0] == 'E' && line[1] == 'A' && mystruct->parse.ea_full == 0)
+	{
+		mystruct->parse.EA = &line[ft_first_x_finder(line, '.')];
+		mystruct->parse.ea_full = 1;
+	}
+}
+
+void	ft_no_so(char *line, t_cub3D *mystruct)
+{
+	if (line[0] == 'N' && line[1] == 'O' && mystruct->parse.no_full == 1)
+		ft_error_message("Wrong input\n");
+	if (line[0] == 'N' && line[1] == 'O' && mystruct->parse.no_full == 0)
+	{
+		mystruct->parse.NO = &line[ft_first_x_finder(line, '.')];
+		mystruct->parse.no_full = 1;
+	}
+	if (line[0] == 'S' && line[1] == 'O' && mystruct->parse.so_full == 1)
+		ft_error_message("Wrong input\n");
+	if (line[0] == 'S' && line[1] == 'O' && mystruct->parse.so_full == 0)
+	{
+		mystruct->parse.SO = &line[ft_first_x_finder(line, '.')];
+		mystruct->parse.so_full = 1;
+	}
+}
+
 void	ft_texture_parser(char *line, t_cub3D *mystruct)
 {
 	if (ft_first_x_finder(line, '.') != -1)
 	{
-		if (line[0] == 'N' && line[1] == 'O' && mystruct->parse.no_full == 0)
-		{
-			mystruct->parse.NO = &line[ft_first_x_finder(line, '.')];
-			mystruct->parse.no_full = 1;
-		}
-		if (line[0] == 'S' && line[1] == 'O' && mystruct->parse.so_full == 0)
-		{
-			mystruct->parse.SO = &line[ft_first_x_finder(line, '.')];
-			mystruct->parse.so_full = 1;
-		}
-		if (line[0] == 'W' && line[1] == 'E' && mystruct->parse.we_full == 0)
-		{
-			mystruct->parse.WE = &line[ft_first_x_finder(line, '.')];
-			mystruct->parse.we_full = 1;
-		}
-		if (line[0] == 'E' && line[1] == 'A' && mystruct->parse.ea_full == 0)
-		{
-			mystruct->parse.EA = &line[ft_first_x_finder(line, '.')];
-			mystruct->parse.ea_full = 1;
-		}
+		ft_no_so(line, mystruct);
+		ft_we_ae(line, mystruct);
 	}
 }
 
@@ -381,5 +399,4 @@ void	ft_input_parse(int argc, char **argv, t_cub3D *mystruct)
 	close(mystruct->parse.fd);
 	//ft_struct_printer(mystruct);
 	//exit(1);
-	//Double line containing NO SO WE EA -> error
 }
