@@ -77,6 +77,59 @@ int	ft_first_x_finder(char *line, char x)
 	return (-1);
 }
 
+void	ft_map_checker2(t_cub3D *mystruct)
+{
+	int	i;
+
+	i = 0;
+	while (i < mystruct->parse.map_width)
+	{
+		if (mystruct->map[0][i] != '*'
+			&& mystruct->map[0][i] != '1')
+			ft_error_message("Wrong input\n");
+		if (mystruct->map[mystruct->parse.map_height - 1][i] != '*'
+			&& mystruct->map[mystruct->parse.map_height - 1][i] != '1')
+			ft_error_message("Wrong input\n");
+		i++;
+	}
+	i = 0;
+	while (i < mystruct->parse.map_height)
+	{
+		if (mystruct->map[i][0] != '*'
+			&& mystruct->map[i][0] != '1')
+			ft_error_message("Wrong input\n");
+		if (mystruct->map[i][mystruct->parse.map_width - 1] != '*'
+			&& mystruct->map[i][mystruct->parse.map_width - 1] != '1')
+			ft_error_message("Wrong input\n");
+		i++;
+	}
+}
+
+void	ft_map_checker(t_cub3D *mystruct)
+{
+	ft_map_checker2(mystruct);
+	while (mystruct->parse.row < mystruct->parse.map_height)
+	{
+		mystruct->parse.col = 0;
+		while (mystruct->parse.col < mystruct->parse.map_width)
+		{
+			if (mystruct->map[mystruct->parse.row][mystruct->parse.col] == '*')
+			{
+				if (mystruct->parse.row != 0)
+					ft_element_check(mystruct, -1, 0);
+				if (mystruct->parse.row != mystruct->parse.map_height - 1)
+					ft_element_check(mystruct, 1, 0);
+				if (mystruct->parse.col != 0)
+					ft_element_check(mystruct, 0, -1);
+				if (mystruct->parse.col != mystruct->parse.map_width - 1)
+					ft_element_check(mystruct, 0, 1);
+			}
+			mystruct->parse.col += 1;
+		}
+		mystruct->parse.row += 1;
+	}
+}
+
 void	ft_color_error_checker(char *line)
 {
 	int	i;
@@ -148,6 +201,30 @@ void	ft_texture_parser(char *line, t_cub3D *mystruct)
 	}
 }
 
+void	ft_different_line_checker(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] == ' ')
+		i++;
+	if (str[i] != 'N' && str[i] != 'S' && str[i] != 'W'
+		&& str[i] != 'E' && str[i] != 'F' && str[i] != 'C'
+		&& str[i] != '\n' && str[i] != '\0')
+		ft_error_message("Wrong input\n");
+}
+
+void	ft_texture_color_parse(t_cub3D *mystruct)
+{
+	ft_different_line_checker(mystruct->parse.line);
+	ft_texture_parser(mystruct->parse.line, mystruct);
+	ft_color_parser(mystruct->parse.line, mystruct);
+	if (mystruct->parse.NO != NULL && mystruct->parse.SO != NULL
+		&& mystruct->parse.WE != NULL && mystruct->parse.EA != NULL
+		&& mystruct->parse.c_full == 1 && mystruct->parse.f_full == 1)
+		mystruct->parse.full = 1;
+}
+
 void	ft_map_char_checker(t_cub3D *mystruct, char *str)
 {
 	int	i;
@@ -164,65 +241,12 @@ void	ft_map_char_checker(t_cub3D *mystruct, char *str)
 	}
 }
 
-void	ft_map_checker2(t_cub3D *mystruct)
-{
-	int	i;
-
-	i = 0;
-	while (i < mystruct->parse.map_width)
-	{
-		if (mystruct->map[0][i] != '*'
-			&& mystruct->map[0][i] != '1')
-			ft_error_message("Wrong input\n");
-		if (mystruct->map[mystruct->parse.map_height - 1][i] != '*'
-			&& mystruct->map[mystruct->parse.map_height - 1][i] != '1')
-			ft_error_message("Wrong input\n");
-		i++;
-	}
-	i = 0;
-	while (i < mystruct->parse.map_height)
-	{
-		if (mystruct->map[i][0] != '*'
-			&& mystruct->map[i][0] != '1')
-			ft_error_message("Wrong input\n");
-		if (mystruct->map[i][mystruct->parse.map_width - 1] != '*'
-			&& mystruct->map[i][mystruct->parse.map_width - 1] != '1')
-			ft_error_message("Wrong input\n");
-		i++;
-	}
-}
-
 void	ft_element_check(t_cub3D *mystruct, int y, int x)
 {
 	if (mystruct->map[mystruct->parse.row + y][mystruct->parse.col + x] != '*'
 		&& mystruct->map[mystruct->parse.row + y]
 				[mystruct->parse.col + x] != '1')
 		ft_error_message("Wrong input\n");
-}
-
-void	ft_map_checker(t_cub3D *mystruct)
-{
-	ft_map_checker2(mystruct);
-	while (mystruct->parse.row < mystruct->parse.map_height)
-	{
-		mystruct->parse.col = 0;
-		while (mystruct->parse.col < mystruct->parse.map_width)
-		{
-			if (mystruct->map[mystruct->parse.row][mystruct->parse.col] == '*')
-			{
-				if (mystruct->parse.row != 0)
-					ft_element_check(mystruct, -1, 0);
-				if (mystruct->parse.row != mystruct->parse.map_height - 1)
-					ft_element_check(mystruct, 1, 0);
-				if (mystruct->parse.col != 0)
-					ft_element_check(mystruct, 0, -1);
-				if (mystruct->parse.col != mystruct->parse.map_width - 1)
-					ft_element_check(mystruct, 0, 1);
-			}
-			mystruct->parse.col += 1;
-		}
-		mystruct->parse.row += 1;
-	}
 }
 
 void	ft_one_line_2d(t_cub3D *mystruct, char *map_line)
@@ -318,19 +342,6 @@ void	ft_extension_checker(int argc, char **argv)
 		ft_error_message("Wrong input\n");
 }
 
-void	ft_different_line_checker(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i] == ' ')
-		i++;
-	if (str[i] != 'N' && str[i] != 'S' && str[i] != 'W'
-		&& str[i] != 'E' && str[i] != 'F' && str[i] != 'C'
-		&& str[i] != '\n' && str[i] != '\0')
-		ft_error_message("Wrong input\n");
-}
-
 void	ft_input_parse(int argc, char **argv, t_cub3D *mystruct)
 {
 	ft_extension_checker(argc, argv);
@@ -340,15 +351,7 @@ void	ft_input_parse(int argc, char **argv, t_cub3D *mystruct)
 		exit(EXIT_FAILURE);
 	while (get_next_line(mystruct->parse.fd, &mystruct->parse.line)
 		> 0 && mystruct->parse.full == 0)
-	{
-		ft_different_line_checker(mystruct->parse.line);
-		ft_texture_parser(mystruct->parse.line, mystruct);
-		ft_color_parser(mystruct->parse.line, mystruct);
-		if (mystruct->parse.NO != NULL && mystruct->parse.SO != NULL
-			&& mystruct->parse.WE != NULL && mystruct->parse.EA != NULL
-			&& mystruct->parse.c_full == 1 && mystruct->parse.f_full == 1)
-			mystruct->parse.full = 1;
-	}
+		ft_texture_color_parse(mystruct);
 	if (mystruct->parse.full != 1)
 	{
 		close (mystruct->parse.fd);
