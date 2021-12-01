@@ -291,5 +291,4 @@ void	ft_input_parse(int argc, char **argv, t_cub3D *mystruct)
 	mystruct->map_width = mystruct->parse.map_width;
 	mystruct->map_height = mystruct->parse.map_height;
 	close(mystruct->parse.fd);
-	//ft_struct_printer(mystruct);
 }

@@ -19,6 +19,9 @@ void	init_struct(t_cub3D *mystruct)
 		extract_image(&mystruct->goggles[i], (t_args1){
 			(t_point){i * 64, 64}, (t_point){(i + 1) * 64, 0}, "assets/goggles.xpm",
 			&mystruct->vars, (t_point){TEXTURE_W, TEXTURE_H}});
+	extract_image(&mystruct->brush_img, (t_args1){
+		(t_point){0, 320}, (t_point){320, 0}, "assets/brush.xpm",
+		&mystruct->vars, (t_point){320, 320}});
 	extract_image(&mystruct->crosshair_img, (t_args1){
 		(t_point){0, 25}, (t_point){25, 0}, "assets/crosshair.xpm",
 		&mystruct->vars, (t_point){CROSSHAIR_SIZE, CROSSHAIR_SIZE}});

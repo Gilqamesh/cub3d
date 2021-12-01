@@ -10,6 +10,8 @@ void	draw_pause_screen(t_cub3D *mystruct)
 {
 	mlx_put_image_to_window(mystruct->vars.mlx, mystruct->vars.win, mystruct->canvas.img, 0, 0);
 	draw_minimap(mystruct);
+	draw_crosshair(mystruct);
+	draw_brush(mystruct);
 	mlx_put_image_to_window(mystruct->vars.mlx, mystruct->vars.win, mystruct->pause_img.img, 0, 0);
 }
 
@@ -173,4 +175,10 @@ void	draw_filled_circle(t_data *data, t_point center, int radius, unsigned int c
 		}
 		++iter.y;
 	}
+}
+
+void	draw_brush(t_cub3D *mystruct)
+{
+	mlx_put_image_to_window(mystruct->vars.mlx, mystruct->vars.win, mystruct->brush_img.img, SCREEN_W / 2,
+		SCREEN_H / 2);
 }
