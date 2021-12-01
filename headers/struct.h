@@ -45,8 +45,6 @@ typedef struct s_vars
 enum texture_name
 {
 	TEXTURE_DOOR,
-	TEXTURE_BARREL,
-	TEXTURE_PILLAR,
 	TEXTURE_LAMP,
 	TEXTURE_NORTH_WALL,
 	TEXTURE_WEST_WALL,
