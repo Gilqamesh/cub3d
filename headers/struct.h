@@ -158,6 +158,8 @@ typedef struct s_cub3D
 	t_data				minimap_door_open_img;
 	int					n_of_renders;
 	t_data				crosshair_img;
+	int					n_of_spaces_on_map;
+	int					n_of_lamps_on_map;
 }	t_cub3D;
 
 typedef struct s_args1

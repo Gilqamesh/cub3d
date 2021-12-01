@@ -23,8 +23,9 @@
 # define KEY_P					35
 # define MOUSE_ZOOM_FORWARD		5
 # define MOUSE_ZOOM_BACKWARD	4
-// Zoom factor in percent
+// Zoom factor is in percentage
 # define ZOOM_FACTOR			20
+# define SPRITE_DENSITY_FACTOR	0.2
 # define PI						3.1415
 # define MOVE_SPEED				(1.0 / 15.0)
 # define ROTATE_SPEED			(1.0 / 30.0)
@@ -42,6 +43,7 @@
 # define DOOR_OPEN_CHAR			'o'
 # define DOOR_CLOSED_CHAR		'd'
 # define SPACE_CHAR				'0'
+# define TREASURE_CHAR			'T'
 # define CROSSHAIR_SIZE			25
 
 #endif /* DEFINITIONS_H */
