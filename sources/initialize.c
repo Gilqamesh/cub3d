@@ -2,6 +2,7 @@
 
 void	init_struct(t_cub3D *mystruct)
 {
+	init_map_params(mystruct);
 	mystruct->ZBuffer = malloc(SCREEN_W * sizeof(*mystruct->ZBuffer));
 	mystruct->vars.mlx = mlx_init();
 	mystruct->vars.win = mlx_new_window(mystruct->vars.mlx, SCREEN_W, SCREEN_H, TITLE);
@@ -19,6 +20,9 @@ void	init_struct(t_cub3D *mystruct)
 		extract_image(&mystruct->goggles[i], (t_args1){
 			(t_point){i * 64, 64}, (t_point){(i + 1) * 64, 0}, "assets/goggles.xpm",
 			&mystruct->vars, (t_point){TEXTURE_W, TEXTURE_H}});
+	extract_image(&mystruct->brush_img, (t_args1){
+		(t_point){0, 320}, (t_point){320, 0}, "assets/brush.xpm",
+		&mystruct->vars, (t_point){320, 320}});
 	extract_image(&mystruct->crosshair_img, (t_args1){
 		(t_point){0, 25}, (t_point){25, 0}, "assets/crosshair.xpm",
 		&mystruct->vars, (t_point){CROSSHAIR_SIZE, CROSSHAIR_SIZE}});
@@ -46,8 +50,8 @@ void	init_struct(t_cub3D *mystruct)
 			(t_point){0, 320}, (t_point){320, 0}, "assets/SOUTH_WALL.xpm", &mystruct->vars, (t_point){TEXTURE_W, TEXTURE_H}});
 	extract_image(&mystruct->textures[TEXTURE_WEST_WALL], (t_args1){
 			(t_point){0, 320}, (t_point){320, 0}, "assets/WEST_WALL.xpm", &mystruct->vars, (t_point){TEXTURE_W, TEXTURE_H}});
-	init_minimap_img(mystruct);
 	init_sprites(mystruct);
+	init_minimap_img(mystruct);
 	mystruct->prev_timestamp = get_current_timestamp();
 }
 
@@ -136,7 +140,7 @@ void	init_position(t_cub3D *mystruct)
 			c = mystruct->map[y][x];
 			if (c == 'N' || c == 'S' || c == 'W' || c == 'E')
 			{
-				mystruct->map[y][x] = '0';
+				mystruct->map[y][x] = SPACE_CHAR;
 				mystruct->posX = x + 0.5;
 				mystruct->posY = y + 0.5;
 				return ;
@@ -148,29 +152,61 @@ void	init_position(t_cub3D *mystruct)
 void	init_sprites(t_cub3D *mystruct)
 {
 	int	sprite_index;
+	int	n_of_treasures;
+	int	cur_n_of_spaces;
 
-	mystruct->n_of_sprites_on_map = 20;
+	n_of_treasures = 0;
+	for (int y = 0; y < mystruct->map_height; ++y)
+		for (int x = 0; x < mystruct->map_width; ++x)
+			if (mystruct->map[y][x] == TREASURE_CHAR)
+				++n_of_treasures;
+	mystruct->n_of_lamps_on_map = mystruct->n_of_spaces_on_map * SPRITE_DENSITY_FACTOR;
+	mystruct->n_of_sprites_on_map = mystruct->n_of_lamps_on_map + n_of_treasures;
 	mystruct->sprites = ft_calloc(mystruct->n_of_sprites_on_map, sizeof(*mystruct->sprites));
-	for (int i = 0; i < mystruct->n_of_sprites_on_map - 1; ++i)
+	for (int i = 0; i < mystruct->n_of_sprites_on_map; ++i)
 	{
-		mystruct->sprites[i].img = &mystruct->textures[TEXTURE_LAMP];
-		mystruct->sprites[i].name = SPRITE_LAMP;
+		if (i < mystruct->n_of_lamps_on_map)
+		{
+			mystruct->sprites[i].img = &mystruct->textures[TEXTURE_LAMP];
+			mystruct->sprites[i].name = SPRITE_LAMP;
+		}
+		else
+		{
+			mystruct->sprites[i].img = mystruct->goggles;
+			mystruct->sprites[i].name = SPRITE_GOGGLE;
+		}
 	}
-	mystruct->sprites[mystruct->n_of_sprites_on_map - 1].img
-		= mystruct->goggles;
-	mystruct->sprites[mystruct->n_of_sprites_on_map - 1].name = SPRITE_GOGGLE;
 	sprite_index = 0;
+	cur_n_of_spaces = 0;
 	for (int y = 0; y < mystruct->map_height; ++y)
 	{
 		for (int x = 0; x < mystruct->map_width; ++x)
 		{
-			if (mystruct->map[y][x] == '0')
+			if (mystruct->map[y][x] == TREASURE_CHAR)
 			{
-				mystruct->sprites[sprite_index].posX = x + 0.5;
-				mystruct->sprites[sprite_index].posY = y + 0.5;
-				if (++sprite_index == mystruct->n_of_sprites_on_map)
-					break ;
+				--n_of_treasures;
+				mystruct->sprites[mystruct->n_of_lamps_on_map + n_of_treasures].posX = x + 0.5;
+				mystruct->sprites[mystruct->n_of_lamps_on_map + n_of_treasures].posY = y + 0.5;
+				mystruct->map[y][x] = SPACE_CHAR;
+			}
+			else if (mystruct->map[y][x] == SPACE_CHAR)
+			{
+				if (++cur_n_of_spaces % (int)(1 / SPRITE_DENSITY_FACTOR) == 0)
+				{
+					mystruct->sprites[sprite_index].posX = x + 0.5;
+					mystruct->sprites[sprite_index].posY = y + 0.5;
+					if (++sprite_index == mystruct->n_of_lamps_on_map)
+						return ;
+				}
 			}
 		}
 	}
+}
+
+void	init_map_params(t_cub3D *mystruct)
+{
+	for (int y = 0; y < mystruct->map_height; ++y)
+		for (int x = 0; x < mystruct->map_width; ++x)
+			if (mystruct->map[y][x] == SPACE_CHAR)
+				++mystruct->n_of_spaces_on_map;
 }

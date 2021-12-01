@@ -146,6 +146,7 @@ typedef struct s_cub3D
 	t_data				minimap_wall_img;
 	t_data				minimap_blank_img;
 	t_data				real_time_minimap_img;
+	t_data				brush_img;
 	long int			prev_timestamp;
 	int					n_of_sprites_on_map;
 	t_sprite			*sprites;
@@ -157,6 +158,8 @@ typedef struct s_cub3D
 	t_data				minimap_door_open_img;
 	int					n_of_renders;
 	t_data				crosshair_img;
+	int					n_of_spaces_on_map;
+	int					n_of_lamps_on_map;
 }	t_cub3D;
 
 typedef struct s_args1

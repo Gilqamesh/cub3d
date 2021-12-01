@@ -25,11 +25,17 @@ int	render_frame(void *param)
 	// 	var = 0;
 	// 	system("leaks cub3D");
 	// }
+	PRINT_HERE();
 	floor_casting(mystruct);
+	PRINT_HERE();
 	wall_casting(mystruct);
+	PRINT_HERE();
 	sprite_casting(mystruct);
 	PRINT_HERE();
 	update_canvas(mystruct);
+	PRINT_HERE();
+	draw_brush(mystruct);
+	PRINT_HERE();
 	draw_crosshair(mystruct);
 	PRINT_HERE();
 	draw_minimap(mystruct);

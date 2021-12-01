@@ -1,5 +1,9 @@
 {
 	"files.associations": {
-		"ft_libftmath.h": "c"
+		"ft_libftmath.h": "c",
+		"cstdlib": "cpp",
+		"locale": "cpp",
+		"ostream": "cpp",
+		"new": "cpp"
 	}
 }
