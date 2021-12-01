@@ -283,6 +283,21 @@ void	ft_extension_checker(int argc, char **argv)
 		ft_error_message("Wrong input\n");
 }
 
+void	ft_different_line_checker(char *str)
+{
+	int	i;
+
+	i = 0;
+	if (str[i] == '\0')
+		return ;
+	while (str[i] == ' ')
+		i++;
+	if (str[i] != 'N' && str[i] != 'S' && str[i] != 'W'
+		&& str[i] != 'E' && str[i] != 'F' && str[i] != 'C'
+		&& str[i] != '\n' && str[i] != '\0')
+		ft_error_message("Wrong input\n");
+}
+
 void	ft_input_parse(int argc, char **argv, t_cub3D *mystruct)
 {
 	ft_extension_checker(argc, argv);
@@ -291,8 +306,9 @@ void	ft_input_parse(int argc, char **argv, t_cub3D *mystruct)
 	if (mystruct->parse.fd == -1)
 		exit(EXIT_FAILURE);
 	while (get_next_line(mystruct->parse.fd, &mystruct->parse.line)
-		!= 0 && mystruct->parse.full == 0)
+		> 0 && mystruct->parse.full == 0)
 	{
+		ft_different_line_checker(mystruct->parse.line);
 		ft_texture_parser(mystruct->parse.line, mystruct);
 		ft_color_parser(mystruct->parse.line, mystruct);
 		if (mystruct->parse.NO != NULL && mystruct->parse.SO != NULL
@@ -313,8 +329,8 @@ void	ft_input_parse(int argc, char **argv, t_cub3D *mystruct)
 	close(mystruct->parse.fd);
 	//ft_struct_printer(mystruct);
 	//exit(1);
-	//check with access if paths are accesible
 	//check for weird characters in map 
 	//000 of color does not work
-	//./path_to_the_north_texture.xpm
+	//255 255 255 is being interpreted as 255 255 0
+	//Double line containing NO SO WE EA F or C remove it
 }
