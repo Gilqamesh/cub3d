@@ -117,7 +117,7 @@ void	sprite_casting(t_cub3D *mystruct)
 		// Loop through every vertical stripe of the sprite on screen
 		for (int stripe = drawStartX; stripe < drawEndX; ++stripe)
 		{
-			int	texX = (int)(256 * (stripe - (-spriteWidth / 2.0 + spriteScreenX)) * TEXTURE_W / spriteWidth) / 256;
+			int	texX = (int)(256 * (stripe - (-spriteWidth / 2.0 + spriteScreenX)) * TEXT_W / spriteWidth) / 256;
 			// The conditions in the if are:
 			// 1) it's in front of camera plane so you don't see things behind you
 			// 2) it's on the screen (left)
@@ -130,7 +130,7 @@ void	sprite_casting(t_cub3D *mystruct)
 				{
 					// 256 and 128 factors to avoid floats
 					int				d = y * 256 - SCREEN_H * 128 + spriteHeight * 128;
-					int				texY = (d * TEXTURE_H / (double)spriteHeight) / 256;
+					int				texY = (d * TEXT_H / (double)spriteHeight) / 256;
 					// Get current color from the texture
 					unsigned int	color = get_color(&mystruct->sprites[i].img[mystruct->sprites[i].index_of_sprite],
 						texX, texY);

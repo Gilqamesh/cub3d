@@ -9,6 +9,26 @@ int	exit_program(void *param)
 	exit(EXIT_SUCCESS);
 }
 
+static void	zoom_forward(t_cub3D *mystruct)
+{
+	if (sqrt(mystruct->dirX * mystruct->dirX + mystruct->dirY * mystruct->dirY)
+			< ft_minofint(REALTIME_MINIMAP_W / 2 / MINIMAP_N_OF_CELL_X - 1,
+			REALTIME_MINIMAP_H / 2 / MINIMAP_N_OF_CELL_Y) - 1)
+	{
+		mystruct->dirX *= 1 + ZOOM_FACTOR / 100.0;
+		mystruct->dirY *= 1 + ZOOM_FACTOR / 100.0;
+	}
+}
+
+static void	zoom_backward(t_cub3D *mystruct)
+{
+	if (sqrt(mystruct->dirX * mystruct->dirX + mystruct->dirY * mystruct->dirY) > 0.2)
+	{
+		mystruct->dirX *= 1 - ZOOM_FACTOR / 100.0;
+		mystruct->dirY *= 1 - ZOOM_FACTOR / 100.0;
+	}
+}
+
 int	mouse_press(int button, int x, int y, void *param)
 {
 	static bool		first_time = true;
@@ -22,23 +42,9 @@ int	mouse_press(int button, int x, int y, void *param)
 	(void)x;
 	(void)y;
 	if (button == MOUSE_ZOOM_FORWARD)
-	{
-		if (sqrt(mystruct->dirX * mystruct->dirX + mystruct->dirY * mystruct->dirY)
-			< ft_minofint(REALTIME_MINIMAP_W / 2 / MINIMAP_N_OF_CELL_X - 1,
-			REALTIME_MINIMAP_H / 2 / MINIMAP_N_OF_CELL_Y) - 1)
-		{
-			mystruct->dirX *= 1 + ZOOM_FACTOR / 100.0;
-			mystruct->dirY *= 1 + ZOOM_FACTOR / 100.0;
-		}
-	}
+		zoom_forward(mystruct);
 	else if (button == MOUSE_ZOOM_BACKWARD)
-	{
-		if (sqrt(mystruct->dirX * mystruct->dirX + mystruct->dirY * mystruct->dirY) > 0.2)
-		{
-			mystruct->dirX *= 1 - ZOOM_FACTOR / 100.0;
-			mystruct->dirY *= 1 - ZOOM_FACTOR / 100.0;
-		}
-	}
+		zoom_backward(mystruct);
 	return (0);
 }
 

@@ -124,16 +124,16 @@ static int	get_wall_texture(t_wall_cast_params *p)
 		if (p->stepY == 1) // NE
 		{
 			if (p->side == 0) // vertical wall hit
-				return (TEXTURE_EAST_WALL);
+				return (TEXT_E_WALL);
 			else // horizontal hit
-				return (TEXTURE_NORTH_WALL);
+				return (TEXT_N_WALL);
 		}
 		else // SE
 		{
 			if (p->side == 0)
-				return (TEXTURE_EAST_WALL);
+				return (TEXT_E_WALL);
 			else
-				return (TEXTURE_SOUTH_WALL);
+				return (TEXT_S_WALL);
 		}
 	}
 	else
@@ -141,16 +141,16 @@ static int	get_wall_texture(t_wall_cast_params *p)
 		if (p->stepY == 1) // NW
 		{
 			if (p->side == 0)
-				return (TEXTURE_WEST_WALL);
+				return (TEXT_W_WALL);
 			else
-				return (TEXTURE_NORTH_WALL);
+				return (TEXT_N_WALL);
 		}
 		else // SW
 		{
 			if (p->side == 0)
-				return (TEXTURE_WEST_WALL);
+				return (TEXT_W_WALL);
 			else
-				return (TEXTURE_SOUTH_WALL);
+				return (TEXT_S_WALL);
 		}
 	}
 }
@@ -175,12 +175,12 @@ void	draw_wall(t_cub3D *mystruct, int current_column, t_wall_cast_params *p)
 	else
 		w.wallX = mystruct->posX + p->perpWallDist * p->rayDirX;
 	w.wallX -= floor(w.wallX);
-	w.texX = (int)(w.wallX * TEXTURE_W);
+	w.texX = (int)(w.wallX * TEXT_W);
 	if (p->side == 0 && p->rayDirX > 0)
-		w.texX = TEXTURE_W - w.texX - 1;
+		w.texX = TEXT_W - w.texX - 1;
 	else if (p->side == 1 && p->rayDirY < 0)
-		w.texX = TEXTURE_W - w.texX - 1;
-	w.step = (double)TEXTURE_H / p->lineHeight;
+		w.texX = TEXT_W - w.texX - 1;
+	w.step = (double)TEXT_H / p->lineHeight;
 	w.texPos = (p->drawStart + (p->lineHeight - SCREEN_H) / 2.0) * w.step;
 	if (p->hit == WALL_CHAR)
 		texture_index = get_wall_texture(p);
@@ -188,7 +188,7 @@ void	draw_wall(t_cub3D *mystruct, int current_column, t_wall_cast_params *p)
 		texture_index = TEXTURE_DOOR;
 	for (int y = p->drawStart; y < p->drawEnd; ++y)
 	{
-		w.texY = (int)w.texPos & (TEXTURE_H - 1);
+		w.texY = (int)w.texPos & (TEXT_H - 1);
 		w.texPos += w.step;
 		w.color = get_color(&mystruct->textures[texture_index], w.texX, w.texY);
 		if (p->side == 1)

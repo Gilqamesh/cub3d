@@ -46,10 +46,10 @@ enum texture_name
 {
 	TEXTURE_DOOR,
 	TEXTURE_LAMP,
-	TEXTURE_NORTH_WALL,
-	TEXTURE_WEST_WALL,
-	TEXTURE_SOUTH_WALL,
-	TEXTURE_EAST_WALL,
+	TEXT_N_WALL,
+	TEXT_W_WALL,
+	TEXT_S_WALL,
+	TEXT_E_WALL,
 	TEXTURE_N_OF_WALL,
 	N_OF_TEXTURES
 };
@@ -94,10 +94,15 @@ typedef struct s_input_parse
 	int		map_width;
 	int		map_height;
 
-	int		fd;
+	int		no_full;
+	int		so_full;
+	int		we_full;
+	int		ea_full;
+
 	int		c_full;
 	int		f_full;
 	int		full;
+	int		fd;
 	int		i;
 
 	int		row;
