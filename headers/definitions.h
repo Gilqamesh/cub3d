@@ -45,5 +45,7 @@
 # define SPACE_CHAR				'0'
 # define TREASURE_CHAR			'T'
 # define CROSSHAIR_SIZE			25
+# define WALL_TEXTURE_W			320
+# define WALL_TEXTURE_H			320
 
 #endif /* DEFINITIONS_H */

@@ -145,13 +145,13 @@ void	init_images(t_cub3D *mystruct)
 	extract_image(&mystruct->pause_img, &mystruct->vars, "assets/pause.xpm", &(t_extract_img_args){NULL, NULL,
 		&(t_point){SCREEN_W, SCREEN_H}});
 	extract_image(&mystruct->textures[TEXTURE_NORTH_WALL], &mystruct->vars, mystruct->parse.NO, &(t_extract_img_args){
-		NULL, NULL, &(t_point){TEXTURE_W, TEXTURE_H}});
+		NULL, NULL, &(t_point){WALL_TEXTURE_W, WALL_TEXTURE_H}});
 	extract_image(&mystruct->textures[TEXTURE_EAST_WALL], &mystruct->vars, mystruct->parse.EA, &(t_extract_img_args){
-		NULL, NULL, &(t_point){TEXTURE_W, TEXTURE_H}});
+		NULL, NULL, &(t_point){WALL_TEXTURE_W, WALL_TEXTURE_H}});
 	extract_image(&mystruct->textures[TEXTURE_SOUTH_WALL], &mystruct->vars, mystruct->parse.SO, &(t_extract_img_args){
-		NULL, NULL, &(t_point){TEXTURE_W, TEXTURE_H}});
+		NULL, NULL, &(t_point){WALL_TEXTURE_W, WALL_TEXTURE_H}});
 	extract_image(&mystruct->textures[TEXTURE_WEST_WALL], &mystruct->vars, mystruct->parse.WE, &(t_extract_img_args){
-		NULL, NULL, &(t_point){TEXTURE_W, TEXTURE_H}});
+		NULL, NULL, &(t_point){WALL_TEXTURE_W, WALL_TEXTURE_H}});
 	make_image_transparent(&mystruct->pause_img, SCREEN_W, SCREEN_H, 120);
 	init_sprites(mystruct);
 	init_minimap_img(mystruct);
