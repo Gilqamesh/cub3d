@@ -1,4 +1,4 @@
-#include "headers.h"
+#include "main.h"
 
 void	ft_print_linked_list(t_cub3D *mystruct)
 {
@@ -15,16 +15,16 @@ void	ft_print_linked_list(t_cub3D *mystruct)
 
 void	ft_struct_printer(t_cub3D *mystruct)
 {
-	//printf("NO: %s\n", mystruct->parse.NO);
-	//printf("SO: %s\n", mystruct->parse.SO);
-	//printf("WE: %s\n", mystruct->parse.WE);
-	//printf("EA: %s\n\n", mystruct->parse.EA);
-	//printf("F: %d\n", mystruct->parse.F);
-	//printf("C: %d\n\n", mystruct->parse.C);
-	//printf("Map Width: %d\n", mystruct->parse.map_width);
-	//printf("Map Height: %d\n\n", mystruct->parse.map_height);
-	//printf("Full: %d\n", mystruct->parse.full);
-	//printf("2D Array: %s\n\n", mystruct->map[13]);
+	printf("NO: %s\n", mystruct->parse.NO);
+	printf("SO: %s\n", mystruct->parse.SO);
+	printf("WE: %s\n", mystruct->parse.WE);
+	printf("EA: %s\n\n", mystruct->parse.EA);
+	printf("F: %d\n", mystruct->parse.F);
+	printf("C: %d\n\n", mystruct->parse.C);
+	printf("Map Width: %d\n", mystruct->parse.map_width);
+	printf("Map Height: %d\n\n", mystruct->parse.map_height);
+	printf("Full: %d\n", mystruct->parse.full);
+	printf("2D Array: %s\n\n", mystruct->map[13]);
 	ft_print_linked_list(mystruct);
 }
 
@@ -347,8 +347,8 @@ void	ft_input_parse(int argc, char **argv, t_cub3D *mystruct)
 	mystruct->map_width = mystruct->parse.map_width;
 	mystruct->map_height = mystruct->parse.map_height;
 	close(mystruct->parse.fd);
-	ft_struct_printer(mystruct);
-	exit(1);
+	//ft_struct_printer(mystruct);
+	//exit(1);
 	//000 of color does not work
 	//255 255 255 is being interpreted as 255 255 0
 	//Double line containing NO SO WE EA F or C remove it
