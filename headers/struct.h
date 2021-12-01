@@ -95,6 +95,8 @@ typedef struct s_input_parse
 	int		map_height;
 
 	int		fd;
+	int		c_full;
+	int		f_full;
 	int		full;
 	int		i;
 
