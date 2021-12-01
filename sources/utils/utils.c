@@ -23,3 +23,8 @@ unsigned int	get_color(t_data *data, double x, double y)
 	dst = data->addr + (b * data->line_length + a * (data->bits_per_pixel / 8));
 	return (*(unsigned int *)dst);
 }
+
+double	euclidean_distance(double a, double b)
+{
+	return (sqrt(a * a + b * b));
+}

@@ -12,6 +12,7 @@ int	render_frame(void *param)
 		mystruct = (t_cub3D *)param;
 		mlx_mouse_hide();
 		mlx_mouse_move(mystruct->vars.win, SCREEN_W / 2, SCREEN_H / 2);
+		mystruct->prev_timestamp = get_current_timestamp();
 	}
 	if (mystruct->is_paused == true)
 	{

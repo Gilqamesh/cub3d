@@ -12,7 +12,7 @@ int	main(int argc, char **argv)
 	ft_input_parse(argc, argv, &mystruct);
 	init_struct(&mystruct);
 	// build_tree();
-	install_hooks(&mystruct);
+	init_hooks(&mystruct);
 	mlx_loop(mystruct.vars.mlx);
 	destroy_struct(&mystruct);
 }

@@ -2,60 +2,13 @@
 
 void	init_struct(t_cub3D *mystruct)
 {
-	init_map_params(mystruct);
-	mystruct->ZBuffer = malloc(SCREEN_W * sizeof(*mystruct->ZBuffer));
+	init_parameters(mystruct);
 	mystruct->vars.mlx = mlx_init();
 	mystruct->vars.win = mlx_new_window(mystruct->vars.mlx, SCREEN_W, SCREEN_H, TITLE);
-	mystruct->canvas.img = mlx_new_image(mystruct->vars.mlx, SCREEN_W, SCREEN_H);
-	mystruct->canvas.addr = mlx_get_data_addr(mystruct->canvas.img, &mystruct->canvas.bits_per_pixel,
-		&mystruct->canvas.line_length, &mystruct->canvas.endian);
-	init_position(mystruct);
-	mystruct->posZ = 0.5 * SCREEN_H;
-	mystruct->dirX = -1;
-	mystruct->dirY = 0;
-	mystruct->planeX = 0;
-	mystruct->planeY = 0.66;
-	mystruct->goggles = malloc(8 * sizeof(*mystruct->goggles));
-	for (int i = 0; i < 8; ++i)
-		extract_image(&mystruct->goggles[i], (t_args1){
-			(t_point){i * 64, 64}, (t_point){(i + 1) * 64, 0}, "assets/goggles.xpm",
-			&mystruct->vars, (t_point){TEXTURE_W, TEXTURE_H}});
-	extract_image(&mystruct->brush_img, (t_args1){
-		(t_point){0, 320}, (t_point){320, 0}, "assets/brush.xpm",
-		&mystruct->vars, (t_point){320, 320}});
-	extract_image(&mystruct->crosshair_img, (t_args1){
-		(t_point){0, 25}, (t_point){25, 0}, "assets/crosshair.xpm",
-		&mystruct->vars, (t_point){CROSSHAIR_SIZE, CROSSHAIR_SIZE}});
-	mystruct->textures = malloc(N_OF_TEXTURES * sizeof(*mystruct->textures));
-	extract_image(&mystruct->textures[TEXTURE_DOOR], (t_args1){
-		(t_point){0, 320}, (t_point){320, 0}, "assets/door.xpm",
-		&mystruct->vars, (t_point){TEXTURE_W, TEXTURE_H}});
-	extract_image(&mystruct->minimap_door_closed_img, (t_args1){
-		(t_point){0, 320}, (t_point){320, 0}, "assets/minimap_door_closed.xpm",
-		&mystruct->vars, (t_point){TEXTURE_W, TEXTURE_H}});
-	extract_image(&mystruct->minimap_door_open_img, (t_args1){
-		(t_point){0, 320}, (t_point){320, 0}, "assets/minimap_door_open.xpm",
-		&mystruct->vars, (t_point){TEXTURE_W, TEXTURE_H}});
-	extract_image(&mystruct->textures[TEXTURE_LAMP], (t_args1){
-		(t_point){640, TEXTURE_H}, (t_point){682, 0}, "assets/wolftextures.xpm",
-		&mystruct->vars, (t_point){TEXTURE_W, TEXTURE_H}});
-	extract_image(&mystruct->pause_img, (t_args1){
-		(t_point){0, 681}, (t_point){1007, 0}, "assets/pause.xpm", &mystruct->vars, (t_point){SCREEN_W, SCREEN_H}});
-	make_image_transparent(&mystruct->pause_img, SCREEN_W, SCREEN_H, 120);
-	extract_image(&mystruct->textures[TEXTURE_NORTH_WALL], (t_args1){
-			(t_point){0, 320}, (t_point){320, 0}, mystruct->parse.NO, &mystruct->vars, (t_point){TEXTURE_W, TEXTURE_H}});
-	extract_image(&mystruct->textures[TEXTURE_EAST_WALL], (t_args1){
-			(t_point){0, 320}, (t_point){320, 0}, mystruct->parse.EA, &mystruct->vars, (t_point){TEXTURE_W, TEXTURE_H}});
-	extract_image(&mystruct->textures[TEXTURE_SOUTH_WALL], (t_args1){
-			(t_point){0, 320}, (t_point){320, 0}, mystruct->parse.SO, &mystruct->vars, (t_point){TEXTURE_W, TEXTURE_H}});
-	extract_image(&mystruct->textures[TEXTURE_WEST_WALL], (t_args1){
-			(t_point){0, 320}, (t_point){320, 0}, mystruct->parse.WE, &mystruct->vars, (t_point){TEXTURE_W, TEXTURE_H}});
-	init_sprites(mystruct);
-	init_minimap_img(mystruct);
-	mystruct->prev_timestamp = get_current_timestamp();
+	init_images(mystruct);
 }
 
-void	install_hooks(t_cub3D *mystruct)
+void	init_hooks(t_cub3D *mystruct)
 {
 	mlx_do_key_autorepeatoff(mystruct->vars.mlx);
 	mlx_hook(mystruct->vars.win, 2, 1, key_press, mystruct);
@@ -129,26 +82,6 @@ void	init_minimap_img(t_cub3D *mystruct)
 		&mystruct->real_time_minimap_img.line_length, &mystruct->real_time_minimap_img.endian);
 }
 
-void	init_position(t_cub3D *mystruct)
-{
-	char	c;
-
-	for (int y = 0; y < mystruct->map_height; ++y)
-	{
-		for (int x = 0; x < mystruct->map_width; ++x)
-		{
-			c = mystruct->map[y][x];
-			if (c == 'N' || c == 'S' || c == 'W' || c == 'E')
-			{
-				mystruct->map[y][x] = SPACE_CHAR;
-				mystruct->posX = x + 0.5;
-				mystruct->posY = y + 0.5;
-				return ;
-			}
-		}
-	}
-}
-
 void	init_sprites(t_cub3D *mystruct)
 {
 	int	sprite_index;
@@ -203,10 +136,77 @@ void	init_sprites(t_cub3D *mystruct)
 	}
 }
 
-void	init_map_params(t_cub3D *mystruct)
+void	init_images(t_cub3D *mystruct)
 {
-	for (int y = 0; y < mystruct->map_height; ++y)
-		for (int x = 0; x < mystruct->map_width; ++x)
-			if (mystruct->map[y][x] == SPACE_CHAR)
+	mystruct->canvas.img = mlx_new_image(mystruct->vars.mlx, SCREEN_W, SCREEN_H);
+	mystruct->canvas.addr = mlx_get_data_addr(mystruct->canvas.img, &mystruct->canvas.bits_per_pixel,
+		&mystruct->canvas.line_length, &mystruct->canvas.endian);
+	mystruct->goggles = malloc(8 * sizeof(*mystruct->goggles));
+	for (int i = 0; i < 8; ++i)
+		extract_image(&mystruct->goggles[i], (t_args1){
+			(t_point){i * 64, 64}, (t_point){(i + 1) * 64, 0}, "assets/goggles.xpm",
+			&mystruct->vars, (t_point){TEXTURE_W, TEXTURE_H}});
+	extract_image(&mystruct->brush_img, (t_args1){
+		(t_point){0, 320}, (t_point){320, 0}, "assets/brush.xpm",
+		&mystruct->vars, (t_point){320, 320}});
+	extract_image(&mystruct->crosshair_img, (t_args1){
+		(t_point){0, 25}, (t_point){25, 0}, "assets/crosshair.xpm",
+		&mystruct->vars, (t_point){CROSSHAIR_SIZE, CROSSHAIR_SIZE}});
+	mystruct->textures = malloc(N_OF_TEXTURES * sizeof(*mystruct->textures));
+	extract_image(&mystruct->textures[TEXTURE_DOOR], (t_args1){
+		(t_point){0, 320}, (t_point){320, 0}, "assets/door.xpm",
+		&mystruct->vars, (t_point){TEXTURE_W, TEXTURE_H}});
+	extract_image(&mystruct->minimap_door_closed_img, (t_args1){
+		(t_point){0, 320}, (t_point){320, 0}, "assets/minimap_door_closed.xpm",
+		&mystruct->vars, (t_point){TEXTURE_W, TEXTURE_H}});
+	extract_image(&mystruct->minimap_door_open_img, (t_args1){
+		(t_point){0, 320}, (t_point){320, 0}, "assets/minimap_door_open.xpm",
+		&mystruct->vars, (t_point){TEXTURE_W, TEXTURE_H}});
+	extract_image(&mystruct->textures[TEXTURE_LAMP], (t_args1){
+		(t_point){640, TEXTURE_H}, (t_point){682, 0}, "assets/wolftextures.xpm",
+		&mystruct->vars, (t_point){TEXTURE_W, TEXTURE_H}});
+	extract_image(&mystruct->pause_img, (t_args1){
+		(t_point){0, 681}, (t_point){1007, 0}, "assets/pause.xpm", &mystruct->vars, (t_point){SCREEN_W, SCREEN_H}});
+	extract_image(&mystruct->textures[TEXTURE_NORTH_WALL], (t_args1){
+			(t_point){0, 320}, (t_point){320, 0}, mystruct->parse.NO, &mystruct->vars, (t_point){TEXTURE_W, TEXTURE_H}});
+	extract_image(&mystruct->textures[TEXTURE_EAST_WALL], (t_args1){
+			(t_point){0, 320}, (t_point){320, 0}, mystruct->parse.EA, &mystruct->vars, (t_point){TEXTURE_W, TEXTURE_H}});
+	extract_image(&mystruct->textures[TEXTURE_SOUTH_WALL], (t_args1){
+			(t_point){0, 320}, (t_point){320, 0}, mystruct->parse.SO, &mystruct->vars, (t_point){TEXTURE_W, TEXTURE_H}});
+	extract_image(&mystruct->textures[TEXTURE_WEST_WALL], (t_args1){
+			(t_point){0, 320}, (t_point){320, 0}, mystruct->parse.WE, &mystruct->vars, (t_point){TEXTURE_W, TEXTURE_H}});
+	make_image_transparent(&mystruct->pause_img, SCREEN_W, SCREEN_H, 120);
+	init_sprites(mystruct);
+	init_minimap_img(mystruct);
+}
+
+void	init_parameters(t_cub3D *mystruct)
+{
+	int		y;
+	int		x;
+	char	c;
+
+	y = -1;
+	while (++y < mystruct->map_height)
+	{
+		x = -1;
+		while (++x < mystruct->map_width)
+		{
+			c = mystruct->map[y][x];
+			if (c == SPACE_CHAR)
 				++mystruct->n_of_spaces_on_map;
+			if (c == 'N' || c == 'S' || c == 'W' || c == 'E')
+			{
+				mystruct->map[y][x] = SPACE_CHAR;
+				mystruct->posX = x + 0.5;
+				mystruct->posY = y + 0.5;
+			}
+		}
+	}
+	mystruct->posZ = 0.5 * SCREEN_H;
+	mystruct->ZBuffer = malloc(SCREEN_W * sizeof(*mystruct->ZBuffer));
+	mystruct->dirX = -1;
+	mystruct->dirY = 0;
+	mystruct->planeX = 0;
+	mystruct->planeY = 0.66;
 }
