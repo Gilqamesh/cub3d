@@ -119,15 +119,10 @@ void	ft_color_parser(char *line, t_cub3D *mystruct)
 
 void	ft_texture_parser(char *line, t_cub3D *mystruct)
 {
-	//printf("%s\n", line);
 	if (ft_first_x_finder(line, '.') != -1)
 	{
 		if (line[0] == 'N' && line[1] == 'O')
 			mystruct->parse.NO = &line[ft_first_x_finder(line, '.')];
-		//printf("NO: %s\n", mystruct->parse.NO);
-		//printf("SO: %s\n", mystruct->parse.SO);
-		//printf("WE: %s\n", mystruct->parse.WE);
-		//printf("EA: %s\n", mystruct->parse.EA);
 		if (line[0] == 'S' && line[1] == 'O')
 			mystruct->parse.SO = &line[ft_first_x_finder(line, '.')];
 		if (line[0] == 'W' && line[1] == 'E')
@@ -300,12 +295,10 @@ void	ft_input_parse(int argc, char **argv, t_cub3D *mystruct)
 	{
 		ft_texture_parser(mystruct->parse.line, mystruct);
 		ft_color_parser(mystruct->parse.line, mystruct);
-		if (mystruct->parse.NO != NULL && mystruct->parse.NO
-			!= NULL && mystruct->parse.WE != NULL
-			&& mystruct->parse.EA != NULL && mystruct->parse.F
-			!= 0 && mystruct->parse.C != 0)
+		if (mystruct->parse.NO != NULL && mystruct->parse.SO != NULL
+			&& mystruct->parse.WE != NULL && mystruct->parse.EA != NULL
+			&& mystruct->parse.F != 0 && mystruct->parse.C != 0)
 			mystruct->parse.full = 1;
-		free(mystruct->parse.line);
 	}
 	if (mystruct->parse.full != 1)
 	{
@@ -318,8 +311,8 @@ void	ft_input_parse(int argc, char **argv, t_cub3D *mystruct)
 	mystruct->map_width = mystruct->parse.map_width;
 	mystruct->map_height = mystruct->parse.map_height;
 	close(mystruct->parse.fd);
-	//exit(1);
 	//ft_struct_printer(mystruct);
+	//exit(1);
 	//check with access if paths are accesible
 	//check for weird characters in map 
 	//000 of color does not work
