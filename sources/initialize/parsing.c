@@ -100,13 +100,23 @@ void	ft_rgb_to_dec(char *line, int *f_or_c)
 
 	ft_color_error_checker(line);
 	i = ft_digit_finder(line);
+	if (ft_atoi(&line[i]) > 255)
+		ft_error_message("Wrong input\n");
 	*f_or_c += ft_atoi(&line[i]) << 16;
 	i += ft_intlen(ft_atoi(&line[i])) + 1;
 	if (ft_isdigit((int)line[i]))
+	{
+		if (ft_atoi(&line[i]) > 255)
+			ft_error_message("Wrong input\n");
 		*f_or_c += ft_atoi(&line[i]) << 8;
+	}
 	i = ft_last_x_finder(line, ',') + 1;
 	if (ft_isdigit((int)line[i]))
+	{
+		if (ft_atoi(&line[i]) > 255)
+			ft_error_message("Wrong input\n");
 		*f_or_c += ft_atoi(&line[i]);
+	}
 }
 
 void	ft_color_parser(char *line, t_cub3D *mystruct)
@@ -146,9 +156,9 @@ void	ft_map_char_checker(t_cub3D *mystruct, char *str)
 	while (i < mystruct->parse.map_width && str[i] != '\0')
 	{
 		if (str[i] != ' ' && str[i] != '1' && str[i] != 'N'
-		&& str[i] != 'S' && str[i] != 'E' && str[i] != 'W'
-		&& str[i] != '0' && str[i] != 'T' && str[i] != 'o'
-		&& str[i] != 'd' && str[i] != '\t' && str[i] != '\n')
+			&& str[i] != 'S' && str[i] != 'E' && str[i] != 'W'
+			&& str[i] != '0' && str[i] != 'T' && str[i] != 'o'
+			&& str[i] != 'd' && str[i] != '\t' && str[i] != '\n')
 			ft_error_message("Wrong input\n");
 		i++;
 	}
@@ -352,6 +362,5 @@ void	ft_input_parse(int argc, char **argv, t_cub3D *mystruct)
 	close(mystruct->parse.fd);
 	//ft_struct_printer(mystruct);
 	//exit(1);
-	//limit colors to 255
 	//Double line containing NO SO WE EA F or C remove it
 }
