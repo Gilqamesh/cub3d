@@ -174,12 +174,16 @@ void	ft_rgb_to_dec(char *line, int *f_or_c)
 
 void	ft_color_parser(char *line, t_cub3D *mystruct)
 {
-	if (line[0] == 'F')
+	if (line[0] == 'F' && mystruct->parse.f_full == 1)
+		ft_error_message("Wrong input\n");
+	if (line[0] == 'F' && mystruct->parse.f_full == 0)
 	{
 		ft_rgb_to_dec(line, &mystruct->parse.F);
 		mystruct->parse.f_full = 1;
 	}
-	if (line[0] == 'C')
+	if (line[0] == 'C' && mystruct->parse.c_full == 1)
+		ft_error_message("Wrong input\n");
+	if (line[0] == 'C' && mystruct->parse.c_full == 0)
 	{
 		ft_rgb_to_dec(line, &mystruct->parse.C);
 		mystruct->parse.c_full = 1;
