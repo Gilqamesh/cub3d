@@ -1,4 +1,4 @@
-#include "headers.h"
+#include "main.h"
 
 void	init_struct(t_cub3D *mystruct)
 {
@@ -43,13 +43,13 @@ void	init_struct(t_cub3D *mystruct)
 		(t_point){0, 681}, (t_point){1007, 0}, "assets/pause.xpm", &mystruct->vars, (t_point){SCREEN_W, SCREEN_H}});
 	make_image_transparent(&mystruct->pause_img, SCREEN_W, SCREEN_H, 120);
 	extract_image(&mystruct->textures[TEXTURE_NORTH_WALL], (t_args1){
-			(t_point){0, 320}, (t_point){320, 0}, "assets/NORTH_WALL.xpm", &mystruct->vars, (t_point){TEXTURE_W, TEXTURE_H}});
+			(t_point){0, 320}, (t_point){320, 0}, mystruct->parse.NO, &mystruct->vars, (t_point){TEXTURE_W, TEXTURE_H}});
 	extract_image(&mystruct->textures[TEXTURE_EAST_WALL], (t_args1){
-			(t_point){0, 320}, (t_point){320, 0}, "assets/EAST_WALL.xpm", &mystruct->vars, (t_point){TEXTURE_W, TEXTURE_H}});
+			(t_point){0, 320}, (t_point){320, 0}, mystruct->parse.EA, &mystruct->vars, (t_point){TEXTURE_W, TEXTURE_H}});
 	extract_image(&mystruct->textures[TEXTURE_SOUTH_WALL], (t_args1){
-			(t_point){0, 320}, (t_point){320, 0}, "assets/SOUTH_WALL.xpm", &mystruct->vars, (t_point){TEXTURE_W, TEXTURE_H}});
+			(t_point){0, 320}, (t_point){320, 0}, mystruct->parse.SO, &mystruct->vars, (t_point){TEXTURE_W, TEXTURE_H}});
 	extract_image(&mystruct->textures[TEXTURE_WEST_WALL], (t_args1){
-			(t_point){0, 320}, (t_point){320, 0}, "assets/WEST_WALL.xpm", &mystruct->vars, (t_point){TEXTURE_W, TEXTURE_H}});
+			(t_point){0, 320}, (t_point){320, 0}, mystruct->parse.WE, &mystruct->vars, (t_point){TEXTURE_W, TEXTURE_H}});
 	init_sprites(mystruct);
 	init_minimap_img(mystruct);
 	mystruct->prev_timestamp = get_current_timestamp();

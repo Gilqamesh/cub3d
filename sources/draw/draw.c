@@ -1,4 +1,4 @@
-#include "headers.h"
+#include "main.h"
 
 void	draw_crosshair(t_cub3D *mystruct)
 {

@@ -1,4 +1,4 @@
-#include "headers.h"
+#include "main.h"
 
 static void	validify_image_params(t_args1 *args1, t_point parameters)
 {
@@ -26,6 +26,8 @@ void	extract_image(t_data *images, t_args1 args1)
 
 	images->img = mlx_xpm_file_to_image(args1.vars->mlx, args1.filePath,
 		&parameters.x, &parameters.y);
+	if (images->img == NULL)
+		exit(EXIT_FAILURE);
 	images->addr = mlx_get_data_addr(images->img, &images->bits_per_pixel,
 		&images->line_length, &images->endian);
 	if (args1.A.x < 0 || args1.B.x < 0 || args1.A.y < 0 || args1.B.y < 0

@@ -6,8 +6,6 @@ Angle jumping between 80 and 100 instead of staying at 90, hmm..
 
 Polish line draw function
 
-Don't store last line of gnl if there are additional stuff in the file after the map
-
 Polish init_minimap_img function
 
 Need: sprite to display something that the player is holding, like a sword
@@ -20,3 +18,5 @@ When goggle is picked up, remove it from the map and change some attributes of t
 
 Make player collision based on a circle instead of a single pixel to have a better feel for collision
 while walking around the map
+
+Free stuff when exiting the program (use malloc wrapper)

@@ -1,4 +1,4 @@
-#include "headers.h"
+#include "main.h"
 
 void	ft_print_linked_list(t_cub3D *mystruct)
 {

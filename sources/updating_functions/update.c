@@ -1,4 +1,4 @@
-#include "headers.h"
+#include "main.h"
 
 static bool	can_we_move_to(char c)
 {

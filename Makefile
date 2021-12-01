@@ -6,26 +6,28 @@ LIBS = -Lminilibx -lmlx -lm -lz -framework OpenGL -framework AppKit -Lmylib -lmy
 SRC = 	main.c initialize.c utils.c hook.c destroy.c parsing.c wall_casting.c \
 		floor_casting.c image_manipulation.c update.c draw.c sprite_casting.c
 SRC += debugging.c
-HDIR = headers
-ODIR = objects
-SDIR = sources
-INCLUDES = -I../$(HDIR) -I../minilibx -I../mylib -I/usr/include
+HDIR = $(realpath headers)
+ODIR = $(realpath objects)
+SDIR = $(realpath sources)
+MLX_PATH = $(realpath ./minilibx)
+MYLIB = $(realpath ./mylib)
+INCLUDES = -I$(HDIR) -I$(MLX_PATH) -I$(MYLIB) -I/usr/include
+SRC_DIRS = destroy draw initialize ray_casting_logic updating_functions utils
+TARGETS = $(foreach target,$(foreach dir,$(SRC_DIRS),$(ODIR)/$(dir)),$(target)/*.o)
 
 DEPENDS:
-	$(MAKE) --directory=mylib
+	$(MAKE) --directory=$(MYLIB)
 	make $(NAME)
-$(NAME): $(foreach file,$(SRC:.c=.o),$(ODIR)/$(file))
+$(NAME): $(TARGETS)
 	$(CC) -o $@ $^ $(LIBS)
-$(ODIR)/main.o: $(SDIR)/main.c
-	cd $(ODIR) && $(CC) $(INCLUDES) $(CFLAGS) -c ../$<
 $(ODIR)/%.o: $(SDIR)/%.c $(HDIR)/%.h
-	cd $(ODIR) && $(CC) $(INCLUDES) $(CFLAGS) -c ../$<
+	cd $(dir $@) && $(CC) $(INCLUDES) $(CFLAGS) -c $<
 
 .PHONY: all clean fclean re bonus fcleanall
 all:
 	make $(NAME)
 clean:
-	rm -f $(ODIR)/*.o
+	rm -rf $(find $(ODIR)/*.o)
 fclean:
 	make clean
 	rm -f $(NAME)
@@ -37,4 +39,4 @@ bonus: CFLAGS += -D BONUS
 bonus: $(NAME)
 fcleanall:
 	make fclean
-	$(MAKE) fcleanall --directory=mylib
+	$(MAKE) fcleanall --directory=$(MYLIB)

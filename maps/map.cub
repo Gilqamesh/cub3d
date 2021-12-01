@@ -1,8 +1,8 @@
-NO ./asd
-SO ./asd
-WE ./ads
+NO ./assets/NORTH_WALL.xpm
+SO ./assets/SOUTH_WALL.xpm
+WE ./assets/WEST_WALL.xpm
 l
-EA ./asd
+EA ./assets/EAST_WALL.xpm
 
 F 255,255,255
 l

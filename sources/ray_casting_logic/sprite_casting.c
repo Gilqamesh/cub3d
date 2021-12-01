@@ -1,4 +1,4 @@
-#include "headers.h"
+#include "main.h"
 
 static void	merge_sort_sprite_copy(t_sprite *in, t_2_int start_end_indexes,
 t_sprite *out)

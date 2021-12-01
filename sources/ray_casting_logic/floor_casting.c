@@ -1,4 +1,4 @@
-#include "headers.h"
+#include "main.h"
 
 // The mask only works here if TEXTURE_W and TEXTURE_H is a power of 2
 // (color >> 1) & 8355711

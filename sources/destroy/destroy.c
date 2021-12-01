@@ -1,4 +1,4 @@
-#include "headers.h"
+#include "main.h"
 
 void	destroy_struct(t_cub3D *mystruct)
 {

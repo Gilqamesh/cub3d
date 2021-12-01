@@ -1,4 +1,4 @@
-#include "headers.h"
+#include "main.h"
 
 int	render_frame(void *param)
 {

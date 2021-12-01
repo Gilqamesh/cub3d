@@ -1,4 +1,4 @@
-#include "headers.h"
+#include "main.h"
 
 // After wall is drawn, set the ZBuffer for the sprite casting
 void	wall_casting(t_cub3D *mystruct)
