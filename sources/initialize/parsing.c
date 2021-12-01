@@ -15,16 +15,16 @@ void	ft_print_linked_list(t_cub3D *mystruct)
 
 void	ft_struct_printer(t_cub3D *mystruct)
 {
-	//printf("NO: %s\n", mystruct->parse.NO);
-	//printf("SO: %s\n", mystruct->parse.SO);
-	//printf("WE: %s\n", mystruct->parse.WE);
-	//printf("EA: %s\n\n", mystruct->parse.EA);
-	//printf("F: %d\n", mystruct->parse.F);
-	//printf("C: %d\n\n", mystruct->parse.C);
-	//printf("Map Width: %d\n", mystruct->parse.map_width);
-	//printf("Map Height: %d\n\n", mystruct->parse.map_height);
-	//printf("Full: %d\n", mystruct->parse.full);
-	//printf("2D Array: %s\n\n", mystruct->map[13]);
+	printf("NO: %s\n", mystruct->parse.NO);
+	printf("SO: %s\n", mystruct->parse.SO);
+	printf("WE: %s\n", mystruct->parse.WE);
+	printf("EA: %s\n\n", mystruct->parse.EA);
+	printf("F: %d\n", mystruct->parse.F);
+	printf("C: %d\n\n", mystruct->parse.C);
+	printf("Map Width: %d\n", mystruct->parse.map_width);
+	printf("Map Height: %d\n\n", mystruct->parse.map_height);
+	printf("Full: %d\n", mystruct->parse.full);
+	printf("2D Array: %s\n\n", mystruct->map[13]);
 	ft_print_linked_list(mystruct);
 }
 
@@ -100,21 +100,37 @@ void	ft_rgb_to_dec(char *line, int *f_or_c)
 
 	ft_color_error_checker(line);
 	i = ft_digit_finder(line);
+	if (ft_atoi(&line[i]) > 255)
+		ft_error_message("Wrong input\n");
 	*f_or_c += ft_atoi(&line[i]) << 16;
 	i += ft_intlen(ft_atoi(&line[i])) + 1;
 	if (ft_isdigit((int)line[i]))
+	{
+		if (ft_atoi(&line[i]) > 255)
+			ft_error_message("Wrong input\n");
 		*f_or_c += ft_atoi(&line[i]) << 8;
-	i = line[ft_last_x_finder(line, ',') + 1];
+	}
+	i = ft_last_x_finder(line, ',') + 1;
 	if (ft_isdigit((int)line[i]))
+	{
+		if (ft_atoi(&line[i]) > 255)
+			ft_error_message("Wrong input\n");
 		*f_or_c += ft_atoi(&line[i]);
+	}
 }
 
 void	ft_color_parser(char *line, t_cub3D *mystruct)
 {
 	if (line[0] == 'F')
+	{
 		ft_rgb_to_dec(line, &mystruct->parse.F);
+		mystruct->parse.f_full = 1;
+	}
 	if (line[0] == 'C')
+	{
 		ft_rgb_to_dec(line, &mystruct->parse.C);
+		mystruct->parse.c_full = 1;
+	}
 }
 
 void	ft_texture_parser(char *line, t_cub3D *mystruct)
@@ -140,9 +156,9 @@ void	ft_map_char_checker(t_cub3D *mystruct, char *str)
 	while (i < mystruct->parse.map_width && str[i] != '\0')
 	{
 		if (str[i] != ' ' && str[i] != '1' && str[i] != 'N'
-		&& str[i] != 'S' && str[i] != 'E' && str[i] != 'W'
-		&& str[i] != '0' && str[i] != 'T' && str[i] != 'o'
-		&& str[i] != 'd' && str[i] != '\t' && str[i] != '\n')
+			&& str[i] != 'S' && str[i] != 'E' && str[i] != 'W'
+			&& str[i] != '0' && str[i] != 'T' && str[i] != 'o'
+			&& str[i] != 'd' && str[i] != '\t' && str[i] != '\n')
 			ft_error_message("Wrong input\n");
 		i++;
 	}
@@ -268,7 +284,6 @@ void	ft_gnl_to_ll(t_cub3D *mystruct)
 {
 	t_map	*tmp;
 
-
 	if (mystruct->parse.map_width < (int)ft_strlen(mystruct->parse.line))
 		mystruct->parse.map_width = (int)ft_strlen(mystruct->parse.line);
 	mystruct->parse.map_height += 1;
@@ -308,8 +323,6 @@ void	ft_different_line_checker(char *str)
 	int	i;
 
 	i = 0;
-	if (str[i] == '\0')
-		return ;
 	while (str[i] == ' ')
 		i++;
 	if (str[i] != 'N' && str[i] != 'S' && str[i] != 'W'
@@ -333,7 +346,7 @@ void	ft_input_parse(int argc, char **argv, t_cub3D *mystruct)
 		ft_color_parser(mystruct->parse.line, mystruct);
 		if (mystruct->parse.NO != NULL && mystruct->parse.SO != NULL
 			&& mystruct->parse.WE != NULL && mystruct->parse.EA != NULL
-			&& mystruct->parse.F != 0 && mystruct->parse.C != 0)
+			&& mystruct->parse.c_full == 1 && mystruct->parse.f_full == 1)
 			mystruct->parse.full = 1;
 	}
 	if (mystruct->parse.full != 1)
@@ -347,8 +360,7 @@ void	ft_input_parse(int argc, char **argv, t_cub3D *mystruct)
 	mystruct->map_width = mystruct->parse.map_width;
 	mystruct->map_height = mystruct->parse.map_height;
 	close(mystruct->parse.fd);
-	ft_struct_printer(mystruct);
-	//000 of color does not work
-	//255 255 255 is being interpreted as 255 255 0
+	//ft_struct_printer(mystruct);
+	//exit(1);
 	//Double line containing NO SO WE EA F or C remove it
 }
