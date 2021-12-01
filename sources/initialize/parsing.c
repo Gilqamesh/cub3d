@@ -1,4 +1,4 @@
-#include "main.h"
+#include "headers.h"
 
 void	ft_print_linked_list(t_cub3D *mystruct)
 {
@@ -15,16 +15,16 @@ void	ft_print_linked_list(t_cub3D *mystruct)
 
 void	ft_struct_printer(t_cub3D *mystruct)
 {
-	printf("NO: %s\n", mystruct->parse.NO);
-	printf("SO: %s\n", mystruct->parse.SO);
-	printf("WE: %s\n", mystruct->parse.WE);
-	printf("EA: %s\n\n", mystruct->parse.EA);
-	printf("F: %d\n", mystruct->parse.F);
-	printf("C: %d\n\n", mystruct->parse.C);
-	printf("Map Width: %d\n", mystruct->parse.map_width);
-	printf("Map Height: %d\n\n", mystruct->parse.map_height);
-	printf("Full: %d\n", mystruct->parse.full);
-	printf("2D Array: %s\n\n", mystruct->map[13]);
+	//printf("NO: %s\n", mystruct->parse.NO);
+	//printf("SO: %s\n", mystruct->parse.SO);
+	//printf("WE: %s\n", mystruct->parse.WE);
+	//printf("EA: %s\n\n", mystruct->parse.EA);
+	//printf("F: %d\n", mystruct->parse.F);
+	//printf("C: %d\n\n", mystruct->parse.C);
+	//printf("Map Width: %d\n", mystruct->parse.map_width);
+	//printf("Map Height: %d\n\n", mystruct->parse.map_height);
+	//printf("Full: %d\n", mystruct->parse.full);
+	//printf("2D Array: %s\n\n", mystruct->map[13]);
 	ft_print_linked_list(mystruct);
 }
 
@@ -129,6 +129,22 @@ void	ft_texture_parser(char *line, t_cub3D *mystruct)
 			mystruct->parse.WE = &line[ft_first_x_finder(line, '.')];
 		if (line[0] == 'E' && line[1] == 'A')
 			mystruct->parse.EA = &line[ft_first_x_finder(line, '.')];
+	}
+}
+
+void	ft_map_char_checker(t_cub3D *mystruct, char *str)
+{
+	int	i;
+
+	i = 0;
+	while (i < mystruct->parse.map_width && str[i] != '\0')
+	{
+		if (str[i] != ' ' && str[i] != '1' && str[i] != 'N'
+		&& str[i] != 'S' && str[i] != 'E' && str[i] != 'W'
+		&& str[i] != '0' && str[i] != 'T' && str[i] != 'o'
+		&& str[i] != 'd' && str[i] != '\t' && str[i] != '\n')
+			ft_error_message("Wrong input\n");
+		i++;
 	}
 }
 
@@ -252,6 +268,7 @@ void	ft_gnl_to_ll(t_cub3D *mystruct)
 {
 	t_map	*tmp;
 
+
 	if (mystruct->parse.map_width < (int)ft_strlen(mystruct->parse.line))
 		mystruct->parse.map_width = (int)ft_strlen(mystruct->parse.line);
 	mystruct->parse.map_height += 1;
@@ -263,7 +280,10 @@ void	ft_gnl_to_ll(t_cub3D *mystruct)
 void	ft_map_parse(t_cub3D *mystruct)
 {
 	while (get_next_line(mystruct->parse.fd, &mystruct->parse.line) != 0)
+	{
+		ft_map_char_checker(mystruct, mystruct->parse.line);
 		ft_gnl_to_ll(mystruct);
+	}
 	if (ft_strlen(mystruct->parse.line) == 0)
 		ft_error_message("Wrong input\n");
 	else
@@ -327,9 +347,8 @@ void	ft_input_parse(int argc, char **argv, t_cub3D *mystruct)
 	mystruct->map_width = mystruct->parse.map_width;
 	mystruct->map_height = mystruct->parse.map_height;
 	close(mystruct->parse.fd);
-	//ft_struct_printer(mystruct);
-	//exit(1);
-	//check for weird characters in map 
+	ft_struct_printer(mystruct);
+	exit(1);
 	//000 of color does not work
 	//255 255 255 is being interpreted as 255 255 0
 	//Double line containing NO SO WE EA F or C remove it
