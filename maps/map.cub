@@ -1,7 +1,7 @@
-NO ./assets/IMAGE_TMP.xpm
-SO ./assets/STARS.xpm
-WE ./assets/STARS.xpm
-EA ./assets/STARS.xpm
+NO ./assets/AMBER_N.xpm
+SO ./assets/AMBER_S.xpm
+WE ./assets/AMBER_W2.xpm
+EA ./assets/AMBER_E.xpm
 
 F 0,0,0
 C 0,0,0

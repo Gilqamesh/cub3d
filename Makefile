@@ -16,12 +16,12 @@ DESTROY_SRC = destroy.c
 DESTROY_PATH = $(foreach file,$(DESTROY_SRC),$(ODIR)/$(DESTROY_DIR)/$(file))
 
 DRAW_DIR = draw
-DRAW_SRC = draw.c
+DRAW_SRC = draw.c draw_wall.c
 DRAW_PATH = $(foreach file,$(DRAW_SRC),$(ODIR)/$(DRAW_DIR)/$(file))
 
 INIT_DIR = initialize
 INIT_SRC = 	hook.c initialize.c parsing.c init_textures.c init_minimap.c \
-			init_sprites.c key_hook.c
+			init_sprites.c key_hook.c init_wall_ray.c
 
 INIT_PATH = $(foreach file,$(INIT_SRC),$(ODIR)/$(INIT_DIR)/$(file))
 

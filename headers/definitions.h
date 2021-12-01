@@ -29,8 +29,8 @@
 # define PI						3.1415
 # define MOVE_SPEED				(1.0 / 15.0)
 # define ROTATE_SPEED			(1.0 / 30.0)
-# define TEXT_W  				64
-# define TEXT_H  				64
+# define TEXT_W  				128
+# define TEXT_H  				128
 # define EPSILON				0.0000001
 # define MAX_X_DELTA			SCREEN_W
 # define MINIMAP_CELL_X			SCREEN_W / 40
@@ -45,7 +45,7 @@
 # define SPACE_CHAR				'0'
 # define TREASURE_CHAR			'T'
 # define CROSSHAIR_SIZE			25
-# define WALL_TEXTURE_W			300
-# define WALL_TEXT_H			300
+# define WALL_TEXTURE_W			670
+# define WALL_TEXT_H			890
 
 #endif /* DEFINITIONS_H */
