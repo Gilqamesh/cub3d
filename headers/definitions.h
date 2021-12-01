@@ -29,8 +29,8 @@
 # define PI						3.1415
 # define MOVE_SPEED				(1.0 / 15.0)
 # define ROTATE_SPEED			(1.0 / 30.0)
-# define TEXTURE_W  			64
-# define TEXTURE_H  			64
+# define TEXTURE_W  			256
+# define TEXTURE_H  			256
 # define EPSILON				0.0000001
 # define MAX_X_DELTA			SCREEN_W
 # define MINIMAP_CELL_X			SCREEN_W / 40

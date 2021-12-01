@@ -141,7 +141,7 @@ void	init_images(t_cub3D *mystruct)
 	extract_image(&mystruct->minimap_door_open_img, &mystruct->vars, "assets/minimap_door_open.xpm", &(t_extract_img_args){
 		NULL, NULL, &(t_point){TEXTURE_W, TEXTURE_H}});
 	extract_image(&mystruct->textures[TEXTURE_LAMP], &mystruct->vars, "assets/wolftextures.xpm", &(t_extract_img_args){
-		&(t_point){640, TEXTURE_H}, &(t_point){682, 0}, &(t_point){TEXTURE_W, TEXTURE_H}});
+		&(t_point){640, 64}, &(t_point){682, 0}, &(t_point){TEXTURE_W, TEXTURE_H}});
 	extract_image(&mystruct->pause_img, &mystruct->vars, "assets/pause.xpm", &(t_extract_img_args){NULL, NULL,
 		&(t_point){SCREEN_W, SCREEN_H}});
 	extract_image(&mystruct->textures[TEXTURE_NORTH_WALL], &mystruct->vars, mystruct->parse.NO, &(t_extract_img_args){
