@@ -3,7 +3,10 @@
 
 # include "struct.h"
 # include <stdio.h>
-# define PRINT_HERE() (printf("file: %s, line: %d\n", __FILE__, __LINE__))
+# define OWNFILE (ft_substr(__FILE__, ft_last_x_finder(__FILE__, '/') + 1, 30))
+# define PRINT_HERE() ({char *tmpasd = OWNFILE;\
+	printf("file: %s, line: %d\n", tmpasd, __LINE__);\
+	free(tmpasd);})
 # include <sys/time.h>
 
 long int	get_current_timestamp(void);
