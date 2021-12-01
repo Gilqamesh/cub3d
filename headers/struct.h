@@ -160,13 +160,11 @@ typedef struct s_cub3D
 	int					n_of_lamps_on_map;
 }	t_cub3D;
 
-typedef struct s_args1
+typedef struct s_extract_img_args
 {
-	t_point	A;
-	t_point	B;
-	char	*filePath;
-	t_vars	*vars;
-	t_point	cell_size;
-}	t_args1;
+	t_point		*A;
+	t_point		*B;
+	t_point		*cell_size;
+}	t_extract_img_args;
 
 #endif /* STRUCT_H */

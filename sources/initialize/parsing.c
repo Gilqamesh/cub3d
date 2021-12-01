@@ -1,4 +1,4 @@
-#include "headers.h"
+#include "main.h"
 
 void	ft_print_linked_list(t_cub3D *mystruct)
 {
@@ -348,7 +348,6 @@ void	ft_input_parse(int argc, char **argv, t_cub3D *mystruct)
 	mystruct->map_height = mystruct->parse.map_height;
 	close(mystruct->parse.fd);
 	ft_struct_printer(mystruct);
-	exit(1);
 	//000 of color does not work
 	//255 255 255 is being interpreted as 255 255 0
 	//Double line containing NO SO WE EA F or C remove it
