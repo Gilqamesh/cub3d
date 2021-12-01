@@ -94,10 +94,15 @@ typedef struct s_input_parse
 	int		map_width;
 	int		map_height;
 
-	int		fd;
+	int		no_full;
+	int		so_full;
+	int		we_full;
+	int		ea_full;
+
 	int		c_full;
 	int		f_full;
 	int		full;
+	int		fd;
 	int		i;
 
 	int		row;
