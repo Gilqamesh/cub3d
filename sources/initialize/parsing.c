@@ -283,15 +283,24 @@ void	ft_element_check(t_cub3D *mystruct, int y, int x)
 		ft_error_message("Wrong input\n");
 }
 
+void	ft_line_saver(t_cub3D *mystruct, int index)
+{
+	while (index < mystruct->parse.map_width)
+		mystruct->map[mystruct->parse.i][index++] = '*';
+	mystruct->map[mystruct->parse.i][index] = '\0';
+}
+
 void	ft_one_line_2d(t_cub3D *mystruct, char *map_line)
 {
 	int	i;
 	int	j;
 	int	index;
 
-	j = 0;
 	mystruct->map[mystruct->parse.i] = malloc((mystruct->parse.map_width + 1)
 			* sizeof(char));
+	if (mystruct->map[mystruct->parse.i] == NULL)
+		ft_error_message("Malloc Failed\n");
+	j = 0;
 	index = 0;
 	while (j < (int)ft_strlen(map_line))
 	{
@@ -307,9 +316,7 @@ void	ft_one_line_2d(t_cub3D *mystruct, char *map_line)
 			mystruct->map[mystruct->parse.i][index++] = map_line[j];
 		++j;
 	}
-	while (index < mystruct->parse.map_width)
-		mystruct->map[mystruct->parse.i][index++] = '*';
-	mystruct->map[mystruct->parse.i][index] = '\0';
+	ft_line_saver(mystruct, index);
 }
 
 void	ft_ll_to_2d(t_cub3D *mystruct)
@@ -317,6 +324,8 @@ void	ft_ll_to_2d(t_cub3D *mystruct)
 	t_map	*temporary;
 
 	mystruct->map = malloc((mystruct->parse.map_height + 1) * sizeof(char *));
+	if (mystruct->map == NULL)
+		ft_error_message("Malloc Failed\n");
 	temporary = mystruct->parse.map;
 	mystruct->parse.i = mystruct->parse.map_height;
 	mystruct->map[mystruct->parse.i] = NULL;
@@ -333,6 +342,8 @@ t_map	*ft_map_to_ll(t_cub3D *mystruct)
 	t_map	*map;
 
 	map = malloc(sizeof(t_map));
+	if (map == NULL)
+		ft_error_message("Malloc Failed\n");
 	map->map_line = mystruct->parse.line;
 	map->next = NULL;
 	return (map);
@@ -399,4 +410,10 @@ void	ft_input_parse(int argc, char **argv, t_cub3D *mystruct)
 	close(mystruct->parse.fd);
 	//ft_struct_printer(mystruct);
 	//exit(1);
+	//break parsing into several files
+	//find some nice sprites
+	//leaks: gnl strdup stuff + davids technique
+	//mystruct->parse.NO = ft_substr();
+	//ft_lstadd_front(&mystruct->allocated_memory, ft_lstnew(mystruct->parse.NO));
+	//ft_lstmallocwrapper(&mystruct->allocated_memory, 5 * sizeof(char *), true); true is for calloc / false is for malloc
 }

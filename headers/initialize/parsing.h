@@ -11,6 +11,7 @@ void	ft_gnl_to_ll(t_cub3D *mystruct);
 t_map	*ft_map_to_ll(t_cub3D *mystruct);
 void	ft_ll_to_2d(t_cub3D *mystruct);
 void	ft_one_line_2d(t_cub3D *mystruct, char *map_line);
+void	ft_line_saver(t_cub3D *mystruct, int index);
 void	ft_element_check(t_cub3D *mystruct, int y, int x);
 void	ft_map_char_checker(t_cub3D *mystruct, char *str);
 void	ft_texture_color_parse(t_cub3D *mystruct);
