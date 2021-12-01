@@ -8,11 +8,7 @@ Polish line draw function
 
 Polish init_minimap_img function
 
-Need: sprite to display something that the player is holding, like a sword
-
 Head bobbling during movement
-
-Randomly placed sprites on the map, hide goggle behind a closed door
 
 When goggle is picked up, remove it from the map and change some attributes of the player, like zoomability
 

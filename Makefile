@@ -11,33 +11,34 @@ MLX_PATH = $(realpath ./minilibx)
 MYLIB = $(realpath ./mylib)
 INCLUDES = -I$(HDIR) -I$(MLX_PATH) -I$(MYLIB) -I/usr/include
 
-DESTROY_DIR = $(ODIR)/destroy
+DESTROY_DIR = destroy
 DESTROY_SRC = destroy.c
-DESTROY_PATH = $(foreach file,$(DESTROY_SRC),$(DESTROY_DIR)/$(file))
+DESTROY_PATH = $(foreach file,$(DESTROY_SRC),$(ODIR)/$(DESTROY_DIR)/$(file))
 
-DRAW_DIR = $(ODIR)/draw
+DRAW_DIR = draw
 DRAW_SRC = draw.c
-DRAW_PATH = $(foreach file,$(DRAW_SRC),$(DRAW_DIR)/$(file))
+DRAW_PATH = $(foreach file,$(DRAW_SRC),$(ODIR)/$(DRAW_DIR)/$(file))
 
-INIT_DIR = $(ODIR)/initialize
-INIT_SRC = hook.c initialize.c parsing.c
-INIT_PATH = $(foreach file,$(INIT_SRC),$(INIT_DIR)/$(file))
+INIT_DIR = initialize
+INIT_SRC = 	hook.c initialize.c parsing.c init_textures.c init_minimap.c \
+			init_sprites.c key_hook.c
 
-RAY_DIR = $(ODIR)/ray_casting_logic
+INIT_PATH = $(foreach file,$(INIT_SRC),$(ODIR)/$(INIT_DIR)/$(file))
+
+RAY_DIR = ray_casting_logic
 RAY_SRC = floor_casting.c sprite_casting.c wall_casting.c
-RAY_PATH = $(foreach file,$(RAY_SRC),$(RAY_DIR)/$(file))
+RAY_PATH = $(foreach file,$(RAY_SRC),$(ODIR)/$(RAY_DIR)/$(file))
 
-UPDATE_DIR = $(ODIR)/updating_functions
-UPDATE_SRC = update.c
-UPDATE_PATH = $(foreach file,$(UPDATE_SRC),$(UPDATE_DIR)/$(file))
+UPDATE_DIR = updating_functions
+UPDATE_SRC = update.c render_frame.c
+UPDATE_PATH = $(foreach file,$(UPDATE_SRC),$(ODIR)/$(UPDATE_DIR)/$(file))
 
-UTILS_DIR = $(ODIR)/utils
+UTILS_DIR = utils
 UTILS_SRC = image_manipulation.c utils.c
-UTILS_PATH = $(foreach file,$(UTILS_SRC),$(UTILS_DIR)/$(file))
+UTILS_PATH = $(foreach file,$(UTILS_SRC),$(ODIR)/$(UTILS_DIR)/$(file))
 
-MAIN_DIR = $(ODIR)
 MAIN_SRC = main.c debugging.c
-MAIN_PATH = $(foreach file,$(MAIN_SRC),$(MAIN_DIR)/$(file))
+MAIN_PATH = $(foreach file,$(MAIN_SRC),$(ODIR)/$(file))
 
 TARGETS = 	$(DESTROY_PATH:.c=.o) $(DRAW_PATH:.c=.o) $(INIT_PATH:.c=.o) $(RAY_PATH:.c=.o) $(UPDATE_PATH:.c=.o) \
 			$(UTILS_PATH:.c=.o) $(MAIN_PATH:.c=.o)
@@ -47,8 +48,9 @@ DEPENDS:
 	make $(NAME)
 $(NAME): $(TARGETS)
 	$(CC) -o $@ $^ $(LIBS)
-$(ODIR)/%.o: $(SDIR)/%.c $(HDIR)/%.h $(HDIR)/definitions.h $(HDIR)/debugging.h
+$(ODIR)/%.o: $(SDIR)/%.c $(HDIR)/$(dir %)/*.h $(HDIR)/definitions.h $(HDIR)/debugging.h
 	cd $(dir $@) && $(CC) $(INCLUDES) $(CFLAGS) -c $<
+
 
 .PHONY: all clean fclean re bonus fcleanall
 all:

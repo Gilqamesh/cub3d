@@ -169,4 +169,10 @@ typedef struct s_extract_img_args
 	t_point		*cell_size;
 }	t_extract_img_args;
 
+typedef struct s_point_p
+{
+	int	*x;
+	int	*y;
+}	t_point_p;
+
 #endif /* STRUCT_H */

@@ -19,7 +19,7 @@ void	extract_image(t_data *images, t_vars *vars, char *path, t_extract_img_args 
 		|| args->A->x > parameters.x || args->B->x > parameters.x
 		|| args->A->y > parameters.y || args->B->y > parameters.y))
 	{
-		ft_dprintf(STDERR_FILENO, "Warning: wrong parameters in extract image, requested parameters: "\
+		ft_dprintf(STDERR_FILENO, "Error: wrong parameters in extract image, requested parameters: "\
 			"w: %d h: %d x0: %d x1: %d y0: %d y1: %d, but image %s has parameters width %d and height %d\n",
 			ft_abs_int(args->A->x - args->B->x), ft_abs_int(args->A->y - args->B->y), args->A->x, args->B->x,
 			args->A->y, args->B->y, path, parameters.x, parameters.y);

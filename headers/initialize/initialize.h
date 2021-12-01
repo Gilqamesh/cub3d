@@ -9,5 +9,7 @@ void	init_minimap_img(t_cub3D *mystruct);
 void	init_sprites(t_cub3D *mystruct);
 void	init_images(t_cub3D *mystruct);
 void	init_parameters(t_cub3D *mystruct);
+void	init_wall_images(t_cub3D *mystruct);
+void	init_textures(t_cub3D *mystruct);
 
 #endif /* INITIALIZE_H */
