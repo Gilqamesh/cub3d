@@ -1,8 +1,6 @@
 #ifndef DESTROY_H
 # define DESTROY_H
 
-# include "struct.h"
-
-void	destroy_struct(t_cub3D *mystruct);
+int	exit_program(void *param);
 
 #endif /* DESTROY_H */

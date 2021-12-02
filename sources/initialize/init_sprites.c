@@ -19,8 +19,8 @@ static int	init_sprites_helper(t_cub3D *mystruct)
 		* SPRITE_DENSITY_FACTOR;
 	mystruct->n_of_sprites_on_map = mystruct->n_of_lamps_on_map
 		+ n_of_treasures;
-	mystruct->sprites = ft_calloc(mystruct->n_of_sprites_on_map,
-			sizeof(*mystruct->sprites));
+	mystruct->sprites = ft_lstmallocwrapper(&mystruct->alloced_memory,
+			mystruct->n_of_sprites_on_map * sizeof(*mystruct->sprites), true);
 	return (n_of_treasures);
 }
 

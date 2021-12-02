@@ -3,6 +3,7 @@
 
 # include <stdbool.h>
 # include "definitions.h"
+# include "ft_mylib.h"
 
 typedef struct s_point
 {
@@ -54,7 +55,6 @@ enum e_texture_name
 	TEXT_W_WALL,
 	TEXT_S_WALL,
 	TEXT_E_WALL,
-	TEXTURE_N_OF_WALL,
 	N_OF_TEXTURES
 };
 
@@ -185,6 +185,7 @@ typedef struct s_cub3D
 	int					n_of_spaces_on_map;
 	int					n_of_lamps_on_map;
 	unsigned int		draw_buffer[SCREEN_H][SCREEN_W];
+	t_list				*alloced_memory;
 }	t_cub3D;
 
 typedef struct s_extract_img_args

@@ -27,9 +27,10 @@ void	init_images(t_cub3D *mystruct)
 	mystruct->canvas.addr = mlx_get_data_addr(mystruct->canvas.img,
 			&mystruct->canvas.bits_per_pixel, &mystruct->canvas.line_length,
 			&mystruct->canvas.endian);
-	mystruct->goggles = malloc(8 * sizeof(*mystruct->goggles));
-	mystruct->amber_sprites = malloc(AMBER_SPRITES_N
-			* sizeof(*mystruct->amber_sprites));
+	mystruct->goggles = ft_lstmallocwrapper(&mystruct->alloced_memory,
+			8 * sizeof(*mystruct->goggles), false);
+	mystruct->amber_sprites = ft_lstmallocwrapper(&mystruct->alloced_memory,
+			AMBER_SPRITES_N * sizeof(*mystruct->amber_sprites), false);
 	init_textures(mystruct);
 	init_wall_images(mystruct);
 	make_image_transparent(&mystruct->pause_img, SCREEN_W, SCREEN_H, 120);
@@ -65,7 +66,8 @@ void	init_parameters(t_cub3D *mystruct)
 {
 	init_parameters_helper(mystruct);
 	mystruct->posZ = 0.5 * SCREEN_H;
-	mystruct->ZBuffer = malloc(SCREEN_W * sizeof(*mystruct->ZBuffer));
+	mystruct->ZBuffer = ft_lstmallocwrapper(&mystruct->alloced_memory,
+			SCREEN_W * sizeof(*mystruct->ZBuffer), false);
 	mystruct->dirX = -1;
 	mystruct->dirY = 0;
 	mystruct->planeX = 0;

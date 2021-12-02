@@ -30,16 +30,18 @@ void	ft_no_so(char *line, t_cub3D *mystruct)
 		ft_error_message("Wrong input\n");
 	if (line[0] == 'N' && line[1] == 'O' && mystruct->parse.no_full == 0)
 	{
-		temp = ft_strdup(line);
-		mystruct->parse.NO = &temp[ft_first_x_finder(line, '.')];
+		temp = ft_substr(line, ft_first_x_finder(line, '.'), ft_strlen(line));
+		mystruct->parse.NO = temp;
+		ft_lstadd_front(&mystruct->alloced_memory, ft_lstnew(temp));
 		mystruct->parse.no_full = 1;
 	}
 	if (line[0] == 'S' && line[1] == 'O' && mystruct->parse.so_full == 1)
 		ft_error_message("Wrong input\n");
 	if (line[0] == 'S' && line[1] == 'O' && mystruct->parse.so_full == 0)
 	{
-		temp = ft_strdup(line);
-		mystruct->parse.SO = &temp[ft_first_x_finder(line, '.')];
+		temp = ft_substr(line, ft_first_x_finder(line, '.'), ft_strlen(line));
+		mystruct->parse.SO = temp;
+		ft_lstadd_front(&mystruct->alloced_memory, ft_lstnew(temp));
 		mystruct->parse.so_full = 1;
 	}
 }

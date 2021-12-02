@@ -13,5 +13,5 @@ int	main(int argc, char **argv)
 	init_struct(&mystruct);
 	init_hooks(&mystruct);
 	mlx_loop(mystruct.vars.mlx);
-	destroy_struct(&mystruct);
+	exit_program(&mystruct);
 }

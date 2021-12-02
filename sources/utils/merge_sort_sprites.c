@@ -59,6 +59,8 @@ void	sort_sprites(t_cub3D *mystruct)
 	t_sprite	*helper;
 
 	helper = malloc(mystruct->n_of_sprites_on_map * sizeof(*helper));
+	if (helper == NULL)
+		exit_program(mystruct);
 	merge_sort_sprite(mystruct->sprites,
 		(t_2_int){0, mystruct->n_of_sprites_on_map}, helper);
 	free(helper);

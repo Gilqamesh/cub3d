@@ -1,13 +1,5 @@
 #include "main.h"
 
-int	exit_program(void *param)
-{
-	t_cub3D	*mystruct;
-
-	mystruct = (t_cub3D *)param;
-	exit(EXIT_SUCCESS);
-}
-
 static void	zoom_forward(t_cub3D *mystruct)
 {
 	if (sqrt(mystruct->dirX * mystruct->dirX + mystruct->dirY * mystruct->dirY)

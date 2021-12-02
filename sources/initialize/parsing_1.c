@@ -3,13 +3,12 @@
 t_map	*ft_map_to_ll(t_cub3D *mystruct)
 {
 	t_map	*map;
-	char	*temp;
 
-	map = malloc(sizeof(t_map));
-	temp = ft_strdup(mystruct->parse.line);
+	map = ft_lstmallocwrapper(&mystruct->alloced_memory, sizeof(t_map), false);
 	if (map == NULL)
 		ft_error_message("Malloc Failed\n");
-	map->map_line = temp;
+	map->map_line = ft_strdup(mystruct->parse.line);
+	ft_lstadd_front(&mystruct->alloced_memory, ft_lstnew(map->map_line));
 	map->next = NULL;
 	return (map);
 }

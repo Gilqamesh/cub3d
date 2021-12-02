@@ -33,29 +33,29 @@ void	ft_line_saver(t_cub3D *mystruct, int index)
 
 void	ft_one_line_2d(t_cub3D *mystruct, char *map_line)
 {
-	int	i;
-	int	j;
-	int	index;
+	t_point	iter;
+	int		index;
 
-	mystruct->map[mystruct->parse.i] = malloc((mystruct->parse.map_width + 1)
-			* sizeof(char));
+	mystruct->map[mystruct->parse.i] = ft_lstmallocwrapper(
+			&mystruct->alloced_memory, (mystruct->parse.map_width + 1)
+			* sizeof(char), false);
 	if (mystruct->map[mystruct->parse.i] == NULL)
 		ft_error_message("Malloc Failed\n");
-	j = 0;
+	iter.y = 0;
 	index = 0;
-	while (j < (int)ft_strlen(map_line))
+	while (iter.y < (int)ft_strlen(map_line))
 	{
-		if (map_line[j] == '\t')
+		if (map_line[iter.y] == '\t')
 		{
-			i = -1;
-			while (++i < 4)
+			iter.x = -1;
+			while (++iter.x < 4)
 				mystruct->map[mystruct->parse.i][index++] = '*';
 		}
-		else if (map_line[j] == ' ')
+		else if (map_line[iter.y] == ' ')
 			mystruct->map[mystruct->parse.i][index++] = '*';
 		else
-			mystruct->map[mystruct->parse.i][index++] = map_line[j];
-		++j;
+			mystruct->map[mystruct->parse.i][index++] = map_line[iter.y];
+		++iter.y;
 	}
 	ft_line_saver(mystruct, index);
 }
@@ -64,7 +64,8 @@ void	ft_ll_to_2d(t_cub3D *mystruct)
 {
 	t_map	*temporary;
 
-	mystruct->map = malloc((mystruct->parse.map_height + 1) * sizeof(char *));
+	mystruct->map = ft_lstmallocwrapper(&mystruct->alloced_memory,
+			(mystruct->parse.map_height + 1) * sizeof(char *), false);
 	if (mystruct->map == NULL)
 		ft_error_message("Malloc Failed\n");
 	temporary = mystruct->parse.map;
