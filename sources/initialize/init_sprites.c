@@ -15,9 +15,12 @@ static int	init_sprites_helper(t_cub3D *mystruct)
 			if (mystruct->map[y][x] == TREASURE_CHAR)
 				++n_of_treasures;
 	}
-	mystruct->n_of_lamps_on_map = mystruct->n_of_spaces_on_map * SPRITE_DENSITY_FACTOR;
-	mystruct->n_of_sprites_on_map = mystruct->n_of_lamps_on_map + n_of_treasures;
-	mystruct->sprites = ft_calloc(mystruct->n_of_sprites_on_map, sizeof(*mystruct->sprites));
+	mystruct->n_of_lamps_on_map = mystruct->n_of_spaces_on_map
+		* SPRITE_DENSITY_FACTOR;
+	mystruct->n_of_sprites_on_map = mystruct->n_of_lamps_on_map
+		+ n_of_treasures;
+	mystruct->sprites = ft_calloc(mystruct->n_of_sprites_on_map,
+		sizeof(*mystruct->sprites));
 	return (n_of_treasures);
 }
 
@@ -66,6 +69,32 @@ static void	init_sprites_helper2(t_cub3D *mystruct, int *n_of_treasures)
 	}
 }
 
+static void	init_sprites_helper4(t_cub3D *mystruct, int i)
+{
+	mystruct->sprites[i].uDiv = 2.0;
+	mystruct->sprites[i].vDiv = 2.0;
+	if (i == mystruct->n_of_lamps_on_map / 2)
+	{
+		mystruct->sprites[i].img = mystruct->amber_sprites;
+		mystruct->sprites[i].name = SPRITE_AMBER;
+		mystruct->sprites[i].translucency_factor = 3.0;
+	}
+	else if (i < mystruct->n_of_lamps_on_map)
+	{
+		mystruct->sprites[i].img = &mystruct->textures[TEXTURE_LAMP];
+		mystruct->sprites[i].name = SPRITE_LAMP;
+		mystruct->sprites[i].vMove = -3.0 * TEXT_H;
+		mystruct->sprites[i].translucency_factor = 2.0;
+	}
+	else
+	{
+		mystruct->sprites[i].img = mystruct->goggles;
+		mystruct->sprites[i].name = SPRITE_GOGGLE;
+		mystruct->sprites[i].vMove = 3 * TEXT_H;
+		mystruct->sprites[i].translucency_factor = 1.0;
+	}
+}
+
 void	init_sprites(t_cub3D *mystruct)
 {
 	int	n_of_treasures;
@@ -74,33 +103,6 @@ void	init_sprites(t_cub3D *mystruct)
 	n_of_treasures = init_sprites_helper(mystruct);
 	i = -1;
 	while (++i < mystruct->n_of_sprites_on_map)
-	{
-		if (i == mystruct->n_of_lamps_on_map / 2)
-		{
-			mystruct->sprites[i].img = mystruct->amber_sprites;
-			mystruct->sprites[i].name = SPRITE_AMBER;
-			mystruct->sprites[i].uDiv = 2.0;
-			mystruct->sprites[i].vDiv = 2.0;
-			mystruct->sprites[i].translucency_factor = 4.0;
-		}
-		else if (i < mystruct->n_of_lamps_on_map)
-		{
-			mystruct->sprites[i].img = &mystruct->textures[TEXTURE_LAMP];
-			mystruct->sprites[i].name = SPRITE_LAMP;
-			mystruct->sprites[i].vMove = -TEXT_W;
-			mystruct->sprites[i].uDiv = 1.0;
-			mystruct->sprites[i].vDiv = 1.0;
-			mystruct->sprites[i].translucency_factor = 2.0;
-		}
-		else
-		{
-			mystruct->sprites[i].img = mystruct->goggles;
-			mystruct->sprites[i].name = SPRITE_GOGGLE;
-			mystruct->sprites[i].vMove = TEXT_W;
-			mystruct->sprites[i].uDiv = 1.0;
-			mystruct->sprites[i].vDiv = 1.0;
-			mystruct->sprites[i].translucency_factor = 1.0;
-		}
-	}
+		init_sprites_helper4(mystruct, i);
 	init_sprites_helper2(mystruct, &n_of_treasures);
 }

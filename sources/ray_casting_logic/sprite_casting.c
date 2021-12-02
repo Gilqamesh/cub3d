@@ -63,98 +63,35 @@ static void	sort_sprites(t_cub3D *mystruct)
 	free(helper);
 }
 
-void	sprite_casting(t_cub3D *mystruct)
+static void	init_sprite_distances(t_cub3D *mystruct)
 {
-	for (int i = 0; i < mystruct->n_of_sprites_on_map; ++i)
-	{
+	int	i;
+
+	i = -1;
+	while (++i < mystruct->n_of_sprites_on_map)
 		mystruct->sprites[i].distance = (mystruct->posX - mystruct->sprites[i].posX)
 			* (mystruct->posX - mystruct->sprites[i].posX) + (mystruct->posY
 			- mystruct->sprites[i].posY) * (mystruct->posY - mystruct->sprites[i].posY);
-	}
+}
+
+void	sprite_casting(t_cub3D *mystruct)
+{
+	int						i;
+	t_sprite_cast_params	p;
+	int						stripe;
+
+	init_sprite_distances(mystruct);
 	sort_sprites(mystruct);
-
-	for (int i = 0; i < mystruct->n_of_sprites_on_map; ++i)
+	i = -1;
+	while (++i < mystruct->n_of_sprites_on_map)
 	{
-		// Change state of sprites for animation
 		if (mystruct->n_of_renders == 0)
-		{
-			if (mystruct->sprites[i].name == SPRITE_GOGGLE
-				&& ++mystruct->sprites[i].index_of_sprite == 8)
-				mystruct->sprites[i].index_of_sprite = 0;
-			else if (mystruct->sprites[i].name == SPRITE_AMBER
-				&& ++mystruct->sprites[i].index_of_sprite == 5)
-				mystruct->sprites[i].index_of_sprite = 0;
-		}
-
-		// Translate sprite position to relative to camera
-		double	spriteX = mystruct->sprites[i].posX - mystruct->posX;
-		double	spriteY = mystruct->sprites[i].posY - mystruct->posY;
-
-		// Transform sprite with the inverse camera matrix
-		// Required for correct matrix multiplication
-		double	invDet = 1.0 / (mystruct->planeX * mystruct->dirY - mystruct->dirX * mystruct->planeY);
-
-		// This is actually the depth inside the screen, that what Z is in 3D
-		double	transformX = invDet * (mystruct->dirY * spriteX - mystruct->dirX * spriteY);
-		double	transformY = invDet * (-mystruct->planeY * spriteX + mystruct->planeX * spriteY);
-
-		int		spriteScreenX = (int)(SCREEN_W / 2.0 * (1 + transformX / transformY));
-
-		// Calculate height of the sprite on screen
-		// Using 'transformY' instead of the real distance prevents fisheye
-		int		spriteHeight = ft_fabs((int)(SCREEN_H / transformY)) / mystruct->sprites[i].vDiv;
-		// Calculate lowest and highest pixel to fill in current stripe
-		int		drawStartY = -spriteHeight / 2.0 + SCREEN_H / 2.0 + (int)(mystruct->sprites[i].vMove / transformY);
-		if (drawStartY < 0)
-			drawStartY = 0;
-		int		drawEndY = spriteHeight / 2.0 + SCREEN_H / 2.0 + (int)(mystruct->sprites[i].vMove / transformY);
-		if (drawEndY >= SCREEN_H)
-			drawEndY = SCREEN_H - 1;
-
-		// Calculate width of the sprite
-		int		spriteWidth = ft_fabs((int)(SCREEN_H) / transformY) / mystruct->sprites[i].uDiv;
-		int		drawStartX = -spriteWidth / 2.0 + spriteScreenX;
-		if (drawStartX < 0)
-			drawStartX = 0;
-		int		drawEndX = spriteWidth / 2.0 + spriteScreenX;
-		if (drawEndX >= SCREEN_W)
-			drawEndX = SCREEN_W - 1;
-
+			update_state_of_sprites(mystruct, i);
+		ft_bzero(&p, sizeof(p));
+		initialize_sprite_draw(mystruct, i, &p);
 		// Loop through every vertical stripe of the sprite on screen
-		for (int stripe = drawStartX; stripe < drawEndX; ++stripe)
-		{
-			int	texX = (int)(256 * (stripe - (-spriteWidth / 2.0 + spriteScreenX)) * TEXT_W / spriteWidth) / 256;
-			// The conditions in the if are:
-			// 1) it's in front of camera plane so you don't see things behind you
-			// 2) it's on the screen (left)
-			// 3) it's on the screen (right)
-			// 4) ZBuffer, with perpendicular distance
-			if (transformY > 0 && stripe > 0 && stripe < SCREEN_W && transformY < mystruct->ZBuffer[stripe])
-			{
-				// For every pixel of the current stripe
-				for (int y = drawStartY; y < drawEndY; ++y)
-				{
-					// 256 and 128 factors to avoid floats
-					int				d = y * 256 - SCREEN_H * 128 + spriteHeight * 128;
-					int				texY = (d * TEXT_H / (double)spriteHeight) / 256;
-					// Get current color from the texture
-					unsigned int	color = get_color(&mystruct->sprites[i].img[mystruct->sprites[i].index_of_sprite],
-						texX, texY);
-					unsigned avg = 0;
-					unsigned avg_color = 0;
-					if ((color & 0xff00000) != 0xff00000)
-					{
-						avg = (((mystruct->draw_buffer[y][stripe] & RED) >> 1) & RED) | (mystruct->draw_buffer[y][stripe] & INV_RED);
-						avg = (((avg & BLUE) >> 1) & BLUE) | (avg & INV_BLUE);
-						avg = (((avg & GREEN) >> 1) & GREEN) | (avg & INV_GREEN);
-						avg_color = (((color & RED) >> 1) & RED) | (color & INV_RED);
-						avg_color = (((avg_color & BLUE) >> 1) & BLUE) | (avg_color & INV_BLUE);
-						avg_color = (((avg_color & GREEN) >> 1) & GREEN) | (avg_color & INV_GREEN);
-					}
-					mystruct->draw_buffer[y][stripe] = avg + avg_color;
-				}
-			}
-		}
+		stripe = p.drawStartX - 1;
+		while (++stripe < p.drawEndX)
+			draw_sprite_stripe(mystruct, i, stripe, &p);
 	}
 }
-// (((color & 0x00ff0000) >> 1) & 0x00ff0000) | (color & 0xff00ffff)

@@ -14,5 +14,7 @@ void	init_wall_images(t_cub3D *mystruct);
 void	init_textures(t_cub3D *mystruct);
 void	initialize_wall_ray(t_cub3D *mystruct, int current_column,
 			t_wall_cast_params *p);
+void	initialize_sprite_draw(t_cub3D *mystruct, int i,
+			t_sprite_cast_params *p);
 
 #endif /* INITIALIZE_H */

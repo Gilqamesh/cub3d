@@ -60,18 +60,20 @@ t_point *new_params)
 	double	ratio_h;
 	t_point	iter;
 
-	ratio_w = (double)(new_params->x - 1) / (old_params->x - 1);
-	ratio_h = (double)(new_params->y - 1) / (old_params->y - 1);
+	if (new_params->x < 2 || new_params->y < 2)
+		return ;
 	new_img.img = mlx_new_image(vars->mlx, new_params->x, new_params->y);
 	new_img.addr = mlx_get_data_addr(new_img.img, &new_img.bits_per_pixel,
 		&new_img.line_length, &new_img.endian);
+	ratio_w = (double)(old_params->x - 1) / (new_params->x - 1);
+	ratio_h = (double)(old_params->y - 1) / (new_params->y - 1);
 	iter.y = -1;
-	while (++iter.y < old_params->y)
+	while (++iter.y < new_params->y)
 	{
 		iter.x = -1;
-		while (++iter.x < old_params->x)
-			my_mlx_pixel_put(&new_img, iter.x * ratio_w, iter.y * ratio_h,
-				get_color(img, iter.x, iter.y));
+		while (++iter.x < new_params->x)
+			my_mlx_pixel_put(&new_img, iter.x, iter.y,
+				get_color(img, iter.x * ratio_w, iter.y * ratio_h));
 	}
 	mlx_destroy_image(vars->mlx, img->img);
 	*img = new_img;

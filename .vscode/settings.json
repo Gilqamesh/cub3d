@@ -4,6 +4,7 @@
 		"cstdlib": "cpp",
 		"locale": "cpp",
 		"ostream": "cpp",
-		"new": "cpp"
+		"new": "cpp",
+		"iterator": "c"
 	}
 }

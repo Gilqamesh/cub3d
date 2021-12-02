@@ -28,3 +28,17 @@ double	euclidean_distance(double a, double b)
 {
 	return (sqrt(a * a + b * b));
 }
+
+unsigned int	divide_color(unsigned int color, double divisor)
+{
+	int	red;
+	int	green;
+	int	blue;
+	int	alpha;
+
+	alpha = (unsigned int)(((color & BLANK) >> 24) / divisor) << 24;
+	red = (unsigned int)(((color & RED) >> 16) / divisor) << 16;
+	green = (unsigned int)(((color & GREEN) >> 8) / divisor) << 8;
+	blue = (unsigned int)((color & BLUE) / divisor);
+	return (alpha | red | green | blue);
+}

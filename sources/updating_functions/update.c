@@ -1,10 +1,27 @@
 #include "main.h"
 
+static void	update_mouse_helper(t_cub3D *mystruct, float mapDeltaX)
+{
+	double	oldX;
+
+	oldX = mystruct->dirX;
+	mystruct->dirX = mystruct->dirX * cos(mapDeltaX / 100.0)
+		- mystruct->dirY * sin(mapDeltaX / 100.0);
+	mystruct->dirY = oldX * sin(mapDeltaX / 100.0)
+		+ mystruct->dirY * cos(mapDeltaX / 100.0);
+	oldX = mystruct->planeX;
+	mystruct->planeX = mystruct->planeX * cos(mapDeltaX / 100.0)
+		- mystruct->planeY * sin(mapDeltaX / 100.0);
+	mystruct->planeY = oldX * sin(mapDeltaX / 100.0)
+		+ mystruct->planeY * cos(mapDeltaX / 100.0);
+}
+
 void	update_mouse(t_cub3D *mystruct)
 {
-	int	x;
-	int	y;
-	int	deltaX;
+	int		x;
+	int		y;
+	int		deltaX;
+	float	mapDeltaX;
 
 	mlx_mouse_get_pos(mystruct->vars.win, &x, &y);
 	deltaX = x - SCREEN_W / 2;
@@ -15,15 +32,10 @@ void	update_mouse(t_cub3D *mystruct)
 		else
 			deltaX = MAX_X_DELTA;
 	}
-	float	mapDeltaX = 1.5 * sqrt(ft_abs_int(deltaX));
+	mapDeltaX = 1.5 * sqrt(ft_abs_int(deltaX));
 	if (deltaX > 0)
 		mapDeltaX *= -1;
-	double	oldDirX = mystruct->dirX;
-	mystruct->dirX = mystruct->dirX * cos(mapDeltaX / 100.0) - mystruct->dirY * sin(mapDeltaX / 100.0);
-	mystruct->dirY = oldDirX * sin(mapDeltaX / 100.0) + mystruct->dirY * cos(mapDeltaX / 100.0);
-	double	oldPlaneX = mystruct->planeX;
-	mystruct->planeX = mystruct->planeX * cos(mapDeltaX / 100.0) - mystruct->planeY * sin(mapDeltaX / 100.0);
-	mystruct->planeY = oldPlaneX * sin(mapDeltaX / 100.0) + mystruct->planeY * cos(mapDeltaX / 100.0);
+	update_mouse_helper(mystruct, mapDeltaX);
 	mlx_mouse_move(mystruct->vars.win, SCREEN_W / 2, SCREEN_H / 2);
 }
 
@@ -56,5 +68,17 @@ void	update_canvas(t_cub3D *mystruct)
 			my_mlx_pixel_put(&mystruct->canvas, x, y,
 				mystruct->draw_buffer[y][x]);
 	}
-	mlx_put_image_to_window(mystruct->vars.mlx, mystruct->vars.win, mystruct->canvas.img, 0, 0);
+	mlx_put_image_to_window(mystruct->vars.mlx, mystruct->vars.win,
+		mystruct->canvas.img, 0, 0);
+}
+
+// Change the state of sprite for animation
+void	update_state_of_sprites(t_cub3D *mystruct, int i)
+{
+	if (mystruct->sprites[i].name == SPRITE_GOGGLE
+		&& ++mystruct->sprites[i].index_of_sprite == 8)
+		mystruct->sprites[i].index_of_sprite = 0;
+	else if (mystruct->sprites[i].name == SPRITE_AMBER
+		&& ++mystruct->sprites[i].index_of_sprite == AMBER_SPRITES_N)
+		mystruct->sprites[i].index_of_sprite = 0;
 }
