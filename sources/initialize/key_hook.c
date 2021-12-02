@@ -72,20 +72,19 @@ int	key_release(int key, void *param)
 		mystruct = (t_cub3D *)param;
 	}
 	movement_keys_release(key, mystruct);
-	if (key == KEY_E && mystruct->looking_at_door
-		&& mystruct->door_to_interact_with.distance_from_player < 2)
+	if (key == KEY_E && mystruct->at_door && mystruct->door_ahaed.dist < 2)
 	{
-		if (mystruct->door_to_interact_with.opened == true)
+		if (mystruct->door_ahaed.opened == true)
 		{
-			mystruct->door_to_interact_with.opened = false;
-			mystruct->map[mystruct->door_to_interact_with.coordinates.y]
-				[mystruct->door_to_interact_with.coordinates.x] = DOOR_CLOSED_CHAR;
+			mystruct->door_ahaed.opened = false;
+			mystruct->map[mystruct->door_ahaed.coordinates.y]
+			[mystruct->door_ahaed.coordinates.x] = DOOR_CLOSED_C;
 		}
 		else
 		{
-			mystruct->door_to_interact_with.opened = true;
-			mystruct->map[mystruct->door_to_interact_with.coordinates.y]
-				[mystruct->door_to_interact_with.coordinates.x] = DOOR_OPEN_CHAR;
+			mystruct->door_ahaed.opened = true;
+			mystruct->map[mystruct->door_ahaed.coordinates.y]
+			[mystruct->door_ahaed.coordinates.x] = DOOR_OPEN_C;
 		}
 	}
 	return (0);

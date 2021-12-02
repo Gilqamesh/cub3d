@@ -4,10 +4,12 @@
 void	wall_casting(t_cub3D *mystruct)
 {
 	t_wall_cast_params	p;
+	int					x;
 
-	mystruct->looking_at_door = false;
-	for (int x = 0; x < SCREEN_W; ++x)
-    {
+	mystruct->at_door = false;
+	x = -1;
+	while (++x < SCREEN_W)
+	{
 		ft_bzero(&p, sizeof(p));
 		initialize_wall_ray(mystruct, x, &p);
 		perform_dda(mystruct, x, &p);
@@ -21,25 +23,25 @@ static void	check_if_ray_hit(t_cub3D *mystruct, int current_column,
 t_wall_cast_params *p)
 {
 	if (mystruct->map[p->mapY][p->mapX] == WALL_CHAR
-		|| mystruct->map[p->mapY][p->mapX] == DOOR_CLOSED_CHAR)
+		|| mystruct->map[p->mapY][p->mapX] == DOOR_CLOSED_C)
 		p->hit = mystruct->map[p->mapY][p->mapX];
 	if (current_column == SCREEN_W / 2 && (mystruct->map[p->mapY][p->mapX]
-		== DOOR_OPEN_CHAR || mystruct->map[p->mapY][p->mapX]
-		== DOOR_CLOSED_CHAR))
+		== DOOR_OPEN_C || mystruct->map[p->mapY][p->mapX]
+		== DOOR_CLOSED_C))
 	{
-		mystruct->looking_at_door = true;
-		if (mystruct->map[p->mapY][p->mapX] == DOOR_CLOSED_CHAR)
-			mystruct->door_to_interact_with.opened = false;
+		mystruct->at_door = true;
+		if (mystruct->map[p->mapY][p->mapX] == DOOR_CLOSED_C)
+			mystruct->door_ahaed.opened = false;
 		else
-			mystruct->door_to_interact_with.opened = true;
-		if (p->side == HORIZONTAL_SIDE)
-			mystruct->door_to_interact_with.distance_from_player = p->sideDistX
+			mystruct->door_ahaed.opened = true;
+		if (p->side == H_SIDE)
+			mystruct->door_ahaed.dist = p->sideDistX
 				- p->deltaDistX;
 		else
-			mystruct->door_to_interact_with.distance_from_player = p->sideDistY
+			mystruct->door_ahaed.dist = p->sideDistY
 				- p->deltaDistY;
-		mystruct->door_to_interact_with.coordinates.x = p->mapX;
-		mystruct->door_to_interact_with.coordinates.y = p->mapY;
+		mystruct->door_ahaed.coordinates.x = p->mapX;
+		mystruct->door_ahaed.coordinates.y = p->mapY;
 	}
 }
 
@@ -55,13 +57,13 @@ t_wall_cast_params *p)
 		{
 			p->sideDistX += p->deltaDistX;
 			p->mapX += p->stepX;
-			p->side = HORIZONTAL_SIDE;
+			p->side = H_SIDE;
 		}
 		else
 		{
 			p->sideDistY += p->deltaDistY;
 			p->mapY += p->stepY;
-			p->side = VERTICAL_SIDE;
+			p->side = V_SIDE;
 		}
 		check_if_ray_hit(mystruct, current_column, p);
 	}
@@ -73,7 +75,7 @@ t_wall_cast_params *p)
 // calculate lowest and highest pixel to fill in current stripe
 void	calculate_distance(t_wall_cast_params *p)
 {
-	if (p->side == HORIZONTAL_SIDE)
+	if (p->side == H_SIDE)
 		p->perpWallDist = p->sideDistX - p->deltaDistX;
 	else
 		p->perpWallDist = p->sideDistY - p->deltaDistY;

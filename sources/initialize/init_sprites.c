@@ -20,7 +20,7 @@ static int	init_sprites_helper(t_cub3D *mystruct)
 	mystruct->n_of_sprites_on_map = mystruct->n_of_lamps_on_map
 		+ n_of_treasures;
 	mystruct->sprites = ft_calloc(mystruct->n_of_sprites_on_map,
-		sizeof(*mystruct->sprites));
+			sizeof(*mystruct->sprites));
 	return (n_of_treasures);
 }
 
@@ -64,8 +64,9 @@ static void	init_sprites_helper2(t_cub3D *mystruct, int *n_of_treasures)
 		x = -1;
 		while (++x < mystruct->map_width)
 			if (init_sprites_helper3(mystruct, n_of_treasures,
-				(t_point_p){&sprite_index, &cur_n_of_spaces}, (t_point){x, y}))
-					return ;
+					(t_point_p){&sprite_index, &cur_n_of_spaces},
+				(t_point){x, y}))
+				return ;
 	}
 }
 
@@ -73,18 +74,21 @@ static void	init_sprites_helper4(t_cub3D *mystruct, int i)
 {
 	mystruct->sprites[i].uDiv = 2.0;
 	mystruct->sprites[i].vDiv = 2.0;
-	if (i % 4 == 0)
+	if (i < mystruct->n_of_lamps_on_map)
 	{
-		mystruct->sprites[i].img = mystruct->amber_sprites;
-		mystruct->sprites[i].name = SPRITE_AMBER;
-		mystruct->sprites[i].translucency_factor = 3.0;
-	}
-	else if (i < mystruct->n_of_lamps_on_map)
-	{
-		mystruct->sprites[i].img = &mystruct->textures[TEXTURE_LAMP];
-		mystruct->sprites[i].name = SPRITE_LAMP;
-		mystruct->sprites[i].vMove = -3.0 * TEXT_H;
-		mystruct->sprites[i].translucency_factor = 2.0;
+		if (i % 4 == 0)
+		{
+			mystruct->sprites[i].img = mystruct->amber_sprites;
+			mystruct->sprites[i].name = SPRITE_AMBER;
+			mystruct->sprites[i].translucency_factor = 3.0;
+		}
+		else
+		{
+			mystruct->sprites[i].img = &mystruct->textures[TEXTURE_LAMP];
+			mystruct->sprites[i].name = SPRITE_LAMP;
+			mystruct->sprites[i].vMove = -3.0 * TEXT_H;
+			mystruct->sprites[i].translucency_factor = 2.0;
+		}
 	}
 	else
 	{

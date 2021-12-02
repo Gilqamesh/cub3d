@@ -1,18 +1,7 @@
 #include "main.h"
 
-// initialize x-coordinate in camera space (cameraX)
-// calculate ray position and direction (rayDir vector)
-// initialize which box of the map we're in (mapX, mapY)
-// initialize length of ray from one x or y-side to next x or y-side (deltaDist vector)
-// calculate step and initialize sideDist
-void	initialize_wall_ray(t_cub3D *mystruct, int current_column,
-t_wall_cast_params *p)
+static void	set_deltadist(t_wall_cast_params *p)
 {
-	p->cameraX = 2.0 * current_column / SCREEN_W - 1;
-	p->rayDirX = mystruct->dirX + mystruct->planeX * p->cameraX;
-	p->rayDirY = mystruct->dirY + mystruct->planeY * p->cameraX;
-	p->mapX = (int)mystruct->posX;
-	p->mapY = (int)mystruct->posY;
 	if (ft_fabs(p->rayDirX) < EPSILON)
 		p->deltaDistX = INFINITY;
 	else
@@ -21,6 +10,10 @@ t_wall_cast_params *p)
 		p->deltaDistY = INFINITY;
 	else
 		p->deltaDistY = ft_fabs(1.0 / p->rayDirY);
+}
+
+static void	set_sidedist(t_cub3D *mystruct, t_wall_cast_params *p)
+{
 	if (p->rayDirX < 0)
 	{
 		p->stepX = -1;
@@ -41,4 +34,22 @@ t_wall_cast_params *p)
 		p->stepY = 1;
 		p->sideDistY = (p->mapY + 1.0 - mystruct->posY) * p->deltaDistY;
 	}
+}
+
+// initialize x-coordinate in camera space (cameraX)
+// calculate ray position and direction (rayDir vector)
+// initialize which box of the map we're in (mapX, mapY)
+// initialize length of ray from one x or y-side to next x or y-side
+//		(deltaDist vector)
+// calculate step and initialize sideDist
+void	initialize_wall_ray(t_cub3D *mystruct, int current_column,
+t_wall_cast_params *p)
+{
+	p->cameraX = 2.0 * current_column / SCREEN_W - 1;
+	p->rayDirX = mystruct->dirX + mystruct->planeX * p->cameraX;
+	p->rayDirY = mystruct->dirY + mystruct->planeY * p->cameraX;
+	p->mapX = (int)mystruct->posX;
+	p->mapY = (int)mystruct->posY;
+	set_deltadist(p);
+	set_sidedist(mystruct, p);
 }

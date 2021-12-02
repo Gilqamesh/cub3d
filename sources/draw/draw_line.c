@@ -1,6 +1,6 @@
 #include "main.h"
 
-static void	slope_logic_helper(t_point p, t_point *delta,
+static void	low_slope_logic_helper(t_point p, t_point *delta,
 t_point *tmp, int *decision_var)
 {
 	if (*decision_var < 0)
@@ -39,9 +39,33 @@ static void	low_slope_logic(t_data *data, t_line_segment s, t_point delta)
 	while (tmp.x <= s.B.x)
 	{
 		my_mlx_pixel_put(data, tmp.x, tmp.y, s.color);
-		slope_logic_helper((t_point){s.B.y, s.A.y}, &delta, &tmp,
+		low_slope_logic_helper((t_point){s.B.y, s.A.y}, &delta, &tmp,
 			&decision_var);
 	}
+}
+
+static void	high_slope_logic_helper(t_point p, t_point *delta,
+t_point *tmp, int *decision_var)
+{
+	if (*decision_var < 0)
+	{
+		if (delta->y > delta->x)
+			*decision_var += 2 * delta->x;
+		else
+			*decision_var -= 2 * delta->x;
+	}
+	else
+	{
+		if (p.x > p.y)
+			++tmp->x;
+		else
+			--tmp->x;
+		if (delta->y > delta->x)
+			*decision_var += 2 * (delta->x - delta->y);
+		else
+			*decision_var -= 2 * (delta->x + delta->y);
+	}
+	++tmp->y;
 }
 
 static void	high_slope_logic(t_data *data, t_line_segment s, t_point delta)
@@ -56,25 +80,8 @@ static void	high_slope_logic(t_data *data, t_line_segment s, t_point delta)
 	while (tmp.y <= s.B.y)
 	{
 		my_mlx_pixel_put(data, tmp.x, tmp.y, s.color);
-		if (decision_var < 0)
-		{
-			if (delta.y > delta.x)
-				decision_var += 2 * delta.x;
-			else
-				decision_var -= 2 * delta.x;
-		}
-		else
-		{
-			if (s.B.x > s.A.x)
-				++tmp.x;
-			else
-				--tmp.x;
-			if (delta.y > delta.x)
-				decision_var += 2 * (delta.x - delta.y);
-			else
-				decision_var -= 2 * (delta.x + delta.y);
-		}
-		++tmp.y;
+		high_slope_logic_helper((t_point){s.B.x, s.A.x}, &delta, &tmp,
+			&decision_var);
 	}
 }
 

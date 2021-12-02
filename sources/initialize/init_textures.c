@@ -18,17 +18,21 @@ void	init_wall_images(t_cub3D *mystruct)
 
 static void	init_textures_helper(t_cub3D *mystruct)
 {
+	t_extract_img_args	p;
+
 	extract_image(&mystruct->minimap_door_closed_img, &mystruct->vars,
 		"assets/minimap_door_closed.xpm", &(t_extract_img_args){NULL, NULL,
 		&(t_point){TEXT_W, TEXT_H}});
 	extract_image(&mystruct->minimap_door_open_img, &mystruct->vars,
 		"assets/minimap_door_open.xpm", &(t_extract_img_args){NULL, NULL,
 		&(t_point){TEXT_W, TEXT_H}});
+	p.A = &(t_point){640, 64};
+	p.B = &(t_point){682, 0};
+	p.cell_size = &(t_point){TEXT_W, TEXT_H};
 	extract_image(&mystruct->textures[TEXTURE_LAMP], &mystruct->vars,
-		"assets/wolftextures.xpm", &(t_extract_img_args){&(t_point){640,
-		64}, &(t_point){682, 0}, &(t_point){TEXT_W, TEXT_H}});
+		"assets/wolftextures.xpm", &p);
 	extract_image(&mystruct->pause_img, &mystruct->vars, "assets/pause.xpm",
-		&(t_extract_img_args){NULL, NULL,&(t_point){SCREEN_W, SCREEN_H}});
+		&(t_extract_img_args){NULL, NULL, &(t_point){SCREEN_W, SCREEN_H}});
 }
 
 static void	init_textures_helper2(t_cub3D *mystruct)
@@ -36,7 +40,7 @@ static void	init_textures_helper2(t_cub3D *mystruct)
 	static char	*amber_textures[AMBER_SPRITES_N] = {
 		"assets/AMBER_E.xpm", "assets/AMBER_N.xpm", "assets/AMBER_S.xpm",
 		"assets/AMBER_W.xpm", "assets/AMBER_W2.xpm"};
-	int					i;
+	int			i;
 
 	i = -1;
 	while (++i < AMBER_SPRITES_N)
@@ -47,13 +51,18 @@ static void	init_textures_helper2(t_cub3D *mystruct)
 
 void	init_textures(t_cub3D *mystruct)
 {
-	int	i;
+	int					i;
+	t_extract_img_args	p;
 
 	i = -1;
 	while (++i < 8)
+	{
+		p.A = &(t_point){i * 64, 64};
+		p.B = &(t_point){(i + 1) * 64, 0};
+		p.cell_size = &(t_point){64, 64};
 		extract_image(&mystruct->goggles[i], &mystruct->vars,
-		"assets/goggles.xpm", &(t_extract_img_args){&(t_point){i * 64, 64},
-		&(t_point){(i + 1) * 64, 0}, &(t_point){64, 64}});
+			"assets/goggles.xpm", &p);
+	}
 	extract_image(&mystruct->brush_img, &mystruct->vars, "assets/brush.xpm",
 		&(t_extract_img_args){NULL, NULL, &(t_point){320, 320}});
 	extract_image(&mystruct->crosshair_img, &mystruct->vars,
@@ -62,7 +71,7 @@ void	init_textures(t_cub3D *mystruct)
 	mystruct->textures = malloc(N_OF_TEXTURES * sizeof(*mystruct->textures));
 	extract_image(&mystruct->textures[TEXTURE_DOOR], &mystruct->vars,
 		"assets/door.xpm", &(t_extract_img_args){NULL, NULL, &(t_point){
-			TEXT_W, TEXT_H}});
+		TEXT_W, TEXT_H}});
 	init_textures_helper(mystruct);
 	init_textures_helper2(mystruct);
 }

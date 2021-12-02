@@ -27,28 +27,24 @@
 # define ZOOM_FACTOR			20
 # define SPRITE_DENSITY_FACTOR	0.2
 # define PI						3.1415
-# define MOVE_SPEED				(1.0 / 15.0)
-# define ROTATE_SPEED			(1.0 / 30.0)
+# define MOVE_SPEED				0.06666
+# define ROTATE_SPEED			0.03333
 # define TEXT_W  				64
 # define TEXT_H  				64
 # define EPSILON				0.0000001
 # define MAX_X_DELTA			SCREEN_W
-# define MINIMAP_CELL_X			SCREEN_W / 40
-# define MINIMAP_CELL_Y			SCREEN_H / 40
 # define MINIMAP_N_OF_CELL_X	10
 # define MINIMAP_N_OF_CELL_Y	10
-# define REALTIME_MINIMAP_W		(MINIMAP_CELL_X * MINIMAP_N_OF_CELL_X)
-# define REALTIME_MINIMAP_H		(MINIMAP_CELL_Y * MINIMAP_N_OF_CELL_Y)
 # define WALL_CHAR				'1'
-# define DOOR_OPEN_CHAR			'o'
-# define DOOR_CLOSED_CHAR		'd'
+# define DOOR_OPEN_C			'o'
+# define DOOR_CLOSED_C			'd'
 # define SPACE_CHAR				'0'
 # define TREASURE_CHAR			'T'
 # define CROSSHAIR_SIZE			25
 # define WALL_TEXTURE_W			320
 # define WALL_TEXT_H			320
 # define AMBER_SPRITES_N		5
-# define HORIZONTAL_SIDE		0
-# define VERTICAL_SIDE			1
+# define H_SIDE					0
+# define V_SIDE					1
 
 #endif /* DEFINITIONS_H */

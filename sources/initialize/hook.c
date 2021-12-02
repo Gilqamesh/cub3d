@@ -5,15 +5,15 @@ int	exit_program(void *param)
 	t_cub3D	*mystruct;
 
 	mystruct = (t_cub3D *)param;
-	// ft_lstmallocfree(&mystruct->malloced_list);
 	exit(EXIT_SUCCESS);
 }
 
 static void	zoom_forward(t_cub3D *mystruct)
 {
 	if (sqrt(mystruct->dirX * mystruct->dirX + mystruct->dirY * mystruct->dirY)
-			< ft_minofint(REALTIME_MINIMAP_W / 2 / MINIMAP_N_OF_CELL_X - 1,
-			REALTIME_MINIMAP_H / 2 / MINIMAP_N_OF_CELL_Y) - 1)
+		< ft_minofint(SCREEN_W / 40 * MINIMAP_N_OF_CELL_X / 2
+			/ MINIMAP_N_OF_CELL_X - 1, SCREEN_H / 40 * MINIMAP_N_OF_CELL_Y / 2
+			/ MINIMAP_N_OF_CELL_Y) - 1)
 	{
 		mystruct->dirX *= 1 + ZOOM_FACTOR / 100.0;
 		mystruct->dirY *= 1 + ZOOM_FACTOR / 100.0;
@@ -23,7 +23,7 @@ static void	zoom_forward(t_cub3D *mystruct)
 static void	zoom_backward(t_cub3D *mystruct)
 {
 	if (sqrt(mystruct->dirX * mystruct->dirX
-		+ mystruct->dirY * mystruct->dirY) > 0.2)
+			+ mystruct->dirY * mystruct->dirY) > 0.2)
 	{
 		mystruct->dirX *= 1 - ZOOM_FACTOR / 100.0;
 		mystruct->dirY *= 1 - ZOOM_FACTOR / 100.0;

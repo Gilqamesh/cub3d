@@ -33,11 +33,11 @@ RAY_SRC = floor_casting.c sprite_casting.c wall_casting.c
 RAY_PATH = $(foreach file,$(RAY_SRC),$(ODIR)/$(RAY_DIR)/$(file))
 
 UPDATE_DIR = updating_functions
-UPDATE_SRC = update.c render_frame.c update_key.c
+UPDATE_SRC = update.c render_frame.c update_key.c update_key_movement.c
 UPDATE_PATH = $(foreach file,$(UPDATE_SRC),$(ODIR)/$(UPDATE_DIR)/$(file))
 
 UTILS_DIR = utils
-UTILS_SRC = image_manipulation.c utils.c
+UTILS_SRC = image_manipulation.c utils.c merge_sort_sprites.c
 UTILS_PATH = $(foreach file,$(UTILS_SRC),$(ODIR)/$(UTILS_DIR)/$(file))
 
 MAIN_SRC = main.c debugging.c

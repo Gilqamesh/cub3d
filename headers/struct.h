@@ -10,7 +10,7 @@ typedef struct s_point
 	int	y;
 }	t_point;
 
-enum color
+enum e_color
 {
 	RED = 0x00ff0000,
 	INV_RED = 0xff00ffff,
@@ -46,7 +46,7 @@ typedef struct s_vars
 	void	*win;
 }	t_vars;
 
-enum texture_name
+enum e_texture_name
 {
 	TEXTURE_DOOR,
 	TEXTURE_LAMP,
@@ -61,7 +61,7 @@ enum texture_name
 # define FLOOR_TEXTURE		WHITE_BRICK
 # define CEILING_TEXTURE	WOOD
 
-enum sprite_name
+enum e_sprite_name
 {
 	SPRITE_LAMP,
 	SPRITE_GOGGLE,
@@ -84,7 +84,7 @@ typedef struct s_sprite
 	t_data				*img;
 	int					index_of_sprite;
 	int					distance;
-	enum sprite_name	name;
+	enum e_sprite_name	name;
 	double				posX;
 	double				posY;
 	double				uDiv;
@@ -137,7 +137,7 @@ typedef struct s_door
 {
 	t_point	coordinates;
 	bool	opened;
-	double	distance_from_player;
+	double	dist;
 }	t_door;
 
 typedef struct s_cub3D
@@ -176,8 +176,8 @@ typedef struct s_cub3D
 	t_sprite			*sprites;
 	double				*ZBuffer;
 	t_input_parse		parse;
-	bool				looking_at_door;
-	t_door				door_to_interact_with;
+	bool				at_door;
+	t_door				door_ahaed;
 	t_data				minimap_door_closed_img;
 	t_data				minimap_door_open_img;
 	int					n_of_renders;

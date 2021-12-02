@@ -8,11 +8,15 @@
 void	floor_casting(t_cub3D *mystruct)
 {
 	t_floor_cast_params	p;
+	int					y;
+	int					x;
 
-	for (int y = 0; y < SCREEN_H; ++y)
+	y = -1;
+	while (++y < SCREEN_H)
 	{
 		initialize_floor_ray(mystruct, y, &p);
-		for (int x = 0; x < SCREEN_W; ++x)
+		x = -1;
+		while (++x < SCREEN_W)
 		{
 			p.tx = (int)(TEXT_W * (p.floorX - (int)p.floorX)) & (TEXT_W - 1);
 			p.ty = (int)(TEXT_H * (p.floorY - (int)p.floorY)) & (TEXT_H - 1);
@@ -24,12 +28,17 @@ void	floor_casting(t_cub3D *mystruct)
 	}
 }
 
-void	initialize_floor_ray(t_cub3D *mystruct, int current_row, t_floor_cast_params *p)
+void	initialize_floor_ray(t_cub3D *mystruct, int current_row,
+t_floor_cast_params *p)
 {
-	p->rowDistance = current_row == SCREEN_H / 2 ? INFINITY
-		: (mystruct->posZ) / (current_row - SCREEN_H / 2);
+	if (current_row == SCREEN_H / 2)
+		p->rowDistance = INFINITY;
+	else
+		p->rowDistance = mystruct->posZ / (current_row - SCREEN_H / 2);
 	p->floorStepX = p->rowDistance * 2.0 * mystruct->planeX / SCREEN_W;
 	p->floorStepY = p->rowDistance * 2.0 * mystruct->planeY / SCREEN_W;
-	p->floorX = mystruct->posX + p->rowDistance * (mystruct->dirX - mystruct->planeX);
-	p->floorY = mystruct->posY + p->rowDistance * (mystruct->dirY - mystruct->planeY);
+	p->floorX = mystruct->posX + p->rowDistance
+		* (mystruct->dirX - mystruct->planeX);
+	p->floorY = mystruct->posY + p->rowDistance
+		* (mystruct->dirY - mystruct->planeY);
 }

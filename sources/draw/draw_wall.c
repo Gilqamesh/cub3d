@@ -2,7 +2,7 @@
 
 static int	get_wall_texture(t_wall_cast_params *p)
 {
-	if (p->side == VERTICAL_SIDE)
+	if (p->side == V_SIDE)
 	{
 		if (p->stepY == 1)
 			return (TEXT_N_WALL);
@@ -31,22 +31,23 @@ void	draw_wall(t_cub3D *mystruct, int current_column, t_wall_cast_params *p)
 {
 	t_draw_wall_params	w;
 	int					texture_index;
+	int					y;
 
-	if (p->side == 0)
+	w.wallX = mystruct->posX + p->perpWallDist * p->rayDirX;
+	if (p->side == H_SIDE)
 		w.wallX = mystruct->posY + p->perpWallDist * p->rayDirY;
-	else
-		w.wallX = mystruct->posX + p->perpWallDist * p->rayDirX;
 	w.wallX -= floor(w.wallX);
 	w.texX = (int)(w.wallX * TEXT_W);
-	if ((p->side == HORIZONTAL_SIDE && p->rayDirX > 0)
-		|| (p->side == VERTICAL_SIDE && p->rayDirY < 0))
+	if ((p->side == H_SIDE && p->rayDirX > 0)
+		|| (p->side == V_SIDE && p->rayDirY < 0))
 		w.texX = TEXT_W - w.texX - 1;
 	w.step = (double)TEXT_H / p->lineHeight;
 	w.texPos = (p->drawStart + (p->lineHeight - SCREEN_H) / 2.0) * w.step;
 	texture_index = TEXTURE_DOOR;
 	if (p->hit == WALL_CHAR)
 		texture_index = get_wall_texture(p);
-	for (int y = p->drawStart; y < p->drawEnd; ++y)
+	y = p->drawStart - 1;
+	while (++y < p->drawEnd)
 	{
 		w.texY = (int)w.texPos & (TEXT_H - 1);
 		w.texPos += w.step;
