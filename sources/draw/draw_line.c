@@ -1,25 +1,25 @@
 #include "main.h"
 
-static void	slope_logic_helper(t_point p, t_point delta,
+static void	slope_logic_helper(t_point p, t_point *delta,
 t_point *tmp, int *decision_var)
 {
-	if (decision_var < 0)
+	if (*decision_var < 0)
 	{
-		if (delta.y >= 0)
-			*decision_var += 2 * delta.y;
+		if (delta->y >= 0)
+			*decision_var += 2 * delta->y;
 		else
-			*decision_var -= 2 * delta.y;
+			*decision_var -= 2 * delta->y;
 	}
 	else
 	{
-		if (B.y > A.y)
+		if (p.x > p.y)
 			++tmp->y;
 		else
 			--tmp->y;
-		if (delta.y >= 0)
-			*decision_var += 2 * (delta.y - delta.x);
+		if (delta->y >= 0)
+			*decision_var += 2 * (delta->y - delta->x);
 		else
-			*decision_var -= 2 * (delta.y + delta.x);
+			*decision_var -= 2 * (delta->y + delta->x);
 	}
 	++tmp->x;
 }
@@ -39,7 +39,8 @@ static void	low_slope_logic(t_data *data, t_line_segment s, t_point delta)
 	while (tmp.x <= s.B.x)
 	{
 		my_mlx_pixel_put(data, tmp.x, tmp.y, s.color);
-		slope_logic_helper(s, delta, &tmp, &decision_var);
+		slope_logic_helper((t_point){s.B.y, s.A.y}, &delta, &tmp,
+			&decision_var);
 	}
 }
 
