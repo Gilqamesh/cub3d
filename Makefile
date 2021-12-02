@@ -2,7 +2,8 @@ NAME = cub3D
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror -O3
 PATH_MLX = mlx
-LIBS = -Lminilibx -lmlx -lm -lz -framework OpenGL -framework AppKit -Lmylib -lmylib
+LIBS = 	-Lminilibx -lmlx -lm -lz -framework OpenGL -framework AppKit \
+		-Lmylib -lmylib
 
 HDIR = $(realpath headers)
 ODIR = $(realpath objects)
@@ -16,7 +17,8 @@ DESTROY_SRC = destroy.c
 DESTROY_PATH = $(foreach file,$(DESTROY_SRC),$(ODIR)/$(DESTROY_DIR)/$(file))
 
 DRAW_DIR = draw
-DRAW_SRC = draw.c draw_wall.c draw_sprite_stripe.c
+DRAW_SRC = 	draw_textures.c draw_wall.c draw_sprite_stripe.c draw_utils.c \
+			draw_line.c
 DRAW_PATH = $(foreach file,$(DRAW_SRC),$(ODIR)/$(DRAW_DIR)/$(file))
 
 INIT_DIR = initialize
@@ -40,15 +42,17 @@ UTILS_PATH = $(foreach file,$(UTILS_SRC),$(ODIR)/$(UTILS_DIR)/$(file))
 MAIN_SRC = main.c debugging.c
 MAIN_PATH = $(foreach file,$(MAIN_SRC),$(ODIR)/$(file))
 
-TARGETS = 	$(DESTROY_PATH:.c=.o) $(DRAW_PATH:.c=.o) $(INIT_PATH:.c=.o) $(RAY_PATH:.c=.o) $(UPDATE_PATH:.c=.o) \
-			$(UTILS_PATH:.c=.o) $(MAIN_PATH:.c=.o)
+TARGETS = 	$(DESTROY_PATH:.c=.o) $(DRAW_PATH:.c=.o) $(INIT_PATH:.c=.o) \
+			$(RAY_PATH:.c=.o) $(UPDATE_PATH:.c=.o) $(UTILS_PATH:.c=.o) \
+			$(MAIN_PATH:.c=.o)
 
 DEPENDS:
 	@$(MAKE) --directory=$(MYLIB)
 	make $(NAME)
 $(NAME): $(TARGETS)
 	$(CC) -o $@ $^ $(LIBS)
-$(ODIR)/%.o: $(SDIR)/%.c $(HDIR)/$(dir %)/*.h $(HDIR)/definitions.h $(HDIR)/debugging.h
+$(ODIR)/%.o: 	$(SDIR)/%.c $(HDIR)/$(dir %)/*.h $(HDIR)/definitions.h \
+				$(HDIR)/debugging.h
 	cd $(dir $@) && $(CC) $(INCLUDES) $(CFLAGS) -c $<
 
 

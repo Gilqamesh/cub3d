@@ -17,9 +17,36 @@ void	wall_casting(t_cub3D *mystruct)
 	}
 }
 
+static void	check_if_ray_hit(t_cub3D *mystruct, int current_column,
+t_wall_cast_params *p)
+{
+	if (mystruct->map[p->mapY][p->mapX] == WALL_CHAR
+		|| mystruct->map[p->mapY][p->mapX] == DOOR_CLOSED_CHAR)
+		p->hit = mystruct->map[p->mapY][p->mapX];
+	if (current_column == SCREEN_W / 2 && (mystruct->map[p->mapY][p->mapX]
+		== DOOR_OPEN_CHAR || mystruct->map[p->mapY][p->mapX]
+		== DOOR_CLOSED_CHAR))
+	{
+		mystruct->looking_at_door = true;
+		if (mystruct->map[p->mapY][p->mapX] == DOOR_CLOSED_CHAR)
+			mystruct->door_to_interact_with.opened = false;
+		else
+			mystruct->door_to_interact_with.opened = true;
+		if (p->side == HORIZONTAL_SIDE)
+			mystruct->door_to_interact_with.distance_from_player = p->sideDistX
+				- p->deltaDistX;
+		else
+			mystruct->door_to_interact_with.distance_from_player = p->sideDistY
+				- p->deltaDistY;
+		mystruct->door_to_interact_with.coordinates.x = p->mapX;
+		mystruct->door_to_interact_with.coordinates.y = p->mapY;
+	}
+}
+
 // Jump to next map square, either in x-direction, or in y-direction
 // Each iteration check if the ray has hit a wall
-void	perform_dda(t_cub3D *mystruct, int current_column, t_wall_cast_params *p)
+void	perform_dda(t_cub3D *mystruct, int current_column,
+t_wall_cast_params *p)
 {
 	p->hit = '\0';
 	while (!p->hit)
@@ -28,41 +55,25 @@ void	perform_dda(t_cub3D *mystruct, int current_column, t_wall_cast_params *p)
 		{
 			p->sideDistX += p->deltaDistX;
 			p->mapX += p->stepX;
-			p->side = 0;
+			p->side = HORIZONTAL_SIDE;
 		}
 		else
 		{
 			p->sideDistY += p->deltaDistY;
 			p->mapY += p->stepY;
-			p->side = 1;
+			p->side = VERTICAL_SIDE;
 		}
-		if (mystruct->map[p->mapY][p->mapX] == WALL_CHAR
-			|| mystruct->map[p->mapY][p->mapX] == DOOR_CLOSED_CHAR)
-			p->hit = mystruct->map[p->mapY][p->mapX];
-		if (current_column == SCREEN_W / 2 && (mystruct->map[p->mapY][p->mapX] == DOOR_OPEN_CHAR
-			|| mystruct->map[p->mapY][p->mapX] == DOOR_CLOSED_CHAR))
-		{
-			mystruct->looking_at_door = true;
-			if (mystruct->map[p->mapY][p->mapX] == DOOR_CLOSED_CHAR)
-				mystruct->door_to_interact_with.opened = false;
-			else
-				mystruct->door_to_interact_with.opened = true;
-			if (p->side == 0)
-				mystruct->door_to_interact_with.distance_from_player = p->sideDistX - p->deltaDistX;
-			else
-				mystruct->door_to_interact_with.distance_from_player = p->sideDistY - p->deltaDistY;
-			mystruct->door_to_interact_with.coordinates.x = p->mapX;
-			mystruct->door_to_interact_with.coordinates.y = p->mapY;
-		}
+		check_if_ray_hit(mystruct, current_column, p);
 	}
 }
 
-// Calculate distance projected on camera direction (Euclidean distance would give fisheye effect!)
+// Calculate distance projected on camera direction
+//		(Euclidean distance would give fisheye effect!)
 // Calculate height of line to draw on screen
 // calculate lowest and highest pixel to fill in current stripe
 void	calculate_distance(t_wall_cast_params *p)
 {
-	if (p->side == 0)
+	if (p->side == HORIZONTAL_SIDE)
 		p->perpWallDist = p->sideDistX - p->deltaDistX;
 	else
 		p->perpWallDist = p->sideDistY - p->deltaDistY;

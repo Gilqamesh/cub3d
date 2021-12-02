@@ -48,5 +48,7 @@
 # define WALL_TEXTURE_W			320
 # define WALL_TEXT_H			320
 # define AMBER_SPRITES_N		5
+# define HORIZONTAL_SIDE		0
+# define VERTICAL_SIDE			1
 
 #endif /* DEFINITIONS_H */

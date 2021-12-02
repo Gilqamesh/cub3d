@@ -22,7 +22,8 @@ static void	zoom_forward(t_cub3D *mystruct)
 
 static void	zoom_backward(t_cub3D *mystruct)
 {
-	if (sqrt(mystruct->dirX * mystruct->dirX + mystruct->dirY * mystruct->dirY) > 0.2)
+	if (sqrt(mystruct->dirX * mystruct->dirX
+		+ mystruct->dirY * mystruct->dirY) > 0.2)
 	{
 		mystruct->dirX *= 1 - ZOOM_FACTOR / 100.0;
 		mystruct->dirY *= 1 - ZOOM_FACTOR / 100.0;

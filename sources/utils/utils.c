@@ -42,3 +42,15 @@ unsigned int	divide_color(unsigned int color, double divisor)
 	blue = (unsigned int)((color & BLUE) / divisor);
 	return (alpha | red | green | blue);
 }
+
+void	swap_t_point(t_point *p, t_point *q)
+{
+	t_point	tmp;
+
+	tmp.x = p->x;
+	tmp.y = p->y;
+	p->x = q->x;
+	p->y = q->y;
+	q->x = tmp.x;
+	q->y = tmp.y;
+}

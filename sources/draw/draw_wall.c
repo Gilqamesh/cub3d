@@ -1,9 +1,8 @@
 #include "main.h"
 
-// side == 0 means vertical wall hit
 static int	get_wall_texture(t_wall_cast_params *p)
 {
-	if (p->side == 1)
+	if (p->side == VERTICAL_SIDE)
 	{
 		if (p->stepY == 1)
 			return (TEXT_N_WALL);
@@ -21,9 +20,11 @@ static int	get_wall_texture(t_wall_cast_params *p)
 // How much to increase the texture coordinate per screen pixel (step)
 // Starting texture coordinate (texPos)
 // Each iteration:
-// Cast the texture coordinate to integer, and mask with (texHeight - 1) in case of overflow (texY)
+// Cast the texture coordinate to integer, and mask with (texHeight - 1)
+//		in case of overflow (texY)
 // Get color from the texture and draw the pixel
-// make color darker for y-sides: R, G and B byte each divided through two with a "shift" and an "and"
+// make color darker for y-sides: R, G and B byte each divided through two
+//		with a "shift" and an "and"
 // if (p->side == 1)
 // 	color = (color >> 1) & 8355711;
 void	draw_wall(t_cub3D *mystruct, int current_column, t_wall_cast_params *p)
@@ -37,7 +38,8 @@ void	draw_wall(t_cub3D *mystruct, int current_column, t_wall_cast_params *p)
 		w.wallX = mystruct->posX + p->perpWallDist * p->rayDirX;
 	w.wallX -= floor(w.wallX);
 	w.texX = (int)(w.wallX * TEXT_W);
-	if ((p->side == 0 && p->rayDirX > 0) || (p->side == 1 && p->rayDirY < 0))
+	if ((p->side == HORIZONTAL_SIDE && p->rayDirX > 0)
+		|| (p->side == VERTICAL_SIDE && p->rayDirY < 0))
 		w.texX = TEXT_W - w.texX - 1;
 	w.step = (double)TEXT_H / p->lineHeight;
 	w.texPos = (p->drawStart + (p->lineHeight - SCREEN_H) / 2.0) * w.step;

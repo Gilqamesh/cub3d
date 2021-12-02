@@ -10,7 +10,8 @@ t_sprite *out)
 		out[i] = in[i];
 }
 
-static void	merge_sort_sprite_comb(t_sprite *in, t_3_int start_mid_end_indexes, t_sprite *out)
+static void	merge_sort_sprite_comb(t_sprite *in, t_3_int start_mid_end_indexes,
+t_sprite *out)
 {
 	int	i;
 	int	j;
@@ -59,7 +60,8 @@ static void	sort_sprites(t_cub3D *mystruct)
 	t_sprite	*helper;
 
 	helper = malloc(mystruct->n_of_sprites_on_map * sizeof(*helper));
-	merge_sort_sprite(mystruct->sprites, (t_2_int){0, mystruct->n_of_sprites_on_map}, helper);
+	merge_sort_sprite(mystruct->sprites,
+		(t_2_int){0, mystruct->n_of_sprites_on_map}, helper);
 	free(helper);
 }
 
@@ -69,11 +71,14 @@ static void	init_sprite_distances(t_cub3D *mystruct)
 
 	i = -1;
 	while (++i < mystruct->n_of_sprites_on_map)
-		mystruct->sprites[i].distance = (mystruct->posX - mystruct->sprites[i].posX)
-			* (mystruct->posX - mystruct->sprites[i].posX) + (mystruct->posY
-			- mystruct->sprites[i].posY) * (mystruct->posY - mystruct->sprites[i].posY);
+		mystruct->sprites[i].distance
+			= (mystruct->posX - mystruct->sprites[i].posX)
+			* (mystruct->posX - mystruct->sprites[i].posX)
+			+ (mystruct->posY - mystruct->sprites[i].posY)
+			* (mystruct->posY - mystruct->sprites[i].posY);
 }
 
+// Loop through every vertical stripe of the sprite on screen
 void	sprite_casting(t_cub3D *mystruct)
 {
 	int						i;
@@ -89,7 +94,6 @@ void	sprite_casting(t_cub3D *mystruct)
 			update_state_of_sprites(mystruct, i);
 		ft_bzero(&p, sizeof(p));
 		initialize_sprite_draw(mystruct, i, &p);
-		// Loop through every vertical stripe of the sprite on screen
 		stripe = p.drawStartX - 1;
 		while (++stripe < p.drawEndX)
 			draw_sprite_stripe(mystruct, i, stripe, &p);
