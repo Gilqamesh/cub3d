@@ -192,36 +192,44 @@ void	ft_color_parser(char *line, t_cub3D *mystruct)
 
 void	ft_we_ae(char *line, t_cub3D *mystruct)
 {
+	char	*temp;
+
 	if (line[0] == 'W' && line[1] == 'E' && mystruct->parse.we_full == 1)
 		ft_error_message("Wrong input\n");
 	if (line[0] == 'W' && line[1] == 'E' && mystruct->parse.we_full == 0)
 	{
-		mystruct->parse.WE = &line[ft_first_x_finder(line, '.')];
+		temp = ft_strdup(line);
+		mystruct->parse.WE = &temp[ft_first_x_finder(line, '.')];
 		mystruct->parse.we_full = 1;
 	}
 	if (line[0] == 'E' && line[1] == 'A' && mystruct->parse.ea_full == 1)
 		ft_error_message("Wrong input\n");
 	if (line[0] == 'E' && line[1] == 'A' && mystruct->parse.ea_full == 0)
 	{
-		mystruct->parse.EA = &line[ft_first_x_finder(line, '.')];
+		temp = ft_strdup(line);
+		mystruct->parse.EA = &temp[ft_first_x_finder(line, '.')];
 		mystruct->parse.ea_full = 1;
 	}
 }
 
 void	ft_no_so(char *line, t_cub3D *mystruct)
 {
+	char	*temp;
+
 	if (line[0] == 'N' && line[1] == 'O' && mystruct->parse.no_full == 1)
 		ft_error_message("Wrong input\n");
 	if (line[0] == 'N' && line[1] == 'O' && mystruct->parse.no_full == 0)
 	{
-		mystruct->parse.NO = &line[ft_first_x_finder(line, '.')];
+		temp = ft_strdup(line);
+		mystruct->parse.NO = &temp[ft_first_x_finder(line, '.')];
 		mystruct->parse.no_full = 1;
 	}
 	if (line[0] == 'S' && line[1] == 'O' && mystruct->parse.so_full == 1)
 		ft_error_message("Wrong input\n");
 	if (line[0] == 'S' && line[1] == 'O' && mystruct->parse.so_full == 0)
 	{
-		mystruct->parse.SO = &line[ft_first_x_finder(line, '.')];
+		temp = ft_strdup(line);
+		mystruct->parse.SO = &temp[ft_first_x_finder(line, '.')];
 		mystruct->parse.so_full = 1;
 	}
 }
@@ -340,11 +348,13 @@ void	ft_ll_to_2d(t_cub3D *mystruct)
 t_map	*ft_map_to_ll(t_cub3D *mystruct)
 {
 	t_map	*map;
+	char	*temp;
 
 	map = malloc(sizeof(t_map));
+	temp = ft_strdup(mystruct->parse.line);
 	if (map == NULL)
 		ft_error_message("Malloc Failed\n");
-	map->map_line = mystruct->parse.line;
+	map->map_line = temp;
 	map->next = NULL;
 	return (map);
 }
@@ -367,11 +377,13 @@ void	ft_map_parse(t_cub3D *mystruct)
 	{
 		ft_map_char_checker(mystruct, mystruct->parse.line);
 		ft_gnl_to_ll(mystruct);
+		free(mystruct->parse.line);
 	}
 	if (ft_strlen(mystruct->parse.line) == 0)
 		ft_error_message("Wrong input\n");
 	else
 		ft_gnl_to_ll(mystruct);
+	free(mystruct->parse.line);
 }
 
 void	ft_extension_checker(int argc, char **argv)
@@ -396,7 +408,11 @@ void	ft_input_parse(int argc, char **argv, t_cub3D *mystruct)
 		exit(EXIT_FAILURE);
 	while (get_next_line(mystruct->parse.fd, &mystruct->parse.line)
 		> 0 && mystruct->parse.full == 0)
+	{
 		ft_texture_color_parse(mystruct);
+		free(mystruct->parse.line);
+	}
+	free(mystruct->parse.line);
 	if (mystruct->parse.full != 1)
 	{
 		close (mystruct->parse.fd);
@@ -408,12 +424,11 @@ void	ft_input_parse(int argc, char **argv, t_cub3D *mystruct)
 	mystruct->map_width = mystruct->parse.map_width;
 	mystruct->map_height = mystruct->parse.map_height;
 	close(mystruct->parse.fd);
+	//system("leaks cub3D");
 	//ft_struct_printer(mystruct);
 	//exit(1);
 	//break parsing into several files
-	//find some nice sprites
-	//leaks: gnl strdup stuff + davids technique
-	//mystruct->parse.NO = ft_substr();
+	//leaks: davids technique:
 	//ft_lstadd_front(&mystruct->allocated_memory, ft_lstnew(mystruct->parse.NO));
 	//ft_lstmallocwrapper(&mystruct->allocated_memory, 5 * sizeof(char *), true); true is for calloc / false is for malloc
 }

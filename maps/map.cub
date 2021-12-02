@@ -1,10 +1,10 @@
-NO ./assets/NORTH_WALL.xpm
-SO ./assets/SOUTH_WALL.xpm
-WE ./assets/WEST_WALL.xpm
-EA ./assets/EAST_WALL.xpm
+NO ./assets/STARS.xpm
+SO ./assets/STARS.xpm
+WE ./assets/STARS.xpm
+EA ./assets/STARS.xpm
 
-F 170,100,20
-C 200,255,255
+F 0,0,0
+C 0,0,0
 
 		1111111111111111111111111
 		1000000000110000000000001
