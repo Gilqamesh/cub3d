@@ -76,9 +76,15 @@ void	sprite_casting(t_cub3D *mystruct)
 	for (int i = 0; i < mystruct->n_of_sprites_on_map; ++i)
 	{
 		// Change state of sprites for animation
-		if (mystruct->n_of_renders == 0 && mystruct->sprites[i].name == SPRITE_GOGGLE)
-			if (++mystruct->sprites[i].index_of_sprite == 8)
+		if (mystruct->n_of_renders == 0)
+		{
+			if (mystruct->sprites[i].name == SPRITE_GOGGLE
+				&& ++mystruct->sprites[i].index_of_sprite == 8)
 				mystruct->sprites[i].index_of_sprite = 0;
+			else if (mystruct->sprites[i].name == SPRITE_AMBER
+				&& ++mystruct->sprites[i].index_of_sprite == 5)
+				mystruct->sprites[i].index_of_sprite = 0;
+		}
 
 		// Translate sprite position to relative to camera
 		double	spriteX = mystruct->sprites[i].posX - mystruct->posX;
@@ -96,17 +102,17 @@ void	sprite_casting(t_cub3D *mystruct)
 
 		// Calculate height of the sprite on screen
 		// Using 'transformY' instead of the real distance prevents fisheye
-		int		spriteHeight = ft_fabs((int)(SCREEN_H / transformY));
+		int		spriteHeight = ft_fabs((int)(SCREEN_H / transformY)) / mystruct->sprites[i].vDiv;
 		// Calculate lowest and highest pixel to fill in current stripe
-		int		drawStartY = -spriteHeight / 2.0 + SCREEN_H / 2.0;
+		int		drawStartY = -spriteHeight / 2.0 + SCREEN_H / 2.0 + (int)(mystruct->sprites[i].vMove / transformY);
 		if (drawStartY < 0)
 			drawStartY = 0;
-		int		drawEndY = spriteHeight / 2.0 + SCREEN_H / 2.0;
+		int		drawEndY = spriteHeight / 2.0 + SCREEN_H / 2.0 + (int)(mystruct->sprites[i].vMove / transformY);
 		if (drawEndY >= SCREEN_H)
 			drawEndY = SCREEN_H - 1;
 
 		// Calculate width of the sprite
-		int		spriteWidth = ft_fabs((int)(SCREEN_H) / transformY);
+		int		spriteWidth = ft_fabs((int)(SCREEN_H) / transformY) / mystruct->sprites[i].uDiv;
 		int		drawStartX = -spriteWidth / 2.0 + spriteScreenX;
 		if (drawStartX < 0)
 			drawStartX = 0;
@@ -134,10 +140,21 @@ void	sprite_casting(t_cub3D *mystruct)
 					// Get current color from the texture
 					unsigned int	color = get_color(&mystruct->sprites[i].img[mystruct->sprites[i].index_of_sprite],
 						texX, texY);
-					if ((color & 0x00ffffff) != 0)
-						my_mlx_pixel_put(&mystruct->canvas, stripe, y, color);
+					unsigned avg = 0;
+					unsigned avg_color = 0;
+					if ((color & 0xff00000) != 0xff00000)
+					{
+						avg = (((mystruct->draw_buffer[y][stripe] & RED) >> 1) & RED) | (mystruct->draw_buffer[y][stripe] & INV_RED);
+						avg = (((avg & BLUE) >> 1) & BLUE) | (avg & INV_BLUE);
+						avg = (((avg & GREEN) >> 1) & GREEN) | (avg & INV_GREEN);
+						avg_color = (((color & RED) >> 1) & RED) | (color & INV_RED);
+						avg_color = (((avg_color & BLUE) >> 1) & BLUE) | (avg_color & INV_BLUE);
+						avg_color = (((avg_color & GREEN) >> 1) & GREEN) | (avg_color & INV_GREEN);
+					}
+					mystruct->draw_buffer[y][stripe] = avg + avg_color;
 				}
 			}
 		}
 	}
 }
+// (((color & 0x00ff0000) >> 1) & 0x00ff0000) | (color & 0xff00ffff)

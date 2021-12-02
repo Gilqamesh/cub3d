@@ -18,8 +18,8 @@ void	floor_casting(t_cub3D *mystruct)
 			p.ty = (int)(TEXT_H * (p.floorY - (int)p.floorY)) & (TEXT_H - 1);
 			p.floorX += p.floorStepX;
 			p.floorY += p.floorStepY;
-			my_mlx_pixel_put(&mystruct->canvas, x, y, mystruct->parse.F);
-			my_mlx_pixel_put(&mystruct->canvas, x, SCREEN_H - y - 1, mystruct->parse.C);
+			mystruct->draw_buffer[y][x] = mystruct->parse.F;
+			mystruct->draw_buffer[SCREEN_H - y - 1][x] = mystruct->parse.C;
 		}
 	}
 }

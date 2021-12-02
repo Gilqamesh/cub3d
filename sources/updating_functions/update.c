@@ -45,5 +45,16 @@ void	update_position(t_cub3D *mystruct)
 
 void	update_canvas(t_cub3D *mystruct)
 {
+	int	x;
+	int	y;
+
+	y = -1;
+	while (++y < SCREEN_H)
+	{
+		x = -1;
+		while (++x < SCREEN_W)
+			my_mlx_pixel_put(&mystruct->canvas, x, y,
+				mystruct->draw_buffer[y][x]);
+	}
 	mlx_put_image_to_window(mystruct->vars.mlx, mystruct->vars.win, mystruct->canvas.img, 0, 0);
 }

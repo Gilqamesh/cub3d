@@ -11,7 +11,7 @@ static void	render_pipeline(t_cub3D *mystruct)
 	draw_minimap(mystruct);
 	update_position(mystruct);
 	update_mouse(mystruct);
-	// print_debug(mystruct);
+	print_debug(mystruct);
 	mlx_do_sync(mystruct->vars.mlx);
 }
 
@@ -33,7 +33,7 @@ int	render_frame(void *param)
 		draw_pause_screen(mystruct);
 		return (0);
 	}
-	if (++mystruct->n_of_renders == 30 / 4)
+	if (++mystruct->n_of_renders == 15)
 		mystruct->n_of_renders = 0;
 	render_pipeline(mystruct);
 	return (0);

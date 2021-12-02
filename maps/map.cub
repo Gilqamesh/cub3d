@@ -1,10 +1,10 @@
-NO ./assets/AMBER_N.xpm
-SO ./assets/AMBER_S.xpm
-WE ./assets/AMBER_W2.xpm
-EA ./assets/AMBER_E.xpm
+NO ./assets/NORTH_WALL.xpm
+SO ./assets/SOUTH_WALL.xpm
+WE ./assets/WEST_WALL.xpm
+EA ./assets/EAST_WALL.xpm
 
-F 0,0,0
-C 0,0,0
+F 170,100,20
+C 200,255,255
 
 		1111111111111111111111111
 		1000000000110000000000001

@@ -75,15 +75,31 @@ void	init_sprites(t_cub3D *mystruct)
 	i = -1;
 	while (++i < mystruct->n_of_sprites_on_map)
 	{
-		if (i < mystruct->n_of_lamps_on_map)
+		if (i == mystruct->n_of_lamps_on_map / 2)
+		{
+			mystruct->sprites[i].img = mystruct->amber_sprites;
+			mystruct->sprites[i].name = SPRITE_AMBER;
+			mystruct->sprites[i].uDiv = 2.0;
+			mystruct->sprites[i].vDiv = 2.0;
+			mystruct->sprites[i].translucency_factor = 4.0;
+		}
+		else if (i < mystruct->n_of_lamps_on_map)
 		{
 			mystruct->sprites[i].img = &mystruct->textures[TEXTURE_LAMP];
 			mystruct->sprites[i].name = SPRITE_LAMP;
+			mystruct->sprites[i].vMove = -TEXT_W;
+			mystruct->sprites[i].uDiv = 1.0;
+			mystruct->sprites[i].vDiv = 1.0;
+			mystruct->sprites[i].translucency_factor = 2.0;
 		}
 		else
 		{
 			mystruct->sprites[i].img = mystruct->goggles;
 			mystruct->sprites[i].name = SPRITE_GOGGLE;
+			mystruct->sprites[i].vMove = TEXT_W;
+			mystruct->sprites[i].uDiv = 1.0;
+			mystruct->sprites[i].vDiv = 1.0;
+			mystruct->sprites[i].translucency_factor = 1.0;
 		}
 	}
 	init_sprites_helper2(mystruct, &n_of_treasures);

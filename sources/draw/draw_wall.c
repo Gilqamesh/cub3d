@@ -49,8 +49,6 @@ void	draw_wall(t_cub3D *mystruct, int current_column, t_wall_cast_params *p)
 		w.texY = (int)w.texPos & (TEXT_H - 1);
 		w.texPos += w.step;
 		w.color = get_color(&mystruct->textures[texture_index], w.texX, w.texY);
-		if (p->side == 1)
-			w.color = (w.color >> 1) & 8355711;
-		my_mlx_pixel_put(&mystruct->canvas, current_column, y, w.color);
+		mystruct->draw_buffer[y][current_column] = w.color;
 	}
 }

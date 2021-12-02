@@ -28,6 +28,8 @@ void	init_images(t_cub3D *mystruct)
 		&mystruct->canvas.bits_per_pixel, &mystruct->canvas.line_length,
 		&mystruct->canvas.endian);
 	mystruct->goggles = malloc(8 * sizeof(*mystruct->goggles));
+	mystruct->amber_sprites = malloc(AMBER_SPRITES_N
+		* sizeof(*mystruct->amber_sprites));
 	init_textures(mystruct);
 	init_wall_images(mystruct);
 	make_image_transparent(&mystruct->pause_img, SCREEN_W, SCREEN_H, 120);

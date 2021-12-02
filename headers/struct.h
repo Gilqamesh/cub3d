@@ -2,6 +2,7 @@
 # define STRUCT_H
 
 # include <stdbool.h>
+# include "definitions.h"
 
 typedef struct s_point
 {
@@ -12,8 +13,11 @@ typedef struct s_point
 enum color
 {
 	RED = 0x00ff0000,
+	INV_RED = 0xff00ffff,
 	GREEN = 0x0000ff00,
+	INV_GREEN = 0xffff00ff,
 	BLUE = 0x000000ff,
+	INV_BLUE = 0xffffff00,
 	YELLOW = 0x00ffff00,
 	WHITE = 0x00ffffff,
 	BLACK = 0x00000000,
@@ -61,10 +65,20 @@ enum sprite_name
 {
 	SPRITE_LAMP,
 	SPRITE_GOGGLE,
+	SPRITE_AMBER,
 	N_OF_SPRITES
 };
 
 // index_of_sprite for sprites where img holds multiple sprites
+// uDiv		shrink sprite's width by this much
+// vDiv		shrink sprite's height by this much
+// vMove	move sprite down in the vertical direction (it might be necessary
+//				after shrinking)
+// translucency_factor	how transparent the sprite is:
+//							1	opaque
+//							2	half transparent
+//							4 	quarter transparent
+//							etc.
 typedef struct s_sprite
 {
 	t_data				*img;
@@ -73,6 +87,10 @@ typedef struct s_sprite
 	enum sprite_name	name;
 	double				posX;
 	double				posY;
+	double				uDiv;
+	double				vDiv;
+	int					vMove;
+	double				translucency_factor;
 }	t_sprite;
 
 typedef struct s_map
@@ -146,6 +164,7 @@ typedef struct s_cub3D
 	bool				is_right_held;
 	bool				is_paused;
 	t_data				*goggles;
+	t_data				*amber_sprites;
 	t_data				pause_img;
 	t_data				minimap_img;
 	t_data				minimap_wall_img;
@@ -165,6 +184,7 @@ typedef struct s_cub3D
 	t_data				crosshair_img;
 	int					n_of_spaces_on_map;
 	int					n_of_lamps_on_map;
+	unsigned int		draw_buffer[SCREEN_H][SCREEN_W];
 }	t_cub3D;
 
 typedef struct s_extract_img_args
