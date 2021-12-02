@@ -22,7 +22,8 @@ DRAW_SRC = 	draw_textures.c draw_wall.c draw_sprite_stripe.c draw_utils.c \
 DRAW_PATH = $(foreach file,$(DRAW_SRC),$(ODIR)/$(DRAW_DIR)/$(file))
 
 INIT_DIR = initialize
-INIT_SRC = 	hook.c initialize.c parsing.c init_textures.c init_minimap.c \
+INIT_SRC = 	hook.c initialize.c parsing_1.c parsing_2.c parsing_3.c \
+			parsing_4.c parsing_5.c init_textures.c init_minimap.c \
 			init_sprites.c key_hook.c init_wall_ray.c init_sprite_draw.c
 
 INIT_PATH = $(foreach file,$(INIT_SRC),$(ODIR)/$(INIT_DIR)/$(file))
