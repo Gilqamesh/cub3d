@@ -73,7 +73,7 @@ static void	init_sprites_helper4(t_cub3D *mystruct, int i)
 {
 	mystruct->sprites[i].uDiv = 2.0;
 	mystruct->sprites[i].vDiv = 2.0;
-	if (i == mystruct->n_of_lamps_on_map / 2)
+	if (i % 4 == 0)
 	{
 		mystruct->sprites[i].img = mystruct->amber_sprites;
 		mystruct->sprites[i].name = SPRITE_AMBER;
