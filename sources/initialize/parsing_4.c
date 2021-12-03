@@ -9,10 +9,13 @@ void	ft_map_checker2(t_cub3D *mystruct)
 	{
 		if (mystruct->map[0][i] != '*'
 			&& mystruct->map[0][i] != '1')
-			ft_error_message("Wrong input\n");
+			exit_program(STDERR_FILENO, "Map is not enclosed by * or 1"\
+				" from the top: %c\n", mystruct->map[0][i]);
 		if (mystruct->map[mystruct->parse.map_height - 1][i] != '*'
 			&& mystruct->map[mystruct->parse.map_height - 1][i] != '1')
-			ft_error_message("Wrong input\n");
+			exit_program(STDERR_FILENO, "Map is not enclosed by * or 1"\
+				" from the bot: %c\n",
+				mystruct->map[mystruct->parse.map_height - 1][i]);
 		i++;
 	}
 	i = 0;
@@ -25,7 +28,8 @@ void	ft_map_checker2(t_cub3D *mystruct)
 		if (mystruct->map[i][mystruct->parse.map_width - 1] != '*'
 			&& mystruct->map[i][mystruct->parse.map_width - 1] != '1')
 			exit_program(STDERR_FILENO, "Map is not enclosed by * or 1"\
-				" from the left: %c\n", mystruct->map[i][0]);
+				" from the right: %c\n",
+				mystruct->map[i][mystruct->parse.map_width - 1]);
 		i++;
 	}
 }

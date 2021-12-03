@@ -33,6 +33,9 @@ static void	init_textures_helper(t_cub3D *mystruct)
 		"assets/wolftextures.xpm", &p);
 	extract_image(&mystruct->pause_img, &mystruct->vars, "assets/pause.xpm",
 		&(t_extract_img_args){NULL, NULL, &(t_point){SCREEN_W, SCREEN_H}});
+	extract_image(&mystruct->textures[TEXTURE_DOOR], &mystruct->vars,
+		"assets/door.xpm", &(t_extract_img_args){NULL, NULL, &(t_point){
+		TEXT_W, TEXT_H}});
 }
 
 static void	init_textures_helper2(t_cub3D *mystruct)
@@ -68,10 +71,11 @@ void	init_textures(t_cub3D *mystruct)
 	extract_image(&mystruct->crosshair_img, &mystruct->vars,
 		"assets/crosshair.xpm", &(t_extract_img_args){NULL, NULL,
 		&(t_point){CROSSHAIR_SIZE, CROSSHAIR_SIZE}});
-	mystruct->textures = malloc(N_OF_TEXTURES * sizeof(*mystruct->textures));
-	extract_image(&mystruct->textures[TEXTURE_DOOR], &mystruct->vars,
-		"assets/door.xpm", &(t_extract_img_args){NULL, NULL, &(t_point){
-		TEXT_W, TEXT_H}});
+	mystruct->textures = ft_lstmallocwrapper(&mystruct->alloced_memory,
+		N_OF_TEXTURES * sizeof(*mystruct->textures), false);
+	if (mystruct->textures == NULL)
+		exit_program(STDERR_FILENO, "malloc failed in init_textures in file "\
+			"%s\n", __LINE__);
 	init_textures_helper(mystruct);
 	init_textures_helper2(mystruct);
 }

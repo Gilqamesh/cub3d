@@ -24,13 +24,22 @@ void	init_images(t_cub3D *mystruct)
 {
 	mystruct->canvas.img = mlx_new_image(mystruct->vars.mlx, SCREEN_W,
 			SCREEN_H);
+	if (mystruct->canvas.img == NULL)
+		exit_program(STDERR_FILENO, "mlx_new_image failed in file %s\n",
+			__FILE__);
 	mystruct->canvas.addr = mlx_get_data_addr(mystruct->canvas.img,
 			&mystruct->canvas.bits_per_pixel, &mystruct->canvas.line_length,
 			&mystruct->canvas.endian);
 	mystruct->goggles = ft_lstmallocwrapper(&mystruct->alloced_memory,
 			8 * sizeof(*mystruct->goggles), false);
+	if (mystruct->goggles == NULL)
+		exit_program(STDERR_FILENO, "malloc failed in init_images in file %s\n",
+			__LINE__);
 	mystruct->amber_sprites = ft_lstmallocwrapper(&mystruct->alloced_memory,
 			AMBER_SPRITES_N * sizeof(*mystruct->amber_sprites), false);
+	if (mystruct->amber_sprites == NULL)
+		exit_program(STDERR_FILENO, "malloc failed in init_images in file %s\n",
+			__LINE__);
 	init_textures(mystruct);
 	init_wall_images(mystruct);
 	make_image_transparent(&mystruct->pause_img, SCREEN_W, SCREEN_H, 120);
@@ -68,6 +77,8 @@ void	init_parameters(t_cub3D *mystruct)
 	mystruct->posZ = 0.5 * SCREEN_H;
 	mystruct->ZBuffer = ft_lstmallocwrapper(&mystruct->alloced_memory,
 			SCREEN_W * sizeof(*mystruct->ZBuffer), false);
+	exit_program(STDERR_FILENO, "malloc failed in init_parameters in file %s\n",
+			__LINE__);
 	mystruct->dirX = -1;
 	mystruct->dirY = 0;
 	mystruct->planeX = 0;

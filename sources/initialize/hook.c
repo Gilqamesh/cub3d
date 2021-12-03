@@ -2,7 +2,7 @@
 
 static void	zoom_forward(t_cub3D *mystruct)
 {
-	if (sqrt(mystruct->dirX * mystruct->dirX + mystruct->dirY * mystruct->dirY)
+	if (euclidean_distance(mystruct->dirX, mystruct->dirY)
 		< ft_minofint(SCREEN_W / 40 * MINIMAP_N_OF_CELL_X / 2
 			/ MINIMAP_N_OF_CELL_X - 1, SCREEN_H / 40 * MINIMAP_N_OF_CELL_Y / 2
 			/ MINIMAP_N_OF_CELL_Y) - 1)
@@ -14,8 +14,7 @@ static void	zoom_forward(t_cub3D *mystruct)
 
 static void	zoom_backward(t_cub3D *mystruct)
 {
-	if (sqrt(mystruct->dirX * mystruct->dirX
-			+ mystruct->dirY * mystruct->dirY) > 0.2)
+	if (euclidean_distance(mystruct->dirX, mystruct->dirY) > 0.2)
 	{
 		mystruct->dirX *= 1 - ZOOM_FACTOR / 100.0;
 		mystruct->dirY *= 1 - ZOOM_FACTOR / 100.0;
@@ -53,5 +52,5 @@ int	mouse_release(int button, int x, int y, void *param)
 int	destroy_window(void *param)
 {
 	(void)param;
-	return (exit_program(STDOUT_FILENO, "Program terminated by window exit\n"));
+	return (exit_program(STDOUT_FILENO, "Clicked on window exit\n"));
 }
