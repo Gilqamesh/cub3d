@@ -41,8 +41,7 @@ void	ft_one_line_2d(t_cub3D *mystruct, char *map_line)
 			&mystruct->alloced_memory, (mystruct->parse.map_width + 1)
 			* sizeof(char), false);
 	if (mystruct->map[mystruct->parse.i] == NULL)
-		exit_program(STDERR_FILENO, "malloc failed in file %s in function "\
-		"ft_one_line_2d\n", __FILE__);
+		exit_program(STDERR_FILENO, "malloc failed in file %s\n", __FILE__);
 	iter.y = 0;
 	index = 0;
 	while (iter.y < (int)ft_strlen(map_line))

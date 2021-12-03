@@ -78,8 +78,8 @@ void	init_parameters(t_cub3D *mystruct)
 	mystruct->ZBuffer = ft_lstmallocwrapper(&mystruct->alloced_memory,
 			SCREEN_W * sizeof(*mystruct->ZBuffer), false);
 	if (mystruct->ZBuffer == NULL)
-		exit_program(STDERR_FILENO, "malloc failed in init_parameters in file %s\n",
-			__FILE__);
+		exit_program(STDERR_FILENO, "malloc failed in init_parameters in file "\
+			"%s\n", __FILE__);
 	mystruct->dirX = -1;
 	mystruct->dirY = 0;
 	mystruct->planeX = 0;

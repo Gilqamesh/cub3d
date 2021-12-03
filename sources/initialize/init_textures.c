@@ -72,10 +72,10 @@ void	init_textures(t_cub3D *mystruct)
 		"assets/crosshair.xpm", &(t_extract_img_args){NULL, NULL,
 		&(t_point){CROSSHAIR_SIZE, CROSSHAIR_SIZE}});
 	mystruct->textures = ft_lstmallocwrapper(&mystruct->alloced_memory,
-		N_OF_TEXTURES * sizeof(*mystruct->textures), false);
+			N_OF_TEXTURES * sizeof(*mystruct->textures), false);
 	if (mystruct->textures == NULL)
 		exit_program(STDERR_FILENO, "malloc failed in init_textures in file "\
-			"%s\n", __LINE__);
+			"%s\n", __FILE__);
 	init_textures_helper(mystruct);
 	init_textures_helper2(mystruct);
 }
