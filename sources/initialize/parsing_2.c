@@ -11,8 +11,8 @@ void	ft_map_char_checker(t_cub3D *mystruct, char *str)
 			&& str[i] != 'S' && str[i] != 'E' && str[i] != 'W'
 			&& str[i] != '0' && str[i] != 'T' && str[i] != 'o'
 			&& str[i] != 'd' && str[i] != '\t' && str[i] != '\n')
-			exit_program(STDERR_FILENO, "map contains other characters then "\
-			"'0' '1' 'N' 'S' 'E' 'W' 'T' 'o' 'd'\n", __FILE__);
+			exit_program(STDERR_FILENO, "map contains other characters than "\
+			"'0' '1' 'N' 'S' 'E' 'W' 'T' 'o' 'd': %c\n", str[i]);
 		i++;
 	}
 }

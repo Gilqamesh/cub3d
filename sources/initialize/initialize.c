@@ -34,12 +34,12 @@ void	init_images(t_cub3D *mystruct)
 			8 * sizeof(*mystruct->goggles), false);
 	if (mystruct->goggles == NULL)
 		exit_program(STDERR_FILENO, "malloc failed in init_images in file %s\n",
-			__LINE__);
+			__FILE__);
 	mystruct->amber_sprites = ft_lstmallocwrapper(&mystruct->alloced_memory,
 			AMBER_SPRITES_N * sizeof(*mystruct->amber_sprites), false);
 	if (mystruct->amber_sprites == NULL)
 		exit_program(STDERR_FILENO, "malloc failed in init_images in file %s\n",
-			__LINE__);
+			__FILE__);
 	init_textures(mystruct);
 	init_wall_images(mystruct);
 	make_image_transparent(&mystruct->pause_img, SCREEN_W, SCREEN_H, 120);
@@ -77,8 +77,9 @@ void	init_parameters(t_cub3D *mystruct)
 	mystruct->posZ = 0.5 * SCREEN_H;
 	mystruct->ZBuffer = ft_lstmallocwrapper(&mystruct->alloced_memory,
 			SCREEN_W * sizeof(*mystruct->ZBuffer), false);
-	exit_program(STDERR_FILENO, "malloc failed in init_parameters in file %s\n",
-			__LINE__);
+	if (mystruct->ZBuffer == NULL)
+		exit_program(STDERR_FILENO, "malloc failed in init_parameters in file %s\n",
+			__FILE__);
 	mystruct->dirX = -1;
 	mystruct->dirY = 0;
 	mystruct->planeX = 0;
