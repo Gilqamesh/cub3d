@@ -80,8 +80,8 @@ void	ft_input_parse(int argc, char **argv, t_cub3D *mystruct)
 	}
 	ft_map_parse(mystruct);
 	ft_ll_to_2d(mystruct);
-	ft_map_checker(mystruct);
 	mystruct->map_width = mystruct->parse.map_width;
 	mystruct->map_height = mystruct->parse.map_height;
+	ft_check_for_player(mystruct);
 	close(mystruct->parse.fd);
 }

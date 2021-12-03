@@ -27,5 +27,6 @@ void	ft_map_checker2(t_cub3D *mystruct);
 int		ft_first_x_finder(char *line, char x);
 int		ft_last_x_finder(char *line, char x);
 int		ft_digit_finder(char *line);
+void	ft_check_for_player(t_cub3D *mystruct);
 
 #endif /* PARSING_H */

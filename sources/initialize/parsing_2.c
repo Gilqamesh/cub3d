@@ -2,7 +2,7 @@
 
 void	ft_map_char_checker(t_cub3D *mystruct, char *str)
 {
-	int	i;
+	int		i;
 
 	i = 0;
 	while (i < mystruct->parse.map_width && str[i] != '\0')
