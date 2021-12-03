@@ -35,7 +35,7 @@ void	ft_map_parse(t_cub3D *mystruct)
 		free(mystruct->parse.line);
 	}
 	if (ft_strlen(mystruct->parse.line) == 0)
-	exit_program(STDERR_FILENO, "map should not end with a newline");
+		exit_program(STDERR_FILENO, "map should not end with a newline");
 	else
 		ft_gnl_to_ll(mystruct);
 	free(mystruct->parse.line);
@@ -48,13 +48,13 @@ void	ft_extension_checker(int argc, char **argv)
 		"./map/map.cub>\n", __FILE__);
 	else if (ft_strlen(argv[1]) < 4)
 		exit_program(STDERR_FILENO, "%s is not a valid map(path) \n",
-		argv[1]);
+			argv[1]);
 	else if (!(argv[1][ft_strlen(argv[1]) - 4] == '.'
 		&& argv[1][ft_strlen(argv[1]) - 3] == 'c'
 		&& argv[1][ft_strlen(argv[1]) - 2] == 'u'
 		&& argv[1][ft_strlen(argv[1]) - 1] == 'b'))
 		exit_program(STDERR_FILENO, "%s should have .cub as extension\n",
-		argv[1]);
+			argv[1]);
 }
 
 void	ft_input_parse(int argc, char **argv, t_cub3D *mystruct)
@@ -76,7 +76,7 @@ void	ft_input_parse(int argc, char **argv, t_cub3D *mystruct)
 	{
 		close (mystruct->parse.fd);
 		exit_program(STDERR_FILENO, "map file does not contain \n"
-		"NO, SO, WE, EA, F and C\n");
+			"NO, SO, WE, EA, F and C\n");
 	}
 	ft_map_parse(mystruct);
 	ft_ll_to_2d(mystruct);
