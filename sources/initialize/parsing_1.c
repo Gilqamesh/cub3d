@@ -44,8 +44,8 @@ void	ft_map_parse(t_cub3D *mystruct)
 void	ft_extension_checker(int argc, char **argv)
 {
 	if (argc != 2)
-		exit_program(STDERR_FILENO, "run program by entering <./cub3D "\
-		"./map/map.cub>\n", __FILE__);
+		exit_program(STDERR_FILENO, "Usage: ./cub3D <map_name.cub>\n",
+			__FILE__);
 	else if (ft_strlen(argv[1]) < 4)
 		exit_program(STDERR_FILENO, "%s is not a valid map(path) \n",
 			argv[1]);
@@ -63,7 +63,7 @@ void	ft_input_parse(int argc, char **argv, t_cub3D *mystruct)
 	ft_bzero(mystruct, sizeof(*mystruct));
 	mystruct->parse.fd = open(argv[1], O_RDONLY);
 	if (mystruct->parse.fd == -1)
-		exit_program(STDERR_FILENO, "error opening map file %d\n",
+		exit_program(STDERR_FILENO, "error opening map file %s\n",
 			argv[1]);
 	while (get_next_line(mystruct->parse.fd, &mystruct->parse.line)
 		> 0 && mystruct->parse.full == 0)
