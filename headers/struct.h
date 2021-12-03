@@ -185,6 +185,7 @@ typedef struct s_cub3D
 	int					n_of_lamps_on_map;
 	unsigned int		draw_buffer[SCREEN_H][SCREEN_W];
 	t_list				*alloced_memory;
+	char				def_orient;
 }	t_cub3D;
 
 typedef struct s_extract_img_args

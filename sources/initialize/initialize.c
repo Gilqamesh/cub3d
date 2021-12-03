@@ -50,6 +50,7 @@ void	init_images(t_cub3D *mystruct)
 static void	init_parameters_helper(t_cub3D *mystruct)
 {
 	t_point	iter;
+	char	c;
 
 	iter.y = -1;
 	while (++iter.y < mystruct->map_height)
@@ -59,10 +60,10 @@ static void	init_parameters_helper(t_cub3D *mystruct)
 		{
 			if (mystruct->map[iter.y][iter.x] == SPACE_CHAR)
 				++mystruct->n_of_spaces_on_map;
-			if (mystruct->map[iter.y][iter.x] == 'N' || mystruct->map[iter.y]
-				[iter.x] == 'S' || mystruct->map[iter.y][iter.x] == 'W'
-				|| mystruct->map[iter.y][iter.x] == 'E')
+			c = mystruct->map[iter.y][iter.x];
+			if (c == 'N' || c == 'S' || c == 'W' || c == 'E')
 			{
+				mystruct->def_orient = c;
 				mystruct->map[iter.y][iter.x] = SPACE_CHAR;
 				mystruct->posX = iter.x + 0.5;
 				mystruct->posY = iter.y + 0.5;
@@ -80,8 +81,22 @@ void	init_parameters(t_cub3D *mystruct)
 	if (mystruct->ZBuffer == NULL)
 		exit_program(STDERR_FILENO, "malloc failed in init_parameters in file "\
 			"%s\n", __FILE__);
-	mystruct->dirX = -1;
-	mystruct->dirY = 0;
-	mystruct->planeX = 0;
-	mystruct->planeY = 0.66;
+	if (mystruct->def_orient == 'N' || mystruct->def_orient == 'S')
+	{
+		mystruct->dirY = -1;
+		if (mystruct->def_orient == 'N')
+			mystruct->dirY = 1;
+		mystruct->planeX = 0.66;
+		if (mystruct->def_orient == 'S')
+			mystruct->planeX = -0.66;
+	}
+	else if (mystruct->def_orient == 'W' || mystruct->def_orient == 'E')
+	{
+		mystruct->dirX = 1;
+		if (mystruct->def_orient == 'W')
+			mystruct->dirX = -1;
+		mystruct->planeY = 0.66;
+		if (mystruct->def_orient == 'E')
+			mystruct->planeY = -0.66;
+	}
 }
