@@ -11,7 +11,8 @@ void	ft_map_char_checker(t_cub3D *mystruct, char *str)
 			&& str[i] != 'S' && str[i] != 'E' && str[i] != 'W'
 			&& str[i] != '0' && str[i] != 'T' && str[i] != 'o'
 			&& str[i] != 'd' && str[i] != '\t' && str[i] != '\n')
-			ft_error_message("Wrong input\n");
+			exit_program(STDERR_FILENO, "map contains other characters then "\
+			"'0' '1' 'N' 'S' 'E' 'W' 'T' 'o' 'd'\n", __FILE__);
 		i++;
 	}
 }
@@ -21,7 +22,7 @@ void	ft_element_check(t_cub3D *mystruct, int y, int x)
 	if (mystruct->map[mystruct->parse.row + y][mystruct->parse.col + x] != '*'
 		&& mystruct->map[mystruct->parse.row + y]
 				[mystruct->parse.col + x] != '1')
-		ft_error_message("Wrong input\n");
+		exit_program(STDERR_FILENO, "map is not surrounded by 1's");
 }
 
 void	ft_line_saver(t_cub3D *mystruct, int index)
@@ -40,7 +41,8 @@ void	ft_one_line_2d(t_cub3D *mystruct, char *map_line)
 			&mystruct->alloced_memory, (mystruct->parse.map_width + 1)
 			* sizeof(char), false);
 	if (mystruct->map[mystruct->parse.i] == NULL)
-		ft_error_message("Malloc Failed\n");
+		exit_program(STDERR_FILENO, "malloc failed in file %s in function "\
+		"ft_one_line_2d\n", __FILE__);
 	iter.y = 0;
 	index = 0;
 	while (iter.y < (int)ft_strlen(map_line))
@@ -67,7 +69,8 @@ void	ft_ll_to_2d(t_cub3D *mystruct)
 	mystruct->map = ft_lstmallocwrapper(&mystruct->alloced_memory,
 			(mystruct->parse.map_height + 1) * sizeof(char *), false);
 	if (mystruct->map == NULL)
-		ft_error_message("Malloc Failed\n");
+		exit_program(STDERR_FILENO, "malloc failed in file %s in function "\
+		"ft_ll_to_2d\n", __FILE__);
 	temporary = mystruct->parse.map;
 	mystruct->parse.i = mystruct->parse.map_height;
 	mystruct->map[mystruct->parse.i] = NULL;
