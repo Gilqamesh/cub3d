@@ -33,15 +33,18 @@ static void	destroy_images(t_cub3D *mystruct)
 
 	i = -1;
 	while (++i < N_OF_TEXTURES)
-		if (mystruct->textures)
-			mlx_destroy_image(mystruct->vars.mlx, mystruct->textures[i].img);
+		if (mystruct->textures && mystruct->textures[i].img)
+			if (mystruct->textures[i].img)
+				mlx_destroy_image(mystruct->vars.mlx,
+					mystruct->textures[i].img);
 	i = -1;
 	while (++i < 8)
-		if (mystruct->goggles)
-			mlx_destroy_image(mystruct->vars.mlx, mystruct->goggles[i].img);
+		if (mystruct->goggles && mystruct->goggles[i].img)
+			if (mystruct->goggles[i].img)
+				mlx_destroy_image(mystruct->vars.mlx, mystruct->goggles[i].img);
 	i = -1;
 	while (++i < AMBER_SPRITES_N)
-		if (mystruct->amber_sprites)
+		if (mystruct->amber_sprites && mystruct->amber_sprites[i].img)
 			mlx_destroy_image(mystruct->vars.mlx,
 				mystruct->amber_sprites[i].img);
 	destroy_images_helper(mystruct);

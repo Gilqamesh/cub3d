@@ -30,7 +30,7 @@ t_extract_img_args *args)
 
 	images->img = mlx_xpm_file_to_image(vars->mlx, path, &p.x, &p.y);
 	if (images->img == NULL)
-		exit_program(STDERR_FILENO, "mlx_xpm_file_to_image failed");
+		exit_program(STDERR_FILENO, "mlx_xpm_file_to_image failed\n");
 	images->addr = mlx_get_data_addr(images->img, &images->bits_per_pixel,
 			&images->line_length, &images->endian);
 	if (extract_image_error(path, args, &p))

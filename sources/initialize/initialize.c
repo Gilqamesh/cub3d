@@ -31,12 +31,12 @@ void	init_images(t_cub3D *mystruct)
 			&mystruct->canvas.bits_per_pixel, &mystruct->canvas.line_length,
 			&mystruct->canvas.endian);
 	mystruct->goggles = ft_lstmallocwrapper(&mystruct->alloced_memory,
-			8 * sizeof(*mystruct->goggles), false);
+			8 * sizeof(*mystruct->goggles), true);
 	if (mystruct->goggles == NULL)
 		exit_program(STDERR_FILENO, "malloc failed in init_images in file %s\n",
 			__FILE__);
 	mystruct->amber_sprites = ft_lstmallocwrapper(&mystruct->alloced_memory,
-			AMBER_SPRITES_N * sizeof(*mystruct->amber_sprites), false);
+			AMBER_SPRITES_N * sizeof(*mystruct->amber_sprites), true);
 	if (mystruct->amber_sprites == NULL)
 		exit_program(STDERR_FILENO, "malloc failed in init_images in file %s\n",
 			__FILE__);
