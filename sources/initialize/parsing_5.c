@@ -1,12 +1,5 @@
 #include "main.h"
 
-void	ft_error_message(char *str)
-{
-	ft_putstr_fd("Error\n", 2);
-	ft_putstr_fd(str, 2);
-	exit (EXIT_FAILURE);
-}
-
 int	ft_digit_finder(char *line)
 {
 	int	i;

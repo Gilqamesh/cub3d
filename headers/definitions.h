@@ -1,12 +1,6 @@
 #ifndef DEFINITIONS_H
 # define DEFINITIONS_H
 
-# ifndef BONUS
-#  define IS_BONUS 1
-# else
-#  define IS_BONUS 0
-# endif /* BONUS */
-
 # define SCREEN_W				1280
 # define SCREEN_H				720
 # define TITLE					"cub3D"

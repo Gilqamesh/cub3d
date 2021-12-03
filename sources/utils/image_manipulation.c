@@ -16,7 +16,7 @@ t_point *parameters)
 			ft_abs_int(args->A->x - args->B->x), ft_abs_int(args->A->y
 				- args->B->y), args->A->x, args->B->x, args->A->y, args->B->y,
 			path, parameters->x, parameters->y);
-		exit(EXIT_FAILURE);
+		exit_program(STDERR_FILENO, NULL);
 	}
 	return (0);
 }
@@ -30,7 +30,7 @@ t_extract_img_args *args)
 
 	images->img = mlx_xpm_file_to_image(vars->mlx, path, &p.x, &p.y);
 	if (images->img == NULL)
-		exit(EXIT_FAILURE);
+		exit_program(STDERR_FILENO, "mlx_xpm_file_to_image failed");
 	images->addr = mlx_get_data_addr(images->img, &images->bits_per_pixel,
 			&images->line_length, &images->endian);
 	if (extract_image_error(path, args, &p))
@@ -63,6 +63,8 @@ t_point *new_params)
 	if (new_params->x < 2 || new_params->y < 2)
 		return ;
 	new_img.img = mlx_new_image(vars->mlx, new_params->x, new_params->y);
+	if (new_img.img == NULL)
+		exit_program(STDERR_FILENO, "mlx_new_image failde in resize_img\n");
 	new_img.addr = mlx_get_data_addr(new_img.img, &new_img.bits_per_pixel,
 			&new_img.line_length, &new_img.endian);
 	ratio_w = (double)(old_params->x - 1) / (new_params->x - 1);
@@ -91,6 +93,8 @@ t_point *bot_left, t_point *top_right)
 	new_img.img = mlx_new_image(vars->mlx,
 			ft_abs_int(top_right->x - bot_left->x),
 			ft_abs_int(bot_left->y - top_right->y));
+	if (new_img.img == NULL)
+		exit_program(STDERR_FILENO, "mlx_new_image failed in crop_img\n");
 	new_img.addr = mlx_get_data_addr(new_img.img, &new_img.bits_per_pixel,
 			&new_img.line_length, &new_img.endian);
 	B.y = 0;

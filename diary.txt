@@ -1,12 +1,4 @@
-Polish minimap textures
-
-Polish extract image function
-
 Angle jumping between 80 and 100 instead of staying at 90, hmm..
-
-Polish line draw function
-
-Polish init_minimap_img function
 
 Head bobbling during movement
 
@@ -14,5 +6,3 @@ When goggle is picked up, remove it from the map and change some attributes of t
 
 Make player collision based on a circle instead of a single pixel to have a better feel for collision
 while walking around the map
-
-Free stuff when exiting the program (use malloc wrapper)

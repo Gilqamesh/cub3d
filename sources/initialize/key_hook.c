@@ -28,7 +28,7 @@ int	key_press(int key, void *param)
 	}
 	movement_keys_press(key, mystruct);
 	if (key == KEY_ESC)
-		exit_program(mystruct);
+		exit_program(STDOUT_FILENO, "Program terminated by escape press\n");
 	else if (key == KEY_P)
 	{
 		if (mystruct->is_paused == false)

@@ -20,10 +20,12 @@ void	ft_map_checker2(t_cub3D *mystruct)
 	{
 		if (mystruct->map[i][0] != '*'
 			&& mystruct->map[i][0] != '1')
-			ft_error_message("Wrong input\n");
+			exit_program(STDERR_FILENO, "Map is not enclosed by * or 1"\
+				" from the left: %c\n", mystruct->map[i][0]);
 		if (mystruct->map[i][mystruct->parse.map_width - 1] != '*'
 			&& mystruct->map[i][mystruct->parse.map_width - 1] != '1')
-			ft_error_message("Wrong input\n");
+			exit_program(STDERR_FILENO, "Map is not enclosed by * or 1"\
+				" from the left: %c\n", mystruct->map[i][0]);
 		i++;
 	}
 }
@@ -65,7 +67,8 @@ void	ft_color_error_checker(char *line)
 	while (line[i] != '\0')
 	{
 		if (!(line[i] == ',' || ft_isdigit(line[i])))
-			ft_error_message("Wrong input\n");
+			exit_program(STDERR_FILENO, "did not find ',' or digit in color"\
+				" format in: %s\n", line);
 		i++;
 	}
 }
@@ -77,20 +80,23 @@ void	ft_rgb_to_dec(char *line, int *f_or_c)
 	ft_color_error_checker(line);
 	i = ft_digit_finder(line);
 	if (ft_atoi(&line[i]) > 255)
-		ft_error_message("Wrong input\n");
+		exit_program(STDERR_FILENO, "color %d must be in between 0 and 255: "\
+		"%s\n", ft_atoi(&line[i]), line);
 	*f_or_c += ft_atoi(&line[i]) << 16;
 	i += ft_intlen(ft_atoi(&line[i])) + 1;
 	if (ft_isdigit((int)line[i]))
 	{
 		if (ft_atoi(&line[i]) > 255)
-			ft_error_message("Wrong input\n");
+			exit_program(STDERR_FILENO, "color %d must be in between 0 and 255"\
+			": %s\n", ft_atoi(&line[i]), line);
 		*f_or_c += ft_atoi(&line[i]) << 8;
 	}
 	i = ft_last_x_finder(line, ',') + 1;
 	if (ft_isdigit((int)line[i]))
 	{
 		if (ft_atoi(&line[i]) > 255)
-			ft_error_message("Wrong input\n");
+			exit_program(STDERR_FILENO, "color %d must be in between 0 and 255"\
+			": %s\n", ft_atoi(&line[i]), line);
 		*f_or_c += ft_atoi(&line[i]);
 	}
 }
@@ -98,14 +104,14 @@ void	ft_rgb_to_dec(char *line, int *f_or_c)
 void	ft_color_parser(char *line, t_cub3D *mystruct)
 {
 	if (line[0] == 'F' && mystruct->parse.f_full == 1)
-		ft_error_message("Wrong input\n");
+		exit_program(STDERR_FILENO, "Floor color has already been parsed\n");
 	if (line[0] == 'F' && mystruct->parse.f_full == 0)
 	{
 		ft_rgb_to_dec(line, &mystruct->parse.F);
 		mystruct->parse.f_full = 1;
 	}
 	if (line[0] == 'C' && mystruct->parse.c_full == 1)
-		ft_error_message("Wrong input\n");
+		exit_program(STDERR_FILENO, "Ceiling color has already been parsed\n");
 	if (line[0] == 'C' && mystruct->parse.c_full == 0)
 	{
 		ft_rgb_to_dec(line, &mystruct->parse.C);

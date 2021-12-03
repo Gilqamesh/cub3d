@@ -80,7 +80,7 @@ static void	init_sprites_helper4(t_cub3D *mystruct, int i)
 		{
 			mystruct->sprites[i].img = mystruct->amber_sprites;
 			mystruct->sprites[i].name = SPRITE_AMBER;
-			mystruct->sprites[i].translucency_factor = 3.0;
+			mystruct->sprites[i].translucency_factor = 2.0;
 		}
 		else
 		{

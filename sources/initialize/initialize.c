@@ -16,7 +16,7 @@ void	init_hooks(t_cub3D *mystruct)
 	mlx_hook(mystruct->vars.win, 3, 1 << 1, key_release, mystruct);
 	mlx_hook(mystruct->vars.win, 4, 1 << 2, mouse_press, mystruct);
 	mlx_hook(mystruct->vars.win, 5, 1 << 3, mouse_release, mystruct);
-	mlx_hook(mystruct->vars.win, 17, 1 << 17, exit_program, mystruct);
+	mlx_hook(mystruct->vars.win, 17, 1 << 17, destroy_window, mystruct);
 	mlx_loop_hook(mystruct->vars.mlx, render_frame, mystruct);
 }
 

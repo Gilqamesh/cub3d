@@ -171,7 +171,6 @@ typedef struct s_cub3D
 	t_data				minimap_blank_img;
 	t_data				real_time_minimap_img;
 	t_data				brush_img;
-	long int			prev_timestamp;
 	int					n_of_sprites_on_map;
 	t_sprite			*sprites;
 	double				*ZBuffer;

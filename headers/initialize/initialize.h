@@ -16,5 +16,6 @@ void	initialize_wall_ray(t_cub3D *mystruct, int current_column,
 			t_wall_cast_params *p);
 void	initialize_sprite_draw(t_cub3D *mystruct, int i,
 			t_sprite_cast_params *p);
+int		destroy_window(void *param);
 
 #endif /* INITIALIZE_H */

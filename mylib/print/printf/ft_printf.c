@@ -26,34 +26,21 @@ int	ft_printf(const char *format, ...)
 
 int	ft_dprintf(int fd, const char *format, ...)
 {
-	va_list		ap;
-	t_printf	mystruct;
+	va_list	ap;
+	int		ret;
 
-	ft_bzero(&mystruct, sizeof(mystruct));
 	va_start(ap, format);
-	while (format[mystruct.index])
-	{
-		if (format[mystruct.index] == '%')
-		{
-			mystruct.index++;
-			ft_set_flags((char *)format, &mystruct);
-			ft_conversion_router(format[mystruct.index], &mystruct, ap, fd);
-		}
-		else
-		{
-			ft_putchar_fd(format[mystruct.index], fd);
-			mystruct.printed_bytes++;
-		}
-		mystruct.index++;
-	}
+	ret = ft_vdprintf(fd, format, ap);
 	va_end(ap);
-	return (mystruct.printed_bytes);
+	return (ret);
 }
 
 int	ft_vdprintf(int fd, const char *format, va_list ap)
 {
 	t_printf	mystruct;
 
+	if (format == NULL || fd < 0)
+		return (-1);
 	ft_bzero(&mystruct, sizeof(mystruct));
 	while (format[mystruct.index])
 	{

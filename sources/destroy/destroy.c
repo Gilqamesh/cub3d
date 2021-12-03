@@ -47,12 +47,20 @@ static void	destroy_images(t_cub3D *mystruct)
 	destroy_images_helper(mystruct);
 }
 
-int	exit_program(void *param)
+int	exit_program(int fd, const char *msg, ...)
 {
 	t_cub3D	*mystruct;
+	va_list	ap;
 
-	mystruct = (t_cub3D *)param;
+	mystruct = ft_get_ptr(NULL);
+	if (fd == STDERR_FILENO)
+		ft_dprintf(STDERR_FILENO, "ERROR\n");
+	va_start(ap, msg);
+	ft_vdprintf(fd, msg, ap);
+	va_end(ap);
 	destroy_images(mystruct);
 	ft_lstmallocfree(&mystruct->alloced_memory);
+	if (fd == STDERR_FILENO)
+		exit(EXIT_FAILURE);
 	exit(EXIT_SUCCESS);
 }

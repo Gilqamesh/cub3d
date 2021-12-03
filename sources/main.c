@@ -9,9 +9,10 @@ int	main(int argc, char **argv)
 		ft_putendl_fd("Usage: ./cub3D <map_name.cub>", STDERR_FILENO);
 		exit(EXIT_FAILURE);
 	}
+	ft_get_ptr(&mystruct);
 	ft_input_parse(argc, argv, &mystruct);
 	init_struct(&mystruct);
 	init_hooks(&mystruct);
 	mlx_loop(mystruct.vars.mlx);
-	exit_program(&mystruct);
+	return (exit_program(STDOUT_FILENO, "Program terminated naturally"));
 }

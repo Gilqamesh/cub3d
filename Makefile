@@ -40,7 +40,7 @@ UTILS_DIR = utils
 UTILS_SRC = image_manipulation.c utils.c merge_sort_sprites.c
 UTILS_PATH = $(foreach file,$(UTILS_SRC),$(ODIR)/$(UTILS_DIR)/$(file))
 
-MAIN_SRC = main.c debugging.c
+MAIN_SRC = main.c
 MAIN_PATH = $(foreach file,$(MAIN_SRC),$(ODIR)/$(file))
 
 TARGETS = 	$(DESTROY_PATH:.c=.o) $(DRAW_PATH:.c=.o) $(INIT_PATH:.c=.o) \
@@ -52,8 +52,7 @@ DEPENDS:
 	make $(NAME)
 $(NAME): $(TARGETS)
 	$(CC) -o $@ $^ $(LIBS)
-$(ODIR)/%.o: 	$(SDIR)/%.c $(HDIR)/$(dir %)/*.h $(HDIR)/definitions.h \
-				$(HDIR)/debugging.h
+$(ODIR)/%.o: 	$(SDIR)/%.c $(HDIR)/$(dir %)/*.h $(HDIR)/definitions.h
 	cd $(dir $@) && $(CC) $(INCLUDES) $(CFLAGS) -c $<
 
 

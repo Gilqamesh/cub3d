@@ -14,13 +14,9 @@
 # include "updating_functions/update.h"
 # include "utils/image_manipulation.h"
 # include "utils/utils.h"
-
 # include "definitions.h"
 # include "struct.h"
 # include "mlx.h"
 # include "ft_mylib.h"
-
-// DEBUG
-# include "debugging.h"
 
 #endif /* MAIN_H */

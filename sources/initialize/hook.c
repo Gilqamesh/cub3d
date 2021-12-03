@@ -49,3 +49,9 @@ int	mouse_release(int button, int x, int y, void *param)
 	(void)param;
 	return (0);
 }
+
+int	destroy_window(void *param)
+{
+	(void)param;
+	return (exit_program(STDOUT_FILENO, "Program terminated by window exit\n"));
+}

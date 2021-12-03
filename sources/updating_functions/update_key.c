@@ -47,11 +47,14 @@ void	update_position_by_key(t_cub3D *mystruct, int key)
 {
 	double	x;
 	double	y;
+	double	vSize;
 
-	x = mystruct->dirX
-		/ euclidean_distance(mystruct->dirX, mystruct->dirY) * MOVE_SPEED;
-	y = mystruct->dirY
-		/ euclidean_distance(mystruct->dirX, mystruct->dirY) * MOVE_SPEED;
+	vSize = euclidean_distance(mystruct->dirX, mystruct->dirY);
+	if (vSize == 0)
+		exit_program(STDERR_FILENO, "vector length is 0 in file %s in function"\
+		" update_position_by_key\n", __FILE__);
+	x = mystruct->dirX / vSize * MOVE_SPEED;
+	y = mystruct->dirY / vSize * MOVE_SPEED;
 	if (key == KEY_W || key == KEY_S)
 		handle_forward_backward(key, mystruct, x, y);
 	else if (key == KEY_A || key == KEY_D)
