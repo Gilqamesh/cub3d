@@ -35,7 +35,7 @@ void	ft_map_parse(t_cub3D *mystruct)
 		free(mystruct->parse.line);
 	}
 	if (ft_strlen(mystruct->parse.line) == 0)
-		exit_program(STDERR_FILENO, "map should not end with a newline");
+		exit_program(STDERR_FILENO, "map should not end with a newline\n");
 	else
 		ft_gnl_to_ll(mystruct);
 	free(mystruct->parse.line);
